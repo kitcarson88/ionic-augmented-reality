@@ -30,6 +30,7 @@ import { Api } from '../providers/api/api';
 //Services
 import { NetworkService } from '../services/network.service';
 import { StorageService } from '../services/storage.service';
+import { SensorsService } from '../services/sensors.service';
 import { SpinnerService } from '../services/spinner.service';
 import { AlertService } from '../services/alert.service';
 
@@ -95,6 +96,7 @@ export function createTranslateLoader(http: HttpClient) {
     Globalization,  //Globalization not mocked. Calls managed directly in app.component
     NetworkService,
     StorageService,
+    SensorsService,
     SpinnerService,
     AlertService,
     Api,

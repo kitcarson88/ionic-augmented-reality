@@ -9,6 +9,7 @@ import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { select } from "@angular-redux/store";
 import { Observable } from "rxjs";
 
+import { SensorsService } from '../../services/sensors.service';
 import { SpinnerService } from '../../services/spinner.service';
 import { AlertService } from '../../services/alert.service';
 
@@ -61,7 +62,7 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
     private screenOrientation: ScreenOrientation,
     private diagnosticService: Diagnostic,
     private nativeStorage: NativeStorage,
-
+    private sensorsService: SensorsService,
     private alertService: AlertService,
     private spinnerService: SpinnerService
   ) { }
@@ -145,7 +146,7 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
     this.sensorMissing = false;
 
     //Start fused orientation service (accelerometer, gyroscope, magnetometer)
-    //this.sensorsService.startSensors();
+    this.sensorsService.startSensors();
 
     //Manage accelerometer, gyroscope, and magnetometer sensors errors
     this.accelerometerCoordinatesErrorSubscription = this.accelerometerCoordinatesError$.subscribe((flag: boolean) => {
@@ -203,7 +204,7 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
 
   ngOnDestroy()
   {
-    //this.spinnerService.dismissLoader();
+    this.spinnerService.dismissLoader();
     this.statusBar.show();
     /*this.cameraPreview.stopCamera();
     this.sensorsService.stopSensors();
