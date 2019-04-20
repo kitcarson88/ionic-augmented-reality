@@ -14,6 +14,9 @@ import { Globalization } from '@ionic-native/globalization/ngx';
 import { HTTP } from '@ionic-native/http/ngx';
 import { Network } from '@ionic-native/network/ngx';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
+import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
+import { Diagnostic } from '@ionic-native/diagnostic/ngx';
+import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -31,7 +34,10 @@ import { StoreModule } from '../store/store.module';
 import {
   getHTTP,
   getNetwork,
-  getNativeStorage
+  getNativeStorage,
+  getScreenOrientation,
+  getDiagnostic,
+  getLocationAccuracy,
 } from './app.providers';
 
 export function createTranslateLoader(http: HttpClient) {
@@ -73,6 +79,12 @@ export function createTranslateLoader(http: HttpClient) {
     {provide: HTTP, useClass: getHTTP()},    //HTTP mocked with empty functions. Calls managed with mocked json data
     {provide: Network, useClass: getNetwork()},
     {provide: NativeStorage, useClass: getNativeStorage()},
+    {provide: ScreenOrientation, useClass: getScreenOrientation()},
+    {provide: Diagnostic, useClass: getDiagnostic()},
+    /*{provide: Geolocation, useClass: getGeolocation()},
+    {provide: DeviceMotion, useClass: getDeviceMotion()},
+    {provide: Gyroscope, useClass: getGyroscope()},*/
+    {provide: LocationAccuracy, useClass: getLocationAccuracy()},
     Globalization,  //Globalization not mocked. Calls managed directly in app.component
     NetworkService,
     StorageService,
