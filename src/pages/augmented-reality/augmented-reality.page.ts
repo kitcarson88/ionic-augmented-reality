@@ -7,6 +7,7 @@ import { Diagnostic } from '@ionic-native/diagnostic/ngx';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
 import { Utils } from '../../util/utils';
+import { constants } from '../../util/constants';
 
 enum ARError {
   INTERNAL_AR_ERROR,
