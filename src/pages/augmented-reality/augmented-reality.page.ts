@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 
-import { Platform } from '@ionic/angular';
+import { Platform, Events } from '@ionic/angular';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 import { Diagnostic } from '@ionic-native/diagnostic/ngx';
@@ -24,7 +24,7 @@ enum ARError {
   templateUrl: './augmented-reality.page.html',
   styleUrls: ['./augmented-reality.page.scss'],
 })
-export class AugmentedRealityPage implements OnInit
+export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
 {
   private static readonly DEG2RAD = Math.PI / 180;
   private static readonly EARTH_RADIUS = 6371;  //Earth radius in km
@@ -36,15 +36,24 @@ export class AugmentedRealityPage implements OnInit
   private locationAuthorized: boolean;
   private firstLocationAuthorization: boolean;
 
+  private sensorMissing: boolean = false;
+
   constructor(
     private platform: Platform,
     private statusBar: StatusBar,
+    private events: Events,
     private screenOrientation: ScreenOrientation,
     private diagnosticService: Diagnostic,
     private nativeStorage: NativeStorage
   ) { }
 
-  ngOnInit() {
+  private leavePage = () => {
+    //TODO go back
+    console.log("GO BACK");
+  };
+
+  ngOnInit()
+  {
     this.statusBar.hide();
 
     if (Utils.isIos(this.platform))
@@ -99,6 +108,15 @@ export class AugmentedRealityPage implements OnInit
     });
   }
 
+  ngAfterViewInit()
+  {
+    //this.spinnerService.showLoader();
+    this.sensorMissing = false;
+
+    //Catch error visualization by alerts, and go back to previous page
+    this.events.subscribe(constants.AR_SYSTEM_ERROR, this.leavePage);
+  }
+
   private manageARSystemsErrors(errorType: ARError)
   {
     /*switch (errorType)
@@ -125,5 +143,12 @@ export class AugmentedRealityPage implements OnInit
         this.alertService.showSensorsError("Per il corretto funzionamento della funzionalità di realtà aumentata, si prega di attivare il gps");
         break;
     }*/
+  }
+
+  ngOnDestroy()
+  {
+    setTimeout(() => this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT), 500);
+
+    this.events.unsubscribe(constants.AR_SYSTEM_ERROR, this.leavePage);
   }
 }

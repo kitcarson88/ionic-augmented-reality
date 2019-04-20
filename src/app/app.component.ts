@@ -20,22 +20,26 @@ export class AppComponent
     {
       title: 'Home',
       url: '/home',
-      icon: 'home'
+      icon: 'home',
+      direction: 'root'
     },
     {
       title: 'Map',
       url: '/map',
-      icon: 'home'
+      icon: 'home',
+      direction: 'root'
     },
     {
       title: 'AR',
       url: '/augmented-reality',
-      icon: 'home'
+      icon: 'home',
+      direction: 'forward'
     },
     {
       title: 'About the author',
       url: '/about-author',
-      icon: 'home'
+      icon: 'home',
+      direction: 'root'
     }
   ];
 
