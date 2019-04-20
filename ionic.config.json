@@ -6,6 +6,8 @@
   "type": "angular",
   "hooks": {
     "serve:before": "./scripts/copy-custom-libs.js",
-    "build:before": "./scripts/copy-custom-libs.js"
+    "build:before": "./scripts/copy-custom-libs.js",
+    "serve:before": "./scripts/redux-persist-react-fix.js",
+    "build:before": "./scripts/redux-persist-react-fix.js"
   }
 }
