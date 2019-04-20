@@ -12,6 +12,8 @@ import { CameraPreviewExtended } from '../../app/app.providers';
 import { select } from "@angular-redux/store";
 import { Observable } from "rxjs";
 
+import { GpsActions } from '../../store';
+
 import { SensorsService } from '../../services/sensors.service';
 import { SpinnerService } from '../../services/spinner.service';
 import { AlertService } from '../../services/alert.service';
@@ -68,6 +70,7 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
     private diagnosticService: Diagnostic,
     private locationAccuracy: LocationAccuracy,
     private nativeStorage: NativeStorage,
+    private gpsService: GpsActions,
     private sensorsService: SensorsService,
     private cameraPreview: CameraPreviewExtended,
     private alertService: AlertService,
@@ -283,7 +286,7 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
         {
           this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
             () => {
-              //this.gpsService.startService();
+              this.gpsService.startService();
               //this.registerARSystems();
             },
             error => {
@@ -294,7 +297,7 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
       }
       else if (Utils.isIos(this.platform))
       {
-        //this.gpsService.startService();
+        this.gpsService.startService();
         //this.registerARSystems();
       }
 

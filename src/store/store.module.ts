@@ -16,7 +16,8 @@ import { environment } from '../environments/environment';
 
 import { rootReducer } from "./store.reducer";
 import { AppState, INITIAL_STATE } from "./store.model";
-import { 
+import {
+  GpsActions,
   AccelerometerActions,
   GyroscopeActions,
   MagnetometerActions
@@ -31,10 +32,11 @@ import { StorageService } from "../services/storage.service";
 /*import { ToastService } from "../services/toast.service";
 import { ErrorManagerService } from "../services/error.service";*/
 
-//import { Converter } from "../util/converter";
+import { Converter } from "../util/converter";
 //import { constants } from "../util/constants";
 
-const ACTIONS = [ 
+const ACTIONS = [
+  GpsActions,
   AccelerometerActions,
   GyroscopeActions,
   MagnetometerActions
@@ -70,7 +72,7 @@ export class StoreModule
       key: 'root',
       storage: storageService,
       //storage,
-      blacklist: [ 'accelerometer', 'gyroscope', 'magnetometer' ]
+      blacklist: [ 'gps', 'accelerometer', 'gyroscope', 'magnetometer' ]
     }
     //const persistedReducer = persistReducer(persistConfig, rootReducer);
 
@@ -207,12 +209,12 @@ export class StoreModule
       {
         //let state = store.getState();
 
-        /*switch (action.type)
+        switch (action.type)
         {
-          case FilieraActions.RETRIEVE_TRACCIATURA_FILIERA_COMPLETED:
-            action.payload = Converter.convertFilieraInfosDTOArrayToFilieraInfosArray(action.payload);
+          case GpsActions.SET_COORDINATES:
+            action.payload = Converter.gpsInfoDTOToGpsCoordinatesDTO(action.payload);
             break;
-        }*/
+        }
       }
 
       return next(action);
