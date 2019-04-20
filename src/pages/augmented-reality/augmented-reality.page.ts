@@ -172,6 +172,93 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
         this.manageARSystemsErrors(ARError.SENSORS_ERROR);
       }
     });
+
+    //Wait some time, and if there are no errors with sensors, continue to initialize remaining ar systems.
+    setTimeout(async () => {
+      //If sensors in error, do nothing (errors are managed previously)
+      if (this.sensorMissing)
+        return;
+
+      //DEBUG this.debugPrint();
+      if (this.accelerometerCoordinatesErrorSubscription)
+        this.accelerometerCoordinatesErrorSubscription.unsubscribe();
+      if (this.gyroscopeCoordinatesErrorSubscription)
+        this.gyroscopeCoordinatesErrorSubscription.unsubscribe();
+      if (this.magnetometerCoordinatesErrorSubscription)
+        this.magnetometerCoordinatesErrorSubscription.unsubscribe();
+
+      if (!this.cameraPresent)
+      {
+        this.manageARSystemsErrors(ARError.CAMERA_SYSTEM_NOT_FOUND);
+        return;
+      }
+
+      if (!this.cameraAuthorized)
+      {
+        //DEBUG console.log("BEFORE camera permission");
+        let cameraAuth = await this.diagnosticService.requestCameraAuthorization();
+        console.log("cameraAuth: ", cameraAuth);
+        //DEBUG console.log("AFTER camera permission");
+
+        if (cameraAuth.toLowerCase().indexOf("denied") >= 0)
+        {
+          this.manageARSystemsErrors(ARError.CAMERA_PERMISSION_NOT_GRANTED);
+          return;
+        }
+      }
+
+      //DEBUG this.debugPrint();
+
+      //Here camera is present and is authorized. Continue with other permissions
+      if (!this.locationEnabled)
+      {
+        this.manageARSystemsErrors(ARError.LOCATION_SERVICE_DISABLED);
+          return;
+      }
+
+      if (!this.locationAvailable || !this.locationAuthorized)
+      {
+        if (Utils.isIos(this.platform))
+        {
+          if (this.firstLocationAuthorization)  //iOS doesn't return anything if the permission is requested many times
+          {
+            //DEBUGconsole.log("BEFORE location permission");
+            let locAuth = await this.diagnosticService.requestLocationAuthorization();
+            console.log("locAuth: ", locAuth);
+            //DEBUGconsole.log("AFTER location permission");
+  
+            this.nativeStorage.setItem(constants.FIRST_LOCATION_PERMISSION_REQUEST, true);
+    
+            if (locAuth.toLowerCase().indexOf("denied") >= 0)
+            {
+              this.manageARSystemsErrors(ARError.LOCATION_PERMISSION_NOT_GRANTED);
+              return;
+            }
+          }
+          else
+          {
+            this.manageARSystemsErrors(ARError.LOCATION_PERMISSION_NOT_GRANTED);
+            return;
+          }
+        }
+        else    //Android has no issues on request the same permission many times
+        {
+          //DEBUGconsole.log("BEFORE location permission");
+          let locAuth = await this.diagnosticService.requestLocationAuthorization();
+          console.log("locAuth: ", locAuth);
+          //DEBUGconsole.log("AFTER location permission");
+  
+          if (locAuth.toLowerCase().indexOf("denied") >= 0)
+          {
+            this.manageARSystemsErrors(ARError.LOCATION_PERMISSION_NOT_GRANTED);
+            return;
+          }
+        }
+      }
+
+      //DEBUG this.debugPrint();
+
+    }, 1500);
   }
 
   private manageARSystemsErrors(errorType: ARError)
@@ -206,8 +293,8 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
   {
     this.spinnerService.dismissLoader();
     this.statusBar.show();
-    /*this.cameraPreview.stopCamera();
     this.sensorsService.stopSensors();
+    /*this.cameraPreview.stopCamera();
     this.gpsService.stopService();*/
     
     setTimeout(() => this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT), 500);
