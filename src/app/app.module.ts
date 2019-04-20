@@ -27,6 +27,8 @@ import { Api } from '../providers/api/api';
 //Services
 import { NetworkService } from '../services/network.service';
 import { StorageService } from '../services/storage.service';
+import { SpinnerService } from '../services/spinner.service';
+import { AlertService } from '../services/alert.service';
 
 //Redux store
 import { StoreModule } from '../store/store.module';
@@ -88,6 +90,8 @@ export function createTranslateLoader(http: HttpClient) {
     Globalization,  //Globalization not mocked. Calls managed directly in app.component
     NetworkService,
     StorageService,
+    SpinnerService,
+    AlertService,
     Api,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],

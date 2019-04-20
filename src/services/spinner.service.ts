@@ -6,19 +6,19 @@ import { LoadingController } from '@ionic/angular';
 @Injectable()
 export class SpinnerService
 {
-  /*private counter = 0;
+  private counter = 0;
   private currentLoader = null;
 
   //Customization
-  private options = {
+  /*private options = {
     spinner: 'hide',
-    content: '<div class="pea-spinner">\
+    content: '<div class="ar-spinner">\
       <div>\
       </div>\
     </div>'
-  };
+  };*/
 
-  constructor(private loadingController: LoadingController, private sanitizer: DomSanitizer) {*/
+  constructor(private loadingController: LoadingController/*, private sanitizer: DomSanitizer*/) {
     /*let svg = '<div class="pea-spinner">\
       <svg width="69" height="69" viewBox="0 0 69 69" fill="none" preserveAspectRatio="none">\
       <g clip-path="url(#clip0)">\
@@ -35,22 +35,22 @@ export class SpinnerService
     let safeSvg = this.sanitizer.bypassSecurityTrustHtml(svg);
 
     this.options.content = safeSvg;*/
-  /*}
+  }
 
-  showLoader()
+  async showLoader()
   {
     if (this.counter <= 0)
     {
       this.counter = 0;
-      this.currentLoader = this.loadingController.create(this.options);
+      this.currentLoader = await this.loadingController.create(/*this.options*/);
       if (this.currentLoader)
-        this.currentLoader.present();
+        await this.currentLoader.present();
     }
 
     this.counter++;
   }
 
-  dismissLoader()
+  async dismissLoader()
   {
     this.counter--;
     
@@ -58,8 +58,8 @@ export class SpinnerService
     {
       this.counter = 0;
       if (this.currentLoader)
-        this.currentLoader.dismissAll();
+        await this.currentLoader.dismissAll();
       this.currentLoader = null;
     }
-  }*/
+  }
 }

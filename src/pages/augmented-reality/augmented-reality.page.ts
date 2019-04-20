@@ -1,10 +1,13 @@
 import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 
-import { Platform, Events } from '@ionic/angular';
+import { Platform, Events, NavController } from '@ionic/angular';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 import { Diagnostic } from '@ionic-native/diagnostic/ngx';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
+
+import { SpinnerService } from '../../services/spinner.service';
+import { AlertService } from '../../services/alert.service';
 
 import { Utils } from '../../util/utils';
 import { constants } from '../../util/constants';
@@ -39,17 +42,20 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
   private sensorMissing: boolean = false;
 
   constructor(
+    private navCtrl: NavController,
     private platform: Platform,
     private statusBar: StatusBar,
     private events: Events,
     private screenOrientation: ScreenOrientation,
     private diagnosticService: Diagnostic,
-    private nativeStorage: NativeStorage
+    private nativeStorage: NativeStorage,
+
+    private alertService: AlertService,
+    private spinnerService: SpinnerService
   ) { }
 
   private leavePage = () => {
-    //TODO go back
-    console.log("GO BACK");
+    this.navCtrl.navigateBack('/home');
   };
 
   ngOnInit()
@@ -110,7 +116,7 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
 
   ngAfterViewInit()
   {
-    //this.spinnerService.showLoader();
+    this.spinnerService.showLoader();
     this.sensorMissing = false;
 
     //Catch error visualization by alerts, and go back to previous page
