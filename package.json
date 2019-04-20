@@ -25,6 +25,7 @@
     "@ionic-native/core": "^5.0.0",
     "@ionic-native/device-motion": "^5.5.0",
     "@ionic-native/diagnostic": "^5.5.0",
+    "@ionic-native/geolocation": "^5.5.0",
     "@ionic-native/globalization": "^5.5.0",
     "@ionic-native/gyroscope": "^5.5.0",
     "@ionic-native/http": "^5.5.0",
@@ -45,6 +46,7 @@
     "cordova-plugin-camera-preview": "0.10.0",
     "cordova-plugin-device-motion": "2.0.1",
     "cordova-plugin-file": "6.0.1",
+    "cordova-plugin-geolocation": "4.0.1",
     "cordova-plugin-globalization": "1.11.0",
     "cordova-plugin-gyroscope": "0.1.4",
     "cordova-plugin-magnetometer": "git+https://github.com/sdesalas/cordova-plugin-magnetometer.git",
@@ -117,7 +119,8 @@
       "cordova-plugin-device-motion": {},
       "cordova-plugin-gyroscope": {},
       "cordova-plugin-magnetometer": {},
-      "cordova-plugin-camera-preview": {}
+      "cordova-plugin-camera-preview": {},
+      "cordova-plugin-geolocation": {}
     },
     "platforms": [
       "ios",

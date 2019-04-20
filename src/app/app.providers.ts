@@ -8,6 +8,7 @@ import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 import { Diagnostic } from '@ionic-native/diagnostic/ngx';
 import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { DeviceMotion } from '@ionic-native/device-motion/ngx';
 import { Gyroscope } from '@ionic-native/gyroscope/ngx';
 import { CameraPreview } from '@ionic-native/camera-preview/ngx';
@@ -173,6 +174,32 @@ export class LocationAccuracyMock {
     }
 }
 
+export class GeolocationMock {
+    watchPosition(options?: any): Observable<any>
+    {
+        let position = {
+            coords: {
+                latitude: 41.906927,
+                longitude: 12.513942,
+                accuracy: 10,
+                altitude: 0,
+                altitudeAccuracy: 0,
+                heading: 0,
+                speed: 0
+            },
+            timestamp: 0
+        };
+
+        return Observable.create((observer: any) => {
+            observer.next(position);
+
+            setInterval(() => {
+                observer.next(position);
+            }, options['maximumAge']);
+        });
+    }
+}
+
 export class DeviceMotionMock {
     watchAcceleration(options?: any): Observable<any>
     {
@@ -267,6 +294,11 @@ export function getDiagnostic(): any {
 
 export function getLocationAccuracy(): any {
     return hasCordova()? LocationAccuracy : LocationAccuracyMock;
+}
+
+export function getGeolocation(): any
+{
+    return hasCordova()? Geolocation : GeolocationMock;
 }
 
 export function getDeviceMotion(): any

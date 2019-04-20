@@ -4,6 +4,7 @@ import { Platform, Events, NavController } from '@ionic/angular';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 import { Diagnostic } from '@ionic-native/diagnostic/ngx';
+import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { CameraPreviewOptions } from '@ionic-native/camera-preview/ngx';
 import { CameraPreviewExtended } from '../../app/app.providers';
@@ -65,6 +66,7 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
     private events: Events,
     private screenOrientation: ScreenOrientation,
     private diagnosticService: Diagnostic,
+    private locationAccuracy: LocationAccuracy,
     private nativeStorage: NativeStorage,
     private sensorsService: SensorsService,
     private cameraPreview: CameraPreviewExtended,
@@ -270,7 +272,7 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
 
       //Here all permissions are granted
       //Only on Android request max location precision
-      /*if (Utils.isAndroid(this.platform))
+      if (Utils.isAndroid(this.platform))
       {
         //DEBUG console.log("BEFORE location can request max precision");
         let canRequest = await this.locationAccuracy.canRequest();
@@ -281,8 +283,8 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
         {
           this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
             () => {
-              this.gpsService.startService();
-              this.registerARSystems();
+              //this.gpsService.startService();
+              //this.registerARSystems();
             },
             error => {
               this.manageARSystemsErrors(ARError.GPS_NOT_ENABLED);
@@ -292,9 +294,9 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
       }
       else if (Utils.isIos(this.platform))
       {
-        this.gpsService.startService();
-        this.registerARSystems();
-      }*/
+        //this.gpsService.startService();
+        //this.registerARSystems();
+      }
 
     }, 1500);
   }

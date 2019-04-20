@@ -17,6 +17,7 @@ import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 import { Diagnostic } from '@ionic-native/diagnostic/ngx';
 import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { DeviceMotion } from '@ionic-native/device-motion/ngx';
 import { Gyroscope } from '@ionic-native/gyroscope/ngx';
 import { CameraPreview } from '@ionic-native/camera-preview/ngx';
@@ -45,6 +46,7 @@ import {
   getScreenOrientation,
   getDiagnostic,
   getLocationAccuracy,
+  getGeolocation,
   getDeviceMotion,
   getGyroscope,
   CameraPreviewExtended,  //Camera Preview extended custom provider
@@ -93,7 +95,7 @@ export function createTranslateLoader(http: HttpClient) {
     {provide: ScreenOrientation, useClass: getScreenOrientation()},
     {provide: Diagnostic, useClass: getDiagnostic()},
     {provide: LocationAccuracy, useClass: getLocationAccuracy()},
-    //{provide: Geolocation, useClass: getGeolocation()},
+    {provide: Geolocation, useClass: getGeolocation()},
     {provide: DeviceMotion, useClass: getDeviceMotion()},
     {provide: Gyroscope, useClass: getGyroscope()},
     CameraPreview,  //Not mocking because of using custom CameraPreviewExtended
