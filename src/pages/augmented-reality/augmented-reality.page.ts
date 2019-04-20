@@ -6,6 +6,9 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 import { Diagnostic } from '@ionic-native/diagnostic/ngx';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
+import { select } from "@angular-redux/store";
+import { Observable } from "rxjs";
+
 import { SpinnerService } from '../../services/spinner.service';
 import { AlertService } from '../../services/alert.service';
 
@@ -40,6 +43,15 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
   private firstLocationAuthorization: boolean;
 
   private sensorMissing: boolean = false;
+  @select(["accelerometer", "error"])
+  accelerometerCoordinatesError$: Observable<boolean>;
+  private accelerometerCoordinatesErrorSubscription: any = null;
+  @select(["gyroscope", "error"])
+  gyroscopeCoordinatesError$: Observable<boolean>;
+  private gyroscopeCoordinatesErrorSubscription: any = null;
+  @select(["magnetometer", "error"])
+  magnetometerCoordinatesError$: Observable<boolean>;
+  private magnetometerCoordinatesErrorSubscription: any = null;
 
   constructor(
     private navCtrl: NavController,
@@ -66,6 +78,9 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
       this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE_SECONDARY);
     else
       this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE_PRIMARY);
+
+    //Catch error visualization by alerts, and go back to previous page
+    this.events.subscribe(constants.AR_SYSTEM_ERROR, this.leavePage);
 
     this.diagnosticService.isCameraPresent()
       .then(cameraPresent => this.cameraPresent = cameraPresent)
@@ -114,18 +129,53 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
     });
   }
 
+  private debugPrint()
+  {
+    console.log("cameraPresent: ", this.cameraPresent);
+    console.log("cameraAuthorized: ", this.cameraAuthorized);
+    console.log("locationEnabled: ", this.locationEnabled);
+    console.log("locationAvailable: ", this.locationAvailable);
+    console.log("locationAuthorized: ", this.locationAuthorized);
+    console.log("firstLocationAuthorization: ", this.firstLocationAuthorization);
+  }
+
   ngAfterViewInit()
   {
     this.spinnerService.showLoader();
     this.sensorMissing = false;
 
-    //Catch error visualization by alerts, and go back to previous page
-    this.events.subscribe(constants.AR_SYSTEM_ERROR, this.leavePage);
+    //Start fused orientation service (accelerometer, gyroscope, magnetometer)
+    //this.sensorsService.startSensors();
+
+    //Manage accelerometer, gyroscope, and magnetometer sensors errors
+    this.accelerometerCoordinatesErrorSubscription = this.accelerometerCoordinatesError$.subscribe((flag: boolean) => {
+      if (flag && !this.sensorMissing)
+      {
+        this.sensorMissing = true;
+        this.manageARSystemsErrors(ARError.SENSORS_ERROR);
+      }
+    });
+
+    this.gyroscopeCoordinatesErrorSubscription = this.gyroscopeCoordinatesError$.subscribe((flag: boolean) => {
+      if (flag && !this.sensorMissing)
+      {
+        this.sensorMissing = true;
+        this.manageARSystemsErrors(ARError.SENSORS_ERROR);
+      }
+    });
+
+    this.magnetometerCoordinatesErrorSubscription = this.magnetometerCoordinatesError$.subscribe((flag: boolean) => {
+      if (flag && !this.sensorMissing)
+      {
+        this.sensorMissing = true;
+        this.manageARSystemsErrors(ARError.SENSORS_ERROR);
+      }
+    });
   }
 
   private manageARSystemsErrors(errorType: ARError)
   {
-    /*switch (errorType)
+    switch (errorType)
     {
       case ARError.INTERNAL_AR_ERROR:
         this.alertService.showSensorsError("Si è verificato un errore con il sistema di realtà aumentata");
@@ -148,13 +198,37 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
       case ARError.LOCATION_SERVICE_DISABLED:
         this.alertService.showSensorsError("Per il corretto funzionamento della funzionalità di realtà aumentata, si prega di attivare il gps");
         break;
-    }*/
+    }
   }
 
   ngOnDestroy()
   {
+    //this.spinnerService.dismissLoader();
+    this.statusBar.show();
+    /*this.cameraPreview.stopCamera();
+    this.sensorsService.stopSensors();
+    this.gpsService.stopService();*/
+    
     setTimeout(() => this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT), 500);
 
     this.events.unsubscribe(constants.AR_SYSTEM_ERROR, this.leavePage);
+
+    /*if (this.gpsCoordinatesSubscription)
+      this.gpsCoordinatesSubscription.unsubscribe();
+
+    if (this.poiListSubscription)
+      this.poiListSubscription.unsubscribe();
+
+    if (this.sensorsServiceSubscription)
+      this.sensorsServiceSubscription.unsubscribe();*/
+
+    if (this.accelerometerCoordinatesErrorSubscription)
+      this.accelerometerCoordinatesErrorSubscription.unsubscribe();
+
+    if (this.gyroscopeCoordinatesErrorSubscription)
+      this.gyroscopeCoordinatesErrorSubscription.unsubscribe();
+
+    if (this.magnetometerCoordinatesErrorSubscription)
+      this.magnetometerCoordinatesErrorSubscription.unsubscribe();
   }
 }

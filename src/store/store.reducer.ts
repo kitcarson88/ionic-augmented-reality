@@ -5,14 +5,21 @@ import { combineReducers } from "redux";
 
 import { AppState, INITIAL_STATE } from "./store.model";
 
+import { accelerometerReducer } from "./accelerometer/accelerometer.reducer";
+import { gyroscopeReducer } from "./gyroscope/gyroscope.reducer";
+import { magnetometerReducer } from "./magnetometer/magnetometer.reducer";
+
 export default function reduceReducers(...reducers)
 {
   return (previous, current) => reducers.reduce((p, r) => r(p, current), previous);
 }
 
 export const rootReducer = reduceReducers(
-  /*combineReducers({
-  }),*/
+  combineReducers({
+    accelerometer: accelerometerReducer,
+    gyroscope: gyroscopeReducer,
+    magnetometer: magnetometerReducer,
+  }),
   mainReducer
 );
 

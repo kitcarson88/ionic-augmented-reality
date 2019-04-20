@@ -22,8 +22,10 @@
     "@angular/platform-browser-dynamic": "^7.2.2",
     "@angular/router": "^7.2.2",
     "@ionic-native/core": "^5.0.0",
+    "@ionic-native/device-motion": "^5.5.0",
     "@ionic-native/diagnostic": "^5.5.0",
     "@ionic-native/globalization": "^5.5.0",
+    "@ionic-native/gyroscope": "^5.5.0",
     "@ionic-native/http": "^5.5.0",
     "@ionic-native/location-accuracy": "^5.5.0",
     "@ionic-native/native-storage": "^5.5.0",
@@ -39,8 +41,11 @@
     "cordova-browser": "6.0.0",
     "cordova-ios": "5.0.0",
     "cordova-plugin-advanced-http": "2.0.9",
+    "cordova-plugin-device-motion": "2.0.1",
     "cordova-plugin-file": "6.0.1",
     "cordova-plugin-globalization": "1.11.0",
+    "cordova-plugin-gyroscope": "0.1.4",
+    "cordova-plugin-magnetometer": "git+https://github.com/sdesalas/cordova-plugin-magnetometer.git",
     "cordova-plugin-nativestorage": "2.3.2",
     "cordova-plugin-network-information": "2.0.1",
     "cordova-plugin-request-location-accuracy": "2.2.3",
@@ -106,7 +111,10 @@
       "cordova.plugins.diagnostic": {
         "ANDROID_SUPPORT_VERSION": "28.+"
       },
-      "cordova-plugin-request-location-accuracy": {}
+      "cordova-plugin-request-location-accuracy": {},
+      "cordova-plugin-device-motion": {},
+      "cordova-plugin-gyroscope": {},
+      "cordova-plugin-magnetometer": {}
     },
     "platforms": [
       "ios",

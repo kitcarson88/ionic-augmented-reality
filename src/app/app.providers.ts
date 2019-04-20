@@ -6,8 +6,11 @@ import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 import { Diagnostic } from '@ionic-native/diagnostic/ngx';
 import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
+import { DeviceMotion } from '@ionic-native/device-motion/ngx';
+import { Gyroscope } from '@ionic-native/gyroscope/ngx';
 
 ////////////////////HERE STARTS PLUGIN MOCKS TO USE THEM MOCKED IN IONIC SERVE (DEV EXECUTION)///////////////
+    //Mock providers
 export class HTTPMock {
     get(endpoint: string, params?: any, header?: any)
     {
@@ -145,10 +148,60 @@ export class LocationAccuracyMock {
     }
 }
 
+export class DeviceMotionMock {
+    watchAcceleration(options?: any): Observable<any>
+    {
+        let frequency = 5000;
+        if (options && options['frequency'])
+            frequency = options['frequency'];
+
+        let motion = {
+            timestamp: 1552143235608,
+            x: -0.06703969836235046,
+            y: -0.019154198467731476,
+            z: 9.773429870605469
+        };
+
+        return Observable.create((observer: any) => {
+            observer.next(motion);
+
+            setInterval(() => {
+                observer.next(motion);
+            }, frequency);
+        });
+    }
+}
+
+export class GyroscopeMock {
+    watch(options?: any): Observable<any>
+    {
+        let frequency = 5000;
+        if (options && options['frequency'])
+            frequency = options['frequency'];
+
+        let orientation = {
+            timestamp: 1552143235689,
+            x: 0.0003597996255848557,
+            y: -0.0006072000251151621,
+            z: -0.0010830641258507967
+        };
+
+        return Observable.create((observer: any) => {
+            observer.next(orientation);
+            
+            setInterval(() => {
+                observer.next(orientation);
+            }, frequency);
+        });
+    }
+}
+
+    //Cordova verify function
 export function hasCordova(): boolean{
     return window.hasOwnProperty('cordova');
 }
 
+    //Providers getters
 export function getHTTP(): any
 {
     return hasCordova()? HTTP : HTTPMock;
@@ -175,5 +228,15 @@ export function getDiagnostic(): any {
 
 export function getLocationAccuracy(): any {
     return hasCordova()? LocationAccuracy : LocationAccuracyMock;
+}
+
+export function getDeviceMotion(): any
+{
+    return hasCordova()? DeviceMotion : DeviceMotionMock;
+}
+
+export function getGyroscope(): any
+{
+    return hasCordova()? Gyroscope : GyroscopeMock;
 }
 ////////////////////HERE ENDS PLUGIN MOCKS TO USE THEM MOCKED IN IONIC SERVE (DEV EXECUTION)///////////////

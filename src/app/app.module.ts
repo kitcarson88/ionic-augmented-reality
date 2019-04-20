@@ -17,6 +17,9 @@ import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 import { Diagnostic } from '@ionic-native/diagnostic/ngx';
 import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
+import { DeviceMotion } from '@ionic-native/device-motion/ngx';
+import { Gyroscope } from '@ionic-native/gyroscope/ngx';
+
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -40,6 +43,8 @@ import {
   getScreenOrientation,
   getDiagnostic,
   getLocationAccuracy,
+  getDeviceMotion,
+  getGyroscope
 } from './app.providers';
 
 export function createTranslateLoader(http: HttpClient) {
@@ -83,10 +88,10 @@ export function createTranslateLoader(http: HttpClient) {
     {provide: NativeStorage, useClass: getNativeStorage()},
     {provide: ScreenOrientation, useClass: getScreenOrientation()},
     {provide: Diagnostic, useClass: getDiagnostic()},
-    /*{provide: Geolocation, useClass: getGeolocation()},
-    {provide: DeviceMotion, useClass: getDeviceMotion()},
-    {provide: Gyroscope, useClass: getGyroscope()},*/
     {provide: LocationAccuracy, useClass: getLocationAccuracy()},
+    //{provide: Geolocation, useClass: getGeolocation()},
+    {provide: DeviceMotion, useClass: getDeviceMotion()},
+    {provide: Gyroscope, useClass: getGyroscope()},
     Globalization,  //Globalization not mocked. Calls managed directly in app.component
     NetworkService,
     StorageService,

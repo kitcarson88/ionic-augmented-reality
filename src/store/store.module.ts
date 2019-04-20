@@ -16,9 +16,11 @@ import { environment } from '../environments/environment';
 
 import { rootReducer } from "./store.reducer";
 import { AppState, INITIAL_STATE } from "./store.model";
-/*import { 
-
-} from "./index";*/
+import { 
+  AccelerometerActions,
+  GyroscopeActions,
+  MagnetometerActions
+} from "./index";
 
 //import rootSaga from './sagas';
 
@@ -33,7 +35,9 @@ import { ErrorManagerService } from "../services/error.service";*/
 //import { constants } from "../util/constants";
 
 const ACTIONS = [ 
-  
+  AccelerometerActions,
+  GyroscopeActions,
+  MagnetometerActions
 ];
 
 const RESOLVERS = [  ];
@@ -66,7 +70,7 @@ export class StoreModule
       key: 'root',
       storage: storageService,
       //storage,
-      blacklist: [ 'certification', 'filiera' ]
+      blacklist: [ 'accelerometer', 'gyroscope', 'magnetometer' ]
     }
     //const persistedReducer = persistReducer(persistConfig, rootReducer);
 
