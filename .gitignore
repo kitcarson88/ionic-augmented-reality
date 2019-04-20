@@ -33,3 +33,6 @@ $RECYCLE.BIN/
 Thumbs.db
 UserInterfaceState.xcuserstate
 package-lock.json
+
+//Fonts downloaded by npm
+src/assets/fonts/roboto

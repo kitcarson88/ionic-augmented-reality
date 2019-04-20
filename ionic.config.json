@@ -3,5 +3,9 @@
   "integrations": {
     "cordova": {}
   },
-  "type": "angular"
+  "type": "angular",
+  "hooks": {
+    "serve:before": "./scripts/copy-custom-libs.js",
+    "build:before": "./scripts/copy-custom-libs.js"
+  }
 }
