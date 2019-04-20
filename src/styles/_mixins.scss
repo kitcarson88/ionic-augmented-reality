@@ -1,0 +1,242 @@
+  /*
+ *VERTICAL ALIGN KNOWN CHILD
+ * */
+@mixin vertical-align-known-child($child-height,$selector) {
+  //position: relative;
+  #{$selector} {
+    height: $child-height;
+    position: absolute;
+    top: 50%;
+    margin-top: -$child-height / 2;
+  }
+}
+
+
+/*
+  *VERTICAL ALIGN KNOWN PARENT
+  * */
+@mixin vertical-align-known-parent($parent-height,$selector) {
+  line-height: $parent-height;
+  height: $parent-height;
+  #{$selector} {
+    line-height: normal;
+    display: inline-block;
+    vertical-align: middle;
+  }
+}
+
+/*
+  *VERTICAL ALIGN GHOST ELEMENT TECHNIQUE
+  * */
+@mixin vertical-align-ghost-element($selector) {
+  text-align: center;
+  /* May want to do this if there is risk the container may be narrower than the element inside */
+  //white-space: nowrap;
+  height: 100%;
+
+  &:before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    margin-right: -0.25rem; /* Adjusts for spacing */
+    width: 0.25rem;
+  }
+
+  #{$selector} {
+    display: inline-block;
+    vertical-align: middle;
+  }
+}
+
+//VERTICAL ALIGN transform technique
+@mixin vertical-align-transform($position: relative) {
+  position: $position !important;
+  top: 50% !important;
+  -webkit-transform: translateY(-50%) !important;
+  -moz-transform: translateY(-50%) !important;
+  -ms-transform: translateY(-50%) !important;
+  -o-transform: translateY(-50%) !important;
+  transform: translateY(-50%) !important;
+}
+
+/*
+dato un container  con padding-top e padding-bottom crea
+  container-top e container-bottom nella posizione corretta
+*/
+@mixin vertical-fluid-layout($top, $bottom, $selector:null) {
+
+  position: relative;
+  width: 100%;
+
+  @if ($top > 0) {
+
+    $cname: #{&}-top;
+    @if ($selector) {
+      $cname: #{$selector}-top;
+    }
+    padding-top: $top;
+    #{$cname} {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: $top;
+      line-height: $top;
+      text-align: center;
+      width: 100%;
+
+    }
+  }
+
+  @if ($bottom > 0) {
+    $cname: #{&}-bottom;
+    @if ($selector) {
+      $cname: #{$selector}-bottom;
+    }
+    padding-bottom: $bottom;
+    #{$cname} {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: $bottom;
+      line-height: $bottom;
+      text-align: center;
+      width: 100%
+    }
+  }
+
+}
+
+@mixin horizontal-fluid-layout($left, $right, $height : 100%, $position : relative) {
+
+  position: $position;
+  height: $height;
+  width: 100%;
+
+  @if ($left > 0) {
+    padding-left: $left;
+    & > .left {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: $left;
+      text-align: center;
+    }
+  }
+
+  @if ($right > 0) {
+    padding-right: $right;
+    & > .right {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+      width: $right;
+      text-align: center;
+    }
+  }
+}
+
+@mixin transition($transition...) {
+  -webkit-transition: $transition;
+  -moz-transition: $transition;
+  -ms-transition: $transition;
+  -o-transition: $transition;
+  transition: $transition;
+}
+
+@mixin transition-property($property...) {
+  -webkit-transition-property: $property;
+  -moz-transition-property: $property;
+  -ms-transition-property: $property;
+  -o-transition-property: $property;
+  transition-property: $property;
+}
+
+@mixin transition-duration($duration...) {
+  -webkit-transition-property: $duration;
+  -moz-transition-property: $duration;
+  -ms-transition-property: $duration;
+  -o-transition-property: $duration;
+  transition-property: $duration;
+}
+
+@mixin transition-timing-function($timing...) {
+  -webkit-transition-timing-function: $timing;
+  -moz-transition-timing-function: $timing;
+  -ms-transition-timing-function: $timing;
+  -o-transition-timing-function: $timing;
+  transition-timing-function: $timing;
+}
+
+@mixin transition-delay($delay...) {
+  -webkit-transition-delay: $delay;
+  -moz-transition-delay: $delay;
+  -ms-transition-delay: $delay;
+  -o-transition-delay: $delay;
+  transition-delay: $delay;
+}
+
+@mixin transform($transformation...) {
+  -webkit-transform: $transformation;
+  -moz-transform: $transformation;
+  -ms-transform: $transformation;
+  -o-transform: $transformation;
+  transform: $transformation;
+}
+
+@mixin animation($animation...) {
+  -webkit-animation: $animation;
+  -moz-animation: $animation;
+  -ms-animation: $animation;
+  -o-animation: $animation;
+  animation: $animation;
+}
+@mixin animation-delay($delay...) {
+  -webkit-animation-delay: $delay;
+  -moz-animation-delay: $delay;
+  -ms-animation-delay: $delay;
+  -o-animation-delay: $delay;
+  animation-delay: $delay;
+}
+
+@mixin box-shadow($box-shadow-intensity, $color) {
+  -webkit-box-shadow: $box-shadow-intensity $color !important;
+  -moz-box-shadow: $box-shadow-intensity $color !important;
+  -ms-box-shadow: $box-shadow-intensity $color !important;
+  -o-box-shadow: $box-shadow-intensity $color !important;
+  box-shadow: $box-shadow-intensity $color !important;
+}
+
+@mixin box-shadow-inline($box-shadow-style...) {
+  -webkit-box-shadow: $box-shadow-style !important;
+  -moz-box-shadow: $box-shadow-style !important;
+  -ms-box-shadow: $box-shadow-style !important;
+  -o-box-shadow: $box-shadow-style !important;
+  box-shadow: $box-shadow-style !important;
+}
+
+//gradient background
+@mixin gradient($startColor, $endColor, $from) {
+  background-color: $startColor; /* For browsers that do not support gradients */
+  background-image: linear-gradient(to $from,  $startColor, $endColor); /* Standard syntax (must be last) */
+}
+
+@mixin gradient-more-colors($from, $colors...) {
+  background-image: linear-gradient(to $from,  $colors); /* Standard syntax (must be last) */
+}
+
+@mixin text-ellipssis() {
+  white-space: nowrap !important; 
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+@mixin mask-image($path) {
+  -webkit-mask-image: url($path);
+  -moz-mask-image: url($path);
+  -ms-mask-image: url($path);
+  -o-mask-image: url($path);
+  mask-image: url($path);
+}

@@ -1,0 +1,11 @@
+//Variables
+@import 'variables';
+@import 'colors';
+@import 'fonts';
+
+//Override some ionic components
+@import 'override-ionic';
+
+//Global styles
+@import 'mixins';
+@import 'layout';

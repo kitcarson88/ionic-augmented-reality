@@ -1,0 +1,190 @@
+@import 'responsive';
+
+$f-size-0: 1rem;
+$f-size-1: 1.2rem;
+$f-size-2: 1.4rem;
+$f-size-3: 1.6rem;
+$f-size-4: 1.8rem;
+$f-size-5: 2rem;
+$f-size-6: 2.2rem;
+$f-size-7: 2.4rem;
+$f-size-8: 2.6rem;
+$f-size-9: 2.8rem;
+$f-size-10: 3rem;
+
+$f-size-big: 4rem;
+
+$f-weight-100: 100;
+$f-weight-200: 200;
+$f-weight-300: 300;
+$f-weight-400: 400;
+$f-weight-500: 500;
+$f-weight-600: 600;
+$f-weight-700: 700;
+$f-weight-800: 800;
+$f-weight-900: 900;
+
+//$letter-spacing: 0.6px;
+
+$font-size-base: 10px;
+$font-family-default: 'Roboto';
+
+/*Font in ordine di grandezza*/
+/***********************************
+  * F-size-10
+  ***********************************/
+  .f-size-10,
+  .f-30 {
+    font-size: $f-size-10 !important;
+  }
+/***********************************
+  * F-size-9
+  ***********************************/
+  .f-size-9,
+  .f-28 {
+    font-size: $f-size-9 !important;
+  }
+
+/***********************************
+  * F-size-8
+  ***********************************/
+  .f-size-8,
+  .f-26 {
+    font-size: $f-size-8 !important;
+  }
+
+/***********************************
+   * F-size-7
+   ***********************************/
+   .f-size-7,
+   .f-24 {
+      font-size: $f-size-7 !important;
+   }
+
+/***********************************
+   * F-size-6
+   ***********************************/
+   .f-size-6,
+   .f-22 {
+     font-size: $f-size-6 !important;
+   }
+
+/***********************************
+   * F-size-5
+   ***********************************/
+.f-size-5,
+.f-xlarge,
+.f-20 {
+  font-size: $f-size-5 !important;
+}
+
+/***********************************
+   * F-size-4
+   ***********************************/
+.f-size-4,
+.f-large,
+.f-title,
+.f-18 {
+  font-size: $f-size-4 !important;
+}
+
+/***********************************
+   * F-size-3
+   ***********************************/
+.f-size-3,
+.f-subtitle,
+.f-normal,
+.f-16 {
+  font-size: $f-size-3 !important;
+}
+
+/***********************************
+   * F-size-2
+   ***********************************/
+.f-size-2,
+.f-small,
+.f-14 {
+  font-size: $f-size-2 !important;
+}
+
+/***********************************
+   * F-size-1
+   ***********************************/
+.f-size-1,
+.f-12 {
+  font-size: $f-size-1 !important;
+}
+
+/***********************************
+   * F-size-0
+   ***********************************/
+   .f-size-0,
+   .f-base,
+   .f-10 {
+      font-size: $font-size-base !important;
+   }
+
+   .f-xsmall{
+    font-size: $f-size-1 !important;
+    @include small-mobile() {
+      font-size: $f-size-0 !important;
+    }
+   }
+
+/***********************************
+   * Font decorator
+   ***********************************/
+
+.f-italic {
+  font-style: italic !important;
+}
+
+.f-underline {
+  text-decoration: underline !important;
+}
+
+.f-no-underline {
+  text-decoration: unset !important;
+}
+
+.f-uppercase {
+  text-transform: uppercase !important;
+}
+
+.f-capitalize {
+  text-transform: capitalize !important;
+}
+.f-capitalize-first-letter:first-letter {
+  text-transform: capitalize !important;
+}
+
+/***********************************
+   * Font weight
+   ***********************************/
+.f-weight-100 {
+  font-weight: $f-weight-100 !important;
+}
+.f-weight-200 {
+  font-weight: $f-weight-200 !important;
+}
+.f-weight-300 {
+  font-weight: $f-weight-300 !important;
+}
+.f-weight-400 {
+  font-weight: $f-weight-400 !important;
+}
+.f-weight-500 {
+  font-weight: $f-weight-500 !important;
+}
+.f-weight-600 {
+  font-weight: $f-weight-600 !important;
+}
+.f-weight-700 {
+  font-weight: $f-weight-700 !important;
+}
+.f-weight-800 {
+  font-weight: $f-weight-800 !important;
+}
+.f-weight-900 {
+  font-weight: $f-weight-900 !important;
+}
