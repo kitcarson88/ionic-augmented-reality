@@ -367,8 +367,8 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
     this.spinnerService.dismissLoader();
     this.statusBar.show();
     this.sensorsService.stopSensors();
-    /*this.cameraPreview.stopCamera();
-    this.gpsService.stopService();*/
+    this.cameraPreview.stopCamera();
+    this.gpsService.stopService();
     
     setTimeout(() => this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT), 500);
 
