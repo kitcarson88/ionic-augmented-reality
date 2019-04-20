@@ -51,7 +51,10 @@ export function createTranslateLoader(http: HttpClient) {
     HttpClientModule,
     StoreModule,
     IonicModule.forRoot({
-        mode: 'md'
+      menuType: 'reveal',
+      //backButtonIcon: 'pea-back-arrow',
+      //backButtonText: '',
+      mode: 'md'
     }),
     TranslateModule.forRoot({
       loader: {

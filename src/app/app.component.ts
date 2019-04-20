@@ -14,7 +14,31 @@ import { NetworkService } from '../services/network.service';
   selector: 'app-root',
   templateUrl: 'app.component.html'
 })
-export class AppComponent {
+export class AppComponent
+{
+  public appPages = [
+    {
+      title: 'Home',
+      url: '/home',
+      icon: 'home'
+    },
+    {
+      title: 'Map',
+      url: '/map',
+      icon: 'home'
+    },
+    {
+      title: 'AR',
+      url: '/augmented-reality',
+      icon: 'home'
+    },
+    {
+      title: 'About the author',
+      url: '/about-author',
+      icon: 'home'
+    }
+  ];
+
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
