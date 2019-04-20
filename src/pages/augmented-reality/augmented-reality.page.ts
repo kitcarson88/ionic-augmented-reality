@@ -5,6 +5,8 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 import { Diagnostic } from '@ionic-native/diagnostic/ngx';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
+import { CameraPreviewOptions } from '@ionic-native/camera-preview/ngx';
+import { CameraPreviewExtended } from '../../app/app.providers';
 
 import { select } from "@angular-redux/store";
 import { Observable } from "rxjs";
@@ -43,6 +45,8 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
   private locationAuthorized: boolean;
   private firstLocationAuthorization: boolean;
 
+  private cameraFOV: number = constants.CAMERA_DEFAULT_FOV;
+
   private sensorMissing: boolean = false;
   @select(["accelerometer", "error"])
   accelerometerCoordinatesError$: Observable<boolean>;
@@ -63,6 +67,7 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
     private diagnosticService: Diagnostic,
     private nativeStorage: NativeStorage,
     private sensorsService: SensorsService,
+    private cameraPreview: CameraPreviewExtended,
     private alertService: AlertService,
     private spinnerService: SpinnerService
   ) { }
@@ -243,10 +248,10 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
         }
         else    //Android has no issues on request the same permission many times
         {
-          //DEBUGconsole.log("BEFORE location permission");
+          //DEBUG console.log("BEFORE location permission");
           let locAuth = await this.diagnosticService.requestLocationAuthorization();
           console.log("locAuth: ", locAuth);
-          //DEBUGconsole.log("AFTER location permission");
+          //DEBUG console.log("AFTER location permission");
   
           if (locAuth.toLowerCase().indexOf("denied") >= 0)
           {
@@ -258,7 +263,70 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
 
       //DEBUG this.debugPrint();
 
+      //Start camera with a delay to let landscape mode and permission requests
+      setTimeout(() => {
+        this.initCamera();
+      }, constants.CAMERA_INIT_DELAY);
+
+      //Here all permissions are granted
+      //Only on Android request max location precision
+      /*if (Utils.isAndroid(this.platform))
+      {
+        //DEBUG console.log("BEFORE location can request max precision");
+        let canRequest = await this.locationAccuracy.canRequest();
+        console.log("canRequest: ", canRequest);
+        //DEBUG console.log("AFTER location can request max precision");
+
+        if (canRequest)
+        {
+          this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
+            () => {
+              this.gpsService.startService();
+              this.registerARSystems();
+            },
+            error => {
+              this.manageARSystemsErrors(ARError.GPS_NOT_ENABLED);
+            }
+          );
+        }
+      }
+      else if (Utils.isIos(this.platform))
+      {
+        this.gpsService.startService();
+        this.registerARSystems();
+      }*/
+
     }, 1500);
+  }
+
+  private initCamera()
+  {
+    let isIos = Utils.isIos(this.platform);
+
+    const cameraPreviewOpts: CameraPreviewOptions = {
+      x: 0,
+      y: 0,
+      width: isIos? window.screen.height : window.screen.width,
+      height: isIos? window.screen.width : window.screen.height,
+      camera: 'rear',
+      tapPhoto: false,
+      previewDrag: false,
+      toBack: true,
+      alpha: 1
+    };
+
+    // start camera
+    this.cameraPreview.startCamera(cameraPreviewOpts).then(res => {
+      console.log(res);
+  
+      //Initializing camera FOV used on AR calculations
+      this.cameraPreview.getHorizontalFOV().then((fov: number) => {
+        //console.log("CAMERA FOV: ", fov);
+        this.cameraFOV = Math.abs(fov);
+      });
+    }, err => {
+      console.log(err);
+    });
   }
 
   private manageARSystemsErrors(errorType: ARError)

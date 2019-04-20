@@ -19,6 +19,7 @@ import { Diagnostic } from '@ionic-native/diagnostic/ngx';
 import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
 import { DeviceMotion } from '@ionic-native/device-motion/ngx';
 import { Gyroscope } from '@ionic-native/gyroscope/ngx';
+import { CameraPreview } from '@ionic-native/camera-preview/ngx';
 
 
 import { AppComponent } from './app.component';
@@ -45,7 +46,9 @@ import {
   getDiagnostic,
   getLocationAccuracy,
   getDeviceMotion,
-  getGyroscope
+  getGyroscope,
+  CameraPreviewExtended,  //Camera Preview extended custom provider
+  getCameraPreviewExtended,
 } from './app.providers';
 
 export function createTranslateLoader(http: HttpClient) {
@@ -93,6 +96,8 @@ export function createTranslateLoader(http: HttpClient) {
     //{provide: Geolocation, useClass: getGeolocation()},
     {provide: DeviceMotion, useClass: getDeviceMotion()},
     {provide: Gyroscope, useClass: getGyroscope()},
+    CameraPreview,  //Not mocking because of using custom CameraPreviewExtended
+    {provide: CameraPreviewExtended, useClass: getCameraPreviewExtended()},
     Globalization,  //Globalization not mocked. Calls managed directly in app.component
     NetworkService,
     StorageService,

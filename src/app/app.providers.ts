@@ -1,3 +1,5 @@
+import { Injectable } from '@angular/core';
+import { Cordova } from '@ionic-native/core';
 import { Observable } from 'rxjs';
 
 import { HTTP } from '@ionic-native/http/ngx';
@@ -8,9 +10,32 @@ import { Diagnostic } from '@ionic-native/diagnostic/ngx';
 import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
 import { DeviceMotion } from '@ionic-native/device-motion/ngx';
 import { Gyroscope } from '@ionic-native/gyroscope/ngx';
+import { CameraPreview } from '@ionic-native/camera-preview/ngx';
+
+//////////////////////////////CAMERA PREVIEW IONIC WRAPPER EXTENSION/////////////////////////////////////////
+//It extends @ionic-native/camera-preview to expose plugin getHorizontalFOV method
+@Injectable()
+export class CameraPreviewExtended extends CameraPreview
+{
+    @Cordova()
+    getHorizontalFOV(): Promise<any> {
+        return new Promise((resolve, reject) => {
+            if (window['CameraPreview'])
+            {
+                let cameraPreviewPlugin = window['CameraPreview'];
+                let result = cameraPreviewPlugin.getHorizontalFOV();                
+                resolve(result);
+            }
+            else
+            {
+                throw new Error("Cordova plugin error on getHorizontalFOV method");
+            }
+        });
+    }
+}
 
 ////////////////////HERE STARTS PLUGIN MOCKS TO USE THEM MOCKED IN IONIC SERVE (DEV EXECUTION)///////////////
-    //Mock providers
+    ////////////////////Mock providers
 export class HTTPMock {
     get(endpoint: string, params?: any, header?: any)
     {
@@ -196,12 +221,26 @@ export class GyroscopeMock {
     }
 }
 
-    //Cordova verify function
+export class CameraPreviewExtendedMock {
+    startCamera(options?: any): Promise<any>
+    {
+        return new Promise((resolve, reject) => {
+            resolve("Camera not available");
+        });
+    }
+
+    stopCamera()
+    {
+        
+    }
+}
+
+    /////////////////////Cordova verify function
 export function hasCordova(): boolean{
     return window.hasOwnProperty('cordova');
 }
 
-    //Providers getters
+    /////////////////////Providers getters
 export function getHTTP(): any
 {
     return hasCordova()? HTTP : HTTPMock;
@@ -238,5 +277,9 @@ export function getDeviceMotion(): any
 export function getGyroscope(): any
 {
     return hasCordova()? Gyroscope : GyroscopeMock;
+}
+
+export function getCameraPreviewExtended(): any{
+    return hasCordova()? CameraPreviewExtended : CameraPreviewExtendedMock;
 }
 ////////////////////HERE ENDS PLUGIN MOCKS TO USE THEM MOCKED IN IONIC SERVE (DEV EXECUTION)///////////////

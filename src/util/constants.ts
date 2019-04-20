@@ -10,7 +10,7 @@ export const constants = {
     FIRST_LOCATION_PERMISSION_REQUEST: 'FIRST_LOCATION_PERMISSION_REQUEST',
         //Camera view settings
     CAMERA_INIT_DELAY: 3000,
-    CAMERA_POI_FOV: 40,
+    CAMERA_DEFAULT_FOV: 60,
         //Radar radius in meters
     RADAR_POI_RADIUS: 5000,
         //Gps relevation options
