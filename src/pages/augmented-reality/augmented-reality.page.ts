@@ -356,6 +356,9 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
         this.arInfos.setFusionCoordinates(fusionOrientation);
     });
 
+    //Hide spinner
+    setTimeout(() => this.spinnerService.dismissLoader(), sensorsFusionOptions.delay);
+
     this.spotArraySubscription = this.spotArray$.subscribe((spotArray: any[]) => {
       //Here we have to update current spot array, and add new spots (if there are)
       //We cannot simply replace redux spots stored, because on iOS this produces a boring
