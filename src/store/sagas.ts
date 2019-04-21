@@ -2,7 +2,7 @@ import { select, call, put, takeEvery, takeLatest, take, all } from 'redux-saga/
 
 import { PoiApiActions } from './poi-api/poi.actions';
 
-import { GpsCoordinatesDTO } from '../entities/dto/GpsInfoDTO';
+import { GpsCoordinatesDTO } from '../entities/dto/gpsInfoDTO';
 
 import { environment } from '../environments/environment';
 

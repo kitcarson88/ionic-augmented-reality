@@ -156,6 +156,8 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
     this.sensorMissing = false;
 
     //Start fused orientation service (accelerometer, gyroscope, magnetometer)
+    //The data is not subscribed yet. The app initially verifies if the device as accelerometer, gyroscope and magnetomer,
+    // and it verifies permissions too
     this.sensorsService.startSensors();
 
     //Manage accelerometer, gyroscope, and magnetometer sensors errors
