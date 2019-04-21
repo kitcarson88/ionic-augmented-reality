@@ -21,7 +21,8 @@ import {
   AccelerometerActions,
   GyroscopeActions,
   MagnetometerActions,
-  PoiApiActions
+  PoiApiActions,
+  ARActions
 } from "./index";
 
 import rootSaga from './sagas';
@@ -41,7 +42,8 @@ const ACTIONS = [
   AccelerometerActions,
   GyroscopeActions,
   MagnetometerActions,
-  PoiApiActions
+  PoiApiActions,
+  ARActions
 ];
 
 const RESOLVERS = [  ];
@@ -74,7 +76,7 @@ export class StoreModule
       key: 'root',
       storage: storageService,
       //storage,
-      blacklist: [ 'gps', 'accelerometer', 'gyroscope', 'magnetometer', 'poi' ]
+      blacklist: [ 'gps', 'accelerometer', 'gyroscope', 'magnetometer', 'poi', 'ar' ]
     }
     //const persistedReducer = persistReducer(persistConfig, rootReducer);
 

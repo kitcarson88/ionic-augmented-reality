@@ -12,7 +12,7 @@ import { CameraPreviewExtended } from '../../app/app.providers';
 import { select } from "@angular-redux/store";
 import { Observable } from "rxjs";
 
-import { GpsActions } from '../../store';
+import { GpsActions, ARActions } from '../../store';
 
 import { SensorsService } from '../../services/sensors.service';
 import { SpinnerService } from '../../services/spinner.service';
@@ -20,6 +20,8 @@ import { AlertService } from '../../services/alert.service';
 
 import { Utils } from '../../util/utils';
 import { constants } from '../../util/constants';
+
+import { FusionSensorsDTO } from '../../entities/dto/fusionSensorsDTO';
 
 enum ARError {
   INTERNAL_AR_ERROR,
@@ -48,7 +50,7 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
   private locationAuthorized: boolean;
   private firstLocationAuthorization: boolean;
 
-  private cameraFOV: number = constants.CAMERA_DEFAULT_FOV;
+  private sensorsServiceSubscription = null;
 
   private sensorMissing: boolean = false;
   @select(["accelerometer", "error"])
@@ -61,6 +63,11 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
   magnetometerCoordinatesError$: Observable<boolean>;
   private magnetometerCoordinatesErrorSubscription: any = null;
 
+  @select(["ar", "spotArray"])
+  spotArray$: Observable<any[]>;
+  private spotArraySubscription: any = null;
+  spotArray: any[] = [];
+
   constructor(
     private navCtrl: NavController,
     private platform: Platform,
@@ -72,6 +79,7 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
     private nativeStorage: NativeStorage,
     private gpsService: GpsActions,
     private sensorsService: SensorsService,
+    private arInfos: ARActions,
     private cameraPreview: CameraPreviewExtended,
     private alertService: AlertService,
     private spinnerService: SpinnerService
@@ -288,8 +296,7 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
         {
           this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
             () => {
-              this.gpsService.startService();
-              //this.registerARSystems();
+              this.startARSystems();
             },
             error => {
               this.manageARSystemsErrors(ARError.GPS_NOT_ENABLED);
@@ -299,8 +306,7 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
       }
       else if (Utils.isIos(this.platform))
       {
-        this.gpsService.startService();
-        //this.registerARSystems();
+        this.startARSystems();
       }
 
     }, 1500);
@@ -328,10 +334,63 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
   
       //Initializing camera FOV used on AR calculations
       this.cameraPreview.getHorizontalFOV().then((fov: number) => {
-        this.cameraFOV = Math.abs(fov);
+        this.arInfos.setCameraFov(Math.abs(fov));
       });
     }, err => {
       console.log(err);
+    });
+  }
+
+  private startARSystems()
+  {
+    this.gpsService.startService();
+
+    //Retrieve sensors fusion coordinates and pass to redux ar infos (redux saga does the remaining calculations)
+    let sensorsFusionOptions = {
+      frequency: constants.FUSION_SENSOR_FREQUENCY,
+      delay: constants.FUSION_SENSOR_INIT_DELAY
+    };
+
+    this.sensorsServiceSubscription = this.sensorsService.getSensorsData(sensorsFusionOptions).subscribe((fusionOrientation: FusionSensorsDTO) => {
+      if (fusionOrientation && fusionOrientation.alfa && fusionOrientation.beta && fusionOrientation.gamma)
+        this.arInfos.setFusionCoordinates(fusionOrientation);
+    });
+
+    this.spotArraySubscription = this.spotArray$.subscribe((spotArray: any[]) => {
+      //Here we have to update current spot array, and add new spots (if there are)
+      //We cannot simply replace redux spots stored, because on iOS this produces a boring
+      //flickering effect on markers
+      for (let spot of spotArray)
+      {
+        let spotToEvaluate = null;
+
+        //Search the spot in the page spot array
+        for (let i = 0; i < this.spotArray.length; ++i)
+          if (this.spotArray[i].id == spot.id)
+            spotToEvaluate = this.spotArray[i];
+
+        if (!spotToEvaluate) //The spot doesn't exist. Let's add it
+        {
+          let spotToAdd = spot;
+          spotToAdd['onFire'] = true;   //Flag added to mark a new or modified spot
+          this.spotArray.push(spotToAdd);
+        }
+        else  //The spot exist; let's update its displacement informations
+        {
+          spotToEvaluate.screenRelativePositionX = spot.screenRelativePositionX;
+          spotToEvaluate.screenRelativePositionY = spot.screenRelativePositionY;
+          spotToEvaluate['onFire'] = true;  //Flag added to mark a new or modified spot
+        }
+      }
+
+      //Finally we remove old spots, and set new/modified spots as evaluated (onFire to false)
+      for (let j = 0; j < this.spotArray.length; ++j)
+      {
+        if (this.spotArray[j]['onFire'])
+          this.spotArray[j]['onFire'] = false;
+        else
+          this.spotArray.splice(j, 1);
+      }
     });
   }
 
@@ -379,10 +438,13 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
       this.gpsCoordinatesSubscription.unsubscribe();
 
     if (this.poiListSubscription)
-      this.poiListSubscription.unsubscribe();
+      this.poiListSubscription.unsubscribe();*/
+
+    if (this.spotArraySubscription)
+      this.spotArraySubscription.unsubscribe();
 
     if (this.sensorsServiceSubscription)
-      this.sensorsServiceSubscription.unsubscribe();*/
+      this.sensorsServiceSubscription.unsubscribe();
 
     if (this.accelerometerCoordinatesErrorSubscription)
       this.accelerometerCoordinatesErrorSubscription.unsubscribe();

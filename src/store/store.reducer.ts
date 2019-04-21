@@ -10,6 +10,7 @@ import { accelerometerReducer } from "./accelerometer/accelerometer.reducer";
 import { gyroscopeReducer } from "./gyroscope/gyroscope.reducer";
 import { magnetometerReducer } from "./magnetometer/magnetometer.reducer";
 import { poiReducer } from "./poi-api/poi.reducer";
+import { arReducer } from './ar-infos/ar.reducer';
 
 export default function reduceReducers(...reducers)
 {
@@ -22,7 +23,8 @@ export const rootReducer = reduceReducers(
     accelerometer: accelerometerReducer,
     gyroscope: gyroscopeReducer,
     magnetometer: magnetometerReducer,
-    poi: poiReducer
+    poi: poiReducer,
+    ar: arReducer
   }),
   mainReducer
 );
