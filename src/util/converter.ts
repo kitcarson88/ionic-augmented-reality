@@ -1,4 +1,4 @@
-import { GpsInfoDTO, GpsCoordinatesDTO } from "../entities/dto/GpsInfoDTO";
+import { GpsInfoDTO, GpsCoordinatesDTO } from "../entities/dto/gpsInfoDTO";
 
 export class Converter
 {

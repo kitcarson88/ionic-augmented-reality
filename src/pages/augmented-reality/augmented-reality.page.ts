@@ -326,7 +326,6 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
   
       //Initializing camera FOV used on AR calculations
       this.cameraPreview.getHorizontalFOV().then((fov: number) => {
-        //console.log("CAMERA FOV: ", fov);
         this.cameraFOV = Math.abs(fov);
       });
     }, err => {

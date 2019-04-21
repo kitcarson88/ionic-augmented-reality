@@ -260,6 +260,12 @@ export class CameraPreviewExtendedMock {
     {
         
     }
+
+    getHorizontalFOV(): Promise<any> {
+        return new Promise((resolve, reject) => {
+            resolve(60);
+        });
+    }
 }
 
     /////////////////////Cordova verify function

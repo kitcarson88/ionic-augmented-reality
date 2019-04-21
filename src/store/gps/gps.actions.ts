@@ -8,8 +8,6 @@ import { AppState } from '../store.model';
 
 import { constants } from "../../util/constants";
 
-//import { GpsInfoDTO, GpsCoordinatesDTO } from "../../entity/dto/GpsInfoDTO";
-
 export interface GpsAction extends Action {
     payload?: any;
 }
@@ -18,6 +16,7 @@ export interface GpsAction extends Action {
 export class GpsActions
 {
     static readonly SET_COORDINATES = "SET_COORDINATES";
+    static readonly SET_FILTERED_COORDINATES = "SET_FILTERED_COORDINATES";
     static readonly RESET_COORDINATES = "RESET_COORDINATES";
 
     private locationServiceSubscription: any = null;
@@ -28,6 +27,9 @@ export class GpsActions
 
     @dispatch()
     setCoordinates = (data: any): GpsAction => ({ type: GpsActions.SET_COORDINATES, payload: data});
+
+    @dispatch()
+    setDistanceFilteredCoordinates = (data: any): GpsAction => ({ type: GpsActions.SET_FILTERED_COORDINATES, payload: data});
 
     @dispatch()
     resetCoordinates = (): GpsAction => ({ type: GpsActions.RESET_COORDINATES });
@@ -43,7 +45,6 @@ export class GpsActions
 
         this.locationServiceSubscription = this.locationService.watchPosition(options)
             .pipe(filter((p) => p.coords !== undefined))    //Filter Out Errors
-            //.map((gpsInfos: GpsInfoDTO) => Converter.gpsInfoDTOToGpsCoordinatesDTO(gpsInfos))   //Remove some unuseful infos
             .subscribe(position => {
                 this.setCoordinates(position);
             });

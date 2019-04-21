@@ -10,6 +10,12 @@ export function gpsReducer(state: GpsState = INITIAL_STATE_GPS, action: GpsActio
                 coordinates: (action as GpsAction).payload
             };
         }
+        case GpsActions.SET_FILTERED_COORDINATES: {
+            return {
+                ...state,
+                distanceFilteredCoordinates: (action as GpsAction).payload
+            }
+        }
         case GpsActions.RESET_COORDINATES: {
             return {
                 ...state,
