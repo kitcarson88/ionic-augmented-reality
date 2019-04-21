@@ -360,39 +360,42 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
     setTimeout(() => this.spinnerService.dismissLoader(), sensorsFusionOptions.delay);
 
     this.spotArraySubscription = this.spotArray$.subscribe((spotArray: any[]) => {
-      //Here we have to update current spot array, and add new spots (if there are)
-      //We cannot simply replace redux spots stored, because on iOS this produces a boring
-      //flickering effect on markers
-      for (let spot of spotArray)
+      if (spotArray)
       {
-        let spotToEvaluate = null;
-
-        //Search the spot in the page spot array
-        for (let i = 0; i < this.spotArray.length; ++i)
-          if (this.spotArray[i].id == spot.id)
-            spotToEvaluate = this.spotArray[i];
-
-        if (!spotToEvaluate) //The spot doesn't exist. Let's add it
+        //Here we have to update current spot array, and add new spots (if there are)
+        //We cannot simply replace redux spots stored, because on iOS this produces a boring
+        //flickering effect on markers
+        for (let spot of spotArray)
         {
-          let spotToAdd = spot;
-          spotToAdd['onFire'] = true;   //Flag added to mark a new or modified spot
-          this.spotArray.push(spotToAdd);
+          let spotToEvaluate = null;
+  
+          //Search the spot in the page spot array
+          for (let i = 0; i < this.spotArray.length; ++i)
+            if (this.spotArray[i].id == spot.id)
+              spotToEvaluate = this.spotArray[i];
+  
+          if (!spotToEvaluate) //The spot doesn't exist. Let's add it
+          {
+            let spotToAdd = spot;
+            spotToAdd['onFire'] = true;   //Flag added to mark a new or modified spot
+            this.spotArray.push(spotToAdd);
+          }
+          else  //The spot exist; let's update its displacement informations
+          {
+            spotToEvaluate.screenRelativePositionX = spot.screenRelativePositionX;
+            spotToEvaluate.screenRelativePositionY = spot.screenRelativePositionY;
+            spotToEvaluate['onFire'] = true;  //Flag added to mark a new or modified spot
+          }
         }
-        else  //The spot exist; let's update its displacement informations
+  
+        //Finally we remove old spots, and set new/modified spots as evaluated (onFire to false)
+        for (let j = 0; j < this.spotArray.length; ++j)
         {
-          spotToEvaluate.screenRelativePositionX = spot.screenRelativePositionX;
-          spotToEvaluate.screenRelativePositionY = spot.screenRelativePositionY;
-          spotToEvaluate['onFire'] = true;  //Flag added to mark a new or modified spot
+          if (this.spotArray[j]['onFire'])
+            this.spotArray[j]['onFire'] = false;
+          else
+            this.spotArray.splice(j, 1);
         }
-      }
-
-      //Finally we remove old spots, and set new/modified spots as evaluated (onFire to false)
-      for (let j = 0; j < this.spotArray.length; ++j)
-      {
-        if (this.spotArray[j]['onFire'])
-          this.spotArray[j]['onFire'] = false;
-        else
-          this.spotArray.splice(j, 1);
       }
     });
   }

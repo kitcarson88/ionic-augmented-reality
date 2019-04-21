@@ -22,6 +22,12 @@ export function arReducer(state: ARState = INITIAL_STATE_AR, action: ARAction): 
                 fusionCoordinates: (action as ARAction).payload
             };
         }
+        case ARActions.SET_SPOT_ARRAY: {
+            return {
+                ...state,
+                spotArray: (action as ARAction).payload
+            };
+        }
     }
 
     return state;

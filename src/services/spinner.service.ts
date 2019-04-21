@@ -58,7 +58,7 @@ export class SpinnerService
     {
       this.counter = 0;
       if (this.currentLoader)
-        await this.currentLoader.dismissAll();
+        await this.currentLoader.dismiss();
       this.currentLoader = null;
     }
   }

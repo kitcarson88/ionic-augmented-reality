@@ -22,7 +22,8 @@
   </div>
   -->
   <div ion-fixed class="spotContainer">
-    <span *ngFor="let spot of spotArray" [ngStyle]="{'left': spot.screenRelativePositionX + '%', 'top': spot.screenRelativePositionY + '%'}">
+    <!--<span *ngFor="let spot of spotArray" [ngStyle]="{'left': spot.screenRelativePositionX + '%', 'top': spot.screenRelativePositionY + '%'}">-->
+    <span>
       <img src="../../assets/imgs/marker.png" [ngStyle]="{'width': spot.relativeSize + '%', 'height': spot.relativeSize + '%'}"/>
     </span>
   </div>

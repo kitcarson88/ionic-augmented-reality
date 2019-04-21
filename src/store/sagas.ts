@@ -120,8 +120,11 @@ function* calculateSpotArray()
 
     yield takeEvery("SET_FUSION_COORDINATES", function* () {
         const pinArray: any[] = yield select(getPinArray);
-        const fusionOrientation: FusionSensorsDTO = yield select(getFusionOrientation);
+        if (!pinArray)
+            return;
+
         const fov: number = yield select(getFov);
+        const fusionOrientation: FusionSensorsDTO = yield select(getFusionOrientation);
 
         let alfa = fusionOrientation.alfa + 90;
 
