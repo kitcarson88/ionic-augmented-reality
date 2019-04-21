@@ -1,6 +1,10 @@
 import { select, call, put, takeEvery, takeLatest, take, all } from 'redux-saga/effects';
 
+import { PoiApiActions } from './poi-api/poi.actions';
+
 import { GpsCoordinatesDTO } from '../entities/dto/GpsInfoDTO';
+
+import { environment } from '../environments/environment';
 
 import { AugmentedRealityUtils } from '../util/utils';
 import { constants } from '../util/constants';
@@ -37,8 +41,39 @@ function* filterGpsCoordinate()
     });
 }
 
+function* retrievePois()
+{
+    console.log("Registering saga retrievePois on gps/SET_FILTERED_COORDINATES");
+
+    yield takeEvery("SET_COORDINATES", function*() {
+        const filteredGpsCoordinates: GpsCoordinatesDTO = yield select(getFilteredGpsCoordinates);
+
+        //Create redux-offline action to launch (provider action in poi.actions.ts)
+        let url = environment.mock? 
+            '../../assets/mock-data/poi-list.json' : 
+            environment.baseUrl + environment.apiVersion + constants.poiListEndpoint + "?" +
+                PoiApiActions.LATITUDE_URL_KEY + "=" + filteredGpsCoordinates.latitude + "&" +
+                PoiApiActions.LONGITUDE_URL_KEY + "=" + filteredGpsCoordinates.longitude + "&" + 
+                PoiApiActions.RADIUS_URL_KEY + "=" + constants.RADAR_POI_RADIUS
+
+        let poiRequestAction = {
+            type: PoiApiActions.RETRIEVE_POI,
+            meta: {
+                offline: {
+                    effect: { url: url, method: 'GET' },
+                    commit: { type: PoiApiActions.RETRIEVE_POI_COMPLETED },
+                    rollback: { type: PoiApiActions.RETRIEVE_POI_ERROR },
+                }
+            }
+        };
+
+        yield put(poiRequestAction);
+    });
+}
+
 export default function* rootSaga() {
     yield all([
-        filterGpsCoordinate()
+        filterGpsCoordinate(),
+        retrievePois()
     ])
 }

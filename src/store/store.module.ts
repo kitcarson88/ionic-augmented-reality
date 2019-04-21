@@ -20,10 +20,11 @@ import {
   GpsActions,
   AccelerometerActions,
   GyroscopeActions,
-  MagnetometerActions
+  MagnetometerActions,
+  PoiApiActions
 } from "./index";
 
-//import rootSaga from './sagas';
+import rootSaga from './sagas';
 
 import { Api } from "../providers/api/api";
 
@@ -39,7 +40,8 @@ const ACTIONS = [
   GpsActions,
   AccelerometerActions,
   GyroscopeActions,
-  MagnetometerActions
+  MagnetometerActions,
+  PoiApiActions
 ];
 
 const RESOLVERS = [  ];
@@ -72,7 +74,7 @@ export class StoreModule
       key: 'root',
       storage: storageService,
       //storage,
-      blacklist: [ 'gps', 'accelerometer', 'gyroscope', 'magnetometer' ]
+      blacklist: [ 'gps', 'accelerometer', 'gyroscope', 'magnetometer', 'poi' ]
     }
     //const persistedReducer = persistReducer(persistConfig, rootReducer);
 
@@ -214,6 +216,9 @@ export class StoreModule
           case GpsActions.SET_COORDINATES:
             action.payload = Converter.gpsInfoDTOToGpsCoordinatesDTO(action.payload);
             break;
+          case PoiApiActions.RETRIEVE_POI_COMPLETED:
+            action.payload = Converter.poiDTOArrayToPoiArray(action.payload);
+            break;
         }
       }
 
@@ -239,6 +244,6 @@ export class StoreModule
     persistStore(ngRedux);
 
     //Executing sagas
-    //sagaMiddleware.run(rootSaga);
+    sagaMiddleware.run(rootSaga);
   }
 }

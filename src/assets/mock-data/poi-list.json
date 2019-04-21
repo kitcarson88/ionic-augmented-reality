@@ -1,0 +1,16 @@
+[
+	{
+		"id": 348237,
+		"latitudine": 41.908883,
+        "longitudine": 12.511753,
+        "titolo": "Example poi 1",
+        "descrizione": "Just an example description on marker 1"
+    },
+    {
+		"id": 348237,
+		"latitudine": 41.904136,
+        "longitudine": 12.510644,
+        "titolo": "Example poi 2",
+        "descrizione": "Just an example description on marker 2"
+    }
+]

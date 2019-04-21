@@ -1,6 +1,6 @@
 export const constants = {
     //Endpoints
-    
+    poiListEndpoint: '',
     //Other constants
         /////////////Here start configuration constants///////////////
     SPLASH_TIMEOUT: 5000,
