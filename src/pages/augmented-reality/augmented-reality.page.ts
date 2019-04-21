@@ -434,12 +434,6 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
 
     this.events.unsubscribe(constants.AR_SYSTEM_ERROR, this.leavePage);
 
-    /*if (this.gpsCoordinatesSubscription)
-      this.gpsCoordinatesSubscription.unsubscribe();
-
-    if (this.poiListSubscription)
-      this.poiListSubscription.unsubscribe();*/
-
     if (this.spotArraySubscription)
       this.spotArraySubscription.unsubscribe();
 

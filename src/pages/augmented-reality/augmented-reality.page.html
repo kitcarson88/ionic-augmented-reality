@@ -10,5 +10,21 @@
 </ion-header>
 
 <ion-content>
+  <!--<div ion-fixed class="spotContainer" (click)="closePoiDetails()">
+    <span *ngFor="let spot of spotsArray" [ngStyle]="{'left': spot.screenRelativePositionX + '%', 'top': spot.screenRelativePositionY + '%'}" (click)="openPoiDetails(spot['pin'], $event)">
+      <img src="../../assets/imgs/marker-poi.png" [ngStyle]="{'width': spot.relativeSize + '%', 'height': spot.relativeSize + '%'}"/>
+    </span>
+  </div>
+
+  <div ion-fixed class="spotDetails bg-white" *ngIf="showDetails()">
+    <span class="f-18 f-medium f-uppercase c-dark">{{infosTitle}}</span>
+    <span class="f-16 f-regular c-dark" [innerHtml]="infosDescription"></span>
+  </div>
+  -->
+  <div ion-fixed class="spotContainer">
+    <span *ngFor="let spot of spotArray" [ngStyle]="{'left': spot.screenRelativePositionX + '%', 'top': spot.screenRelativePositionY + '%'}">
+      <img src="../../assets/imgs/marker.png" [ngStyle]="{'width': spot.relativeSize + '%', 'height': spot.relativeSize + '%'}"/>
+    </span>
+  </div>
 
 </ion-content>
