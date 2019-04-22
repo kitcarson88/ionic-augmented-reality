@@ -64,6 +64,7 @@
     "redux-saga": "^1.0.2",
     "roboto-fontface": "^0.10.0",
     "rxjs": "~6.3.3",
+    "typeface-josefin-sans": "0.0.54",
     "zone.js": "~0.8.29"
   },
   "devDependencies": {

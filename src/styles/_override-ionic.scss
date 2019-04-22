@@ -16,7 +16,7 @@
 //////////////////////////////////////////////////////////////
 
 :root {
-    /*ion-toolbar {
+    ion-toolbar {
         --padding-start: 0 !important;
         --padding-end: 0 !important;
         --padding-top: 0 !important;
@@ -30,48 +30,10 @@
     }
 
     ion-content {
-        --ion-background-color: #{$ion-content-background-color} !important;
+        //--ion-background-color: #{$ion-content-background-color} !important;
         --padding-start: 0 !important;
         --padding-end: 0 !important;
         --padding-top: 0 !important;
         --padding-bottom: 0 !important;
     }
-
-    ion-card {
-        background-color: $ion-card-background-color !important;
-        border-radius: $ion-card-border-radius !important;
-    }
-
-    ion-back-button {
-        --margin-top: 0 !important;
-        --margin-bottom: 0 !important;
-        --margin-start: 0 !important;
-        --margin-end: 0 !important;
-        --padding-top: 0 !important;
-        --padding-bottom: 0 !important;
-        --padding-start: 0 !important;
-        --padding-end: 0 !important;
-        --min-height: #{$enology-main-toolbar-height} !important;
-        --min-width: #{$enology-main-toolbar-height} !important;
-        --icon-font-size: #{$ion-back-button-icon-font-size} !important;
-
-        ion-icon {
-            margin-top: 0 !important;
-            margin-bottom: 0 !important;
-            margin-left: 0 !important;
-            margin-right: 0 !important;
-            padding-top: 0 !important;
-            padding-bottom: 0 !important;
-            padding-left: 0 !important;
-            padding-right: 0 !important;
-        }
-    }
-
-    ion-button {
-        --padding-start: 0 !important;
-        --padding-end: 0 !important;
-        margin: 0 !important;
-        --border-radius: #{$ion-button-border-radius} !important;
-        --box-shadow: none !important;
-    }*/
 }
