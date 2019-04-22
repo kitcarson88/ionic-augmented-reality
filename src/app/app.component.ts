@@ -20,25 +20,25 @@ export class AppComponent
     {
       title: 'Home',
       url: '/home',
-      icon: 'home',
+      iconPath: 'assets/icon/home.svg',
       direction: 'root'
     },
     {
       title: 'Map',
       url: '/map',
-      icon: 'home',
+      iconPath: 'assets/icon/mappa.svg',
       direction: 'root'
     },
     {
       title: 'AR',
       url: '/augmented-reality',
-      icon: 'home',
+      iconPath: 'assets/icon/ar.svg',
       direction: 'forward'
     },
     {
       title: 'About the author',
       url: '/about-author',
-      icon: 'home',
+      iconPath: 'assets/icon/author.svg',
       direction: 'root'
     }
   ];
