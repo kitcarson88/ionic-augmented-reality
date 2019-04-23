@@ -4,6 +4,7 @@ export const constants = {
     //Other constants
         /////////////Here start configuration constants///////////////
     SPLASH_TIMEOUT: 5000,
+    SPLASH_ANIMATION_DELAY: 2500,
     TOAST_TIMEOUT: 5000,
     CONNECTION_TIMEOUT: 5000,
     SERVICE_TIMEOUT: 5,

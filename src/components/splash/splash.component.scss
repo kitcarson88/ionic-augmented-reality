@@ -1,0 +1,41 @@
+@import '../../styles/mixins';
+@import '../../styles/colors';
+
+ion-content {
+    width: 100%;
+    height: 100%;
+    z-index: 10000000;
+}
+
+.splashContainer {
+    background-color: $c-white;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    @include transition(background-color .3s linear);
+
+    .content {
+        width: 100%;
+        @include vertical-align-transform(absolute);
+
+        ion-icon {
+            color: $c-red;
+            font-size: 10rem !important;
+            margin-bottom: 4rem;
+            @include transition(color .3s linear);
+        }
+
+        div {
+            color: $c-water-green;
+            @include transition(color .3s linear);
+        }
+    }
+
+    &.colorFade {
+        background-color: $c-water-green;
+
+        ion-icon, div {
+            color: $c-white !important;
+        }
+    }
+}

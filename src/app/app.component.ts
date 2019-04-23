@@ -10,12 +10,16 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { NetworkService } from '../services/network.service';
 
+import { constants } from '../util/constants';
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html'
 })
 export class AppComponent
 {
+  showSplash: boolean = false;
+
   public appPages = [
     {
       title: 'Home',
@@ -83,6 +87,10 @@ export class AppComponent
         sysOptions.systemLanguage = language;
       }
     });
+
+    setTimeout(() => {
+      this.showSplash = false;
+    }, constants.SPLASH_TIMEOUT);
   }
 
   private getSuitableLanguage(language)

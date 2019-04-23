@@ -22,9 +22,11 @@ import { DeviceMotion } from '@ionic-native/device-motion/ngx';
 import { Gyroscope } from '@ionic-native/gyroscope/ngx';
 import { CameraPreview } from '@ionic-native/camera-preview/ngx';
 
-
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+
+//Components
+import { SplashModule } from 'src/components/splash/splash.module';
 
 //Providers
 import { Api } from '../providers/api/api';
@@ -69,6 +71,7 @@ export function createTranslateLoader(http: HttpClient) {
     HttpModule,
     HttpClientModule,
     StoreModule,
+    SplashModule,
     IonicModule.forRoot({
       menuType: 'reveal',
       //backButtonIcon: 'pea-back-arrow',

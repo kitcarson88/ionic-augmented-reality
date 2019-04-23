@@ -4,6 +4,7 @@ $c-water-green: #048eab;
 $c-grey: #777;
 $c-light-grey-b7: #b7b7b7;
 $c-light-grey-e0: #e0e0e0;
+$c-red: #c51d1d;
 
 //FONT
 .c-white {
@@ -19,7 +20,10 @@ $c-light-grey-e0: #e0e0e0;
     color: $c-grey !important;
 }
 .c-light-grey-e0 {
-    color: $c-light-grey-e0;
+    color: $c-light-grey-e0 !important;
+}
+.c-red {
+    color: $c-red !important;
 }
 
 //BACKGROUND
@@ -36,7 +40,10 @@ $c-light-grey-e0: #e0e0e0;
     background-color: $c-grey !important;
 }
 .bg-light-grey-e0 {
-    background-color: $c-light-grey-e0;
+    background-color: $c-light-grey-e0 !important;
+}
+.bg-red {
+    background-color: $c-red !important;
 }
 
 @mixin bg-opacity($color, $opacity) {
