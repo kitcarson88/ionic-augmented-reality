@@ -98,7 +98,18 @@ ion-menu.ar-menu {
                 --padding-start: #{$ar-menu-content-padding} !important;
 
                 ion-icon {
+                    color: $c-grey !important;
                     margin : 0 $ar-menu-content-padding 0 0 !important;
+                }
+
+                ion-label {
+                    color: $c-grey !important;
+                }
+
+                &.active {
+                    ion-label, ion-icon {
+                        color: $c-water-green !important;
+                    }
                 }
             }
         }
