@@ -7,6 +7,8 @@ import { IonicModule } from '@ionic/angular';
 
 import { AboutAuthorPage } from './about-author.page';
 
+import { MenuOverlayModule } from '../../components/menu-overlay/menu-overlay.module';
+
 const routes: Routes = [
   {
     path: '',
@@ -19,6 +21,7 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
+    MenuOverlayModule,
     RouterModule.forChild(routes)
   ],
   declarations: [AboutAuthorPage]
