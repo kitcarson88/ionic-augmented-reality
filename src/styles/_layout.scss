@@ -5,6 +5,7 @@
 html {
     font-size: $font-size-base !important; //10px
     font-family: $font-family-default !important;
+    --ion-default-font: #{$font-family-default} !important;
     height: 100%;
     width: 100%;
 }

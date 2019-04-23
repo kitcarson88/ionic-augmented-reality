@@ -1,5 +1,13 @@
 @import 'responsive';
 
+//Import roboto font
+@import 'assets/fonts/roboto/css/roboto-condensed/roboto-condensed-fontface.css';
+@import 'assets/fonts/roboto/css/roboto-slab/roboto-slab-fontface.css';
+@import 'assets/fonts/roboto/css/roboto/roboto-fontface.css';
+
+//Import josefin font
+@import 'assets/fonts/josefin/index.css';
+
 $f-size-0: 1rem;
 $f-size-1: 1.2rem;
 $f-size-2: 1.4rem;
@@ -28,6 +36,7 @@ $f-weight-900: 900;
 
 $font-size-base: 10px;
 $font-family-default: 'Roboto';
+$font-family-josefin: 'Josefin Sans';
 
 /*Font in ordine di grandezza*/
 /***********************************
@@ -187,4 +196,14 @@ $font-family-default: 'Roboto';
 }
 .f-weight-900 {
   font-weight: $f-weight-900 !important;
+}
+
+/***********************************
+   * Font families
+   ***********************************/
+.f-family-roboto {
+  font-family: 'Roboto' !important;
+}
+.f-family-josefin {
+  font-family: 'Josefin Sans' !important;
 }

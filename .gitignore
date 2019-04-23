@@ -36,3 +36,4 @@ package-lock.json
 
 //Fonts downloaded by npm
 src/assets/fonts/roboto
+src/assets/fonts/josefin

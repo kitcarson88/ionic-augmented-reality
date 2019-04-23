@@ -16,24 +16,42 @@
 //////////////////////////////////////////////////////////////
 
 :root {
+    ion-router-outlet {
+        @include box-shadow-inline(none);
+    }
+
     ion-header {
         &:after {
             display: none !important;
         }
-    }
 
-    ion-toolbar {
-        --padding-start: 0 !important;
-        --padding-end: 0 !important;
-        --padding-top: 0 !important;
-        --padding-bottom: 0 !important;
-        --min-height: #{$ion-toolbar-height} !important;
-
-        ion-title {
-            padding-inline-start: 0 !important;
-            padding-inline-end: 0 !important;
+        ion-toolbar {
+            --background: #{$ion-toolbar-background-color} !important;
+            --padding-start: 0 !important;
+            --padding-end: 0 !important;
+            --padding-top: 0 !important;
+            --padding-bottom: 0 !important;
+            --min-height: #{$ion-toolbar-height} !important;
+    
+            ion-title {
+                padding-inline-start: 0 !important;
+                padding-inline-end: 0 !important;
+            }
+    
+            ion-buttons {
+                background-color: grey;
+                width: #{$ion-toolbar-height} !important;
+                height: #{$ion-toolbar-height} !important;
+    
+                ion-menu-button {
+                    display: block !important;
+                    float: none !important;
+                    margin: 0 auto !important;
+                }
+            }
         }
     }
+
 
     ion-content {
         //--ion-background-color: #{$ion-content-background-color} !important;
