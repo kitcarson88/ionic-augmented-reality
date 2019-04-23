@@ -41,4 +41,13 @@
         --padding-top: 0 !important;
         --padding-bottom: 0 !important;
     }
+
+    ion-list {
+        ion-item {
+            --padding-start: 0 !important;
+            --padding-end: 0 !important;
+            --border-style: none !important;
+            //border: 1px solid black;    //DEBUG
+        }
+    }
 }

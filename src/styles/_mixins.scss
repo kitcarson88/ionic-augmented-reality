@@ -219,8 +219,8 @@ dato un container  con padding-top e padding-bottom crea
 
 //gradient background
 @mixin gradient($startColor, $endColor, $from) {
-  background-color: $startColor; /* For browsers that do not support gradients */
-  background-image: linear-gradient(to $from,  $startColor, $endColor); /* Standard syntax (must be last) */
+  background-color: $startColor !important; /* For browsers that do not support gradients */
+  background-image: linear-gradient(to $from,  $startColor, $endColor) !important; /* Standard syntax (must be last) */
 }
 
 @function gradient($startColor, $endColor, $from) {
@@ -228,7 +228,11 @@ dato un container  con padding-top e padding-bottom crea
 }
 
 @mixin gradient-more-colors($from, $colors...) {
-  background-image: linear-gradient(to $from,  $colors); /* Standard syntax (must be last) */
+  background-image: linear-gradient(to $from,  $colors) !important; /* Standard syntax (must be last) */
+}
+
+@mixin gradient-inline($gradient) {
+  background-image: ($gradient) !important;
 }
 
 @mixin text-ellipssis() {

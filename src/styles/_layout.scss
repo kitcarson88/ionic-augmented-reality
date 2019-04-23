@@ -76,8 +76,13 @@ ion-toolbar.ar-toolbar {
 ion-menu.ar-menu {
     ion-header {
         ion-toolbar {
+            text-align: center !important;
             --background: #{$ar-menu-toolbar-background-color} !important;
             --min-height: #{$ar-toolbar-height} !important;
+
+            .logo {
+                font-size: $ar-menu-logo-size !important;
+            }
         }
     }
     ion-content {
@@ -85,9 +90,16 @@ ion-menu.ar-menu {
 
         ion-list {
             background-color: transparent !important;
+            padding-top: $ar-menu-content-padding !important;
 
             ion-item {
                 --background: transparent !important;
+                border-bottom: $ar-menu-item-border !important;
+                --padding-start: #{$ar-menu-content-padding} !important;
+
+                ion-icon {
+                    margin : 0 $ar-menu-content-padding 0 0 !important;
+                }
             }
         }
     }
