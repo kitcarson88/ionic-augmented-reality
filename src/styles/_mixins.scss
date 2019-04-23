@@ -223,6 +223,10 @@ dato un container  con padding-top e padding-bottom crea
   background-image: linear-gradient(to $from,  $startColor, $endColor); /* Standard syntax (must be last) */
 }
 
+@function gradient($startColor, $endColor, $from) {
+  @return linear-gradient(to $from,  $startColor, $endColor);
+}
+
 @mixin gradient-more-colors($from, $colors...) {
   background-image: linear-gradient(to $from,  $colors); /* Standard syntax (must be last) */
 }

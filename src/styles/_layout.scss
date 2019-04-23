@@ -50,3 +50,45 @@ h5 {
     }
     font-size: $f-size-4 !important;
 }
+
+ion-toolbar.ar-toolbar {
+    --background: #{$ar-toolbar-background-color} !important;
+    --min-height: #{$ar-toolbar-height} !important;
+
+    ion-title {
+        padding-inline-start: 0 !important;
+        padding-inline-end: 0 !important;
+    }
+
+    ion-buttons {
+        background-color: #{$ar-buttons-background-color};
+        width: #{$ar-toolbar-height} !important;
+        height: #{$ar-toolbar-height} !important;
+
+        ion-menu-button {
+            display: block !important;
+            float: none !important;
+            margin: 0 auto !important;
+        }
+    }
+}
+
+ion-menu.ar-menu {
+    ion-header {
+        ion-toolbar {
+            --background: #{$ar-menu-toolbar-background-color} !important;
+            --min-height: #{$ar-toolbar-height} !important;
+        }
+    }
+    ion-content {
+        --background: #{gradient($ar-menu-toolbar-background-color, $c-white, bottom)} !important;
+
+        ion-list {
+            background-color: transparent !important;
+
+            ion-item {
+                --background: transparent !important;
+            }
+        }
+    }
+}
