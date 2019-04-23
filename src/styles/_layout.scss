@@ -104,3 +104,14 @@ ion-menu.ar-menu {
         }
     }
 }
+
+menu-overlay > div{
+    z-index: -10;
+    opacity: 0;
+    @include transition(opacity $menu-overlay-opacity-time linear);
+}
+
+ion-menu.show-menu + ion-router-outlet menu-overlay > div {
+    z-index: 10000;
+    opacity: $menu-overlay-opacity;
+}

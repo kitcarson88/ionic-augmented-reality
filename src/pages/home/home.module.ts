@@ -5,12 +5,14 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { HomePage } from './home.page';
+import { MenuOverlayModule } from 'src/components/menu-overlay/menu-overlay.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    MenuOverlayModule,
     RouterModule.forChild([
       {
         path: '',
