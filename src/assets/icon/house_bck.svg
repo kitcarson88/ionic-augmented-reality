@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   version="1.0"
+   width="16"
+   height="16"
+   id="svg2">
+  <defs
+     id="defs4" />
+  <path
+     d="M 1.5,7.5 L 1.5,15.5 L 14.5,15.5 L 14.5,7.5"
+     style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1"
+     id="path2215" />
+  <path
+     d="M 15.5,7.5 L 15.5,5.5 L 10.5,0.5 L 5.5,0.5 L 0.5,5.5 L 0.5,7.5 L 15.5,7.5 z "
+     style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1"
+     id="path2207" />
+  <path
+     d="M 3.5,12.5 L 6.5,12.5 L 6.5,9.5 L 3.5,9.5 L 3.5,12.5 z "
+     style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1"
+     id="path2211" />
+  <path
+     d="M 9.5,15.5 L 9.5,9.5 L 12.5,9.5 L 12.5,15.5"
+     style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1"
+     id="path2213" />
+</svg>

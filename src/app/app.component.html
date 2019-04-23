@@ -1,6 +1,6 @@
 <ion-app>
   <ion-split-pane>
-    <ion-menu>
+    <ion-menu swipeGesture="false">
       <ion-header>
         <ion-toolbar>
           <ion-title>Menu</ion-title>
@@ -10,7 +10,7 @@
         <ion-list>
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
             <ion-item [routerLink]="p.url" [routerDirection]="p.direction">
-              <ion-icon slot="start" [src]="p.iconPath"></ion-icon>
+              <ion-icon slot="start" [name]="p.icon"></ion-icon>
               <ion-label>
                 {{p.title}}
               </ion-label>
