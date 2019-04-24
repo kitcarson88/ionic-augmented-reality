@@ -18,7 +18,7 @@ import { CameraPreview } from '@ionic-native/camera-preview/ngx';
 @Injectable()
 export class CameraPreviewExtended extends CameraPreview
 {
-    //@Cordova()
+    @Cordova()
     getHorizontalFOV(): Promise<any> {
         return new Promise((resolve, reject) => {
             if (window['CameraPreview'])
