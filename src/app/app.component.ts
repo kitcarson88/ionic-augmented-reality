@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 
 import { Globalization } from '@ionic-native/globalization/ngx';
 import { defaultLanguage, availableLanguages, sysOptions } from './i18n.constants';
@@ -53,7 +54,8 @@ export class AppComponent
     private statusBar: StatusBar,
     public globalization: Globalization,
     public translate: TranslateService,
-    private networkService: NetworkService
+    private networkService: NetworkService,
+    private screenOrientation: ScreenOrientation
   ) {
     this.initializeApp();
   }
@@ -67,6 +69,8 @@ export class AppComponent
       this.statusBar.overlaysWebView(false);
 
       this.networkService.initializeNetworkService();
+
+      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
 
       // this language will be used as a fallback when a translation isn't found in the current language
       this.translate.setDefaultLang(defaultLanguage);

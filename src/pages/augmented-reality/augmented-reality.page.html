@@ -1,11 +1,8 @@
 <ion-header>
-  <ion-toolbar mode="ios">
+  <ion-toolbar mode="ios" class="ar-toolbar">
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>
-      AR
-    </ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -22,8 +19,8 @@
   </div>
   -->
   <div ion-fixed class="spotContainer">
-    <!--<span *ngFor="let spot of spotArray" [ngStyle]="{'left': spot.screenRelativePositionX + '%', 'top': spot.screenRelativePositionY + '%'}">-->
-    <span>
+    <span *ngFor="let spot of spotArray" [ngStyle]="{'left': spot.screenRelativePositionX + '%', 'top': spot.screenRelativePositionY + '%'}">
+    <!--<span>-->
       <img src="../../assets/imgs/marker.png" [ngStyle]="{'width': spot.relativeSize + '%', 'height': spot.relativeSize + '%'}"/>
     </span>
   </div>

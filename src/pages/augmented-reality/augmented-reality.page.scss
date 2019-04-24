@@ -1,0 +1,31 @@
+@import '../../styles/fonts';
+@import '../../styles/variables';
+
+ion-header {
+    display: block !important;
+    width: $ar-toolbar-height !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+
+    ion-toolbar.ar-toolbar {
+        --background: transparent !important;
+        width: $ar-toolbar-height !important;
+
+        ion-buttons {
+            background-color: transparent !important;
+
+            ion-back-button {
+                width: 100% !important;
+
+                button.button-native {
+                    padding: 0 !important;
+                }
+            }
+        }
+    }
+}
+
+ion-content {
+    --background: transparent !important;
+}
