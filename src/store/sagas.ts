@@ -16,7 +16,7 @@ const getFilteredGpsCoordinates = state => state.gps.distanceFilteredCoordinates
 const getPois = state => state.poi.poi;
 const getPinArray = state => state.ar.pinArray;
 const getFusionOrientation = state => state.ar.fusionCoordinates;
-const getFov = state => state.ar.fov;
+const getFov = state => state.ar.cameraFov;
 
 function* filterGpsCoordinate() {
     console.log("Registering saga filterGpsCoordinate on gps/SET_COORDINATES");

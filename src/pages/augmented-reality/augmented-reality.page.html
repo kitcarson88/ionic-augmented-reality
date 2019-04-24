@@ -25,4 +25,9 @@
     </span>
   </div>
 
+  <!-- ONLY DEBUG -->
+  <div style="position:absolute; top: 100px; left: 0;">
+    <span *ngIf="fusionSensor$ | async as coord">alpha: {{coord.alfa}}<br>beta: {{coord.beta}}<br>gamma: {{coord.gamma}}<br></span>
+  </div>
+
 </ion-content>

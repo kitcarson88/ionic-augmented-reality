@@ -67,6 +67,11 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
   private spotArraySubscription: any = null;
   spotArray: any[] = [];
 
+
+  //ONLY FOR DEBUG
+  @select(["ar", "fusionCoordinates"])
+  fusionSensor$: Observable<boolean>;
+
   constructor(
     private navCtrl: NavController,
     private platform: Platform,
