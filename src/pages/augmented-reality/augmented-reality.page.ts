@@ -67,10 +67,11 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
   private spotArraySubscription: any = null;
   spotArray: any[] = [];
 
+  private preloadAuthorizationError: boolean = false;
 
   //ONLY FOR DEBUG
-  @select(["ar", "fusionCoordinates"])
-  fusionSensor$: Observable<boolean>;
+  //@select(["ar", "fusionCoordinates"])
+  //fusionSensor$: Observable<boolean>;
 
   constructor(
     private navCtrl: NavController,
@@ -109,6 +110,7 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
       .then(cameraPresent => this.cameraPresent = cameraPresent)
       .catch(err => {
         console.log("Error isCameraPresent: ", err);
+        this.preloadAuthorizationError = true;
         this.manageARSystemsErrors(ARError.INTERNAL_AR_ERROR);
       });
 
@@ -116,6 +118,7 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
       .then(cameraAuthorized => this.cameraAuthorized = cameraAuthorized)
       .catch(err => {
         console.log("Error isCameraAuthorized: ", err);
+        this.preloadAuthorizationError = true;
         this.manageARSystemsErrors(ARError.INTERNAL_AR_ERROR);
       });
 
@@ -123,6 +126,7 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
       .then(locationEnabled => this.locationEnabled = locationEnabled)
       .catch(err => {
         console.log("Error isLocationEnabled: ", err);
+        this.preloadAuthorizationError = true;
         this.manageARSystemsErrors(ARError.INTERNAL_AR_ERROR);
       });
 
@@ -130,6 +134,7 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
       .then(locationAvailable => this.locationAvailable = locationAvailable)
       .catch(err => {
         console.log("Error isLocationAvailable: ", err);
+        this.preloadAuthorizationError = true;
         this.manageARSystemsErrors(ARError.INTERNAL_AR_ERROR);
       });
 
@@ -137,6 +142,7 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
       .then(locationAuthorized => this.locationAuthorized = locationAuthorized)
       .catch(err => {
         console.log("Error isLocationAuthorized: ", err);
+        this.preloadAuthorizationError = true;
         this.manageARSystemsErrors(ARError.INTERNAL_AR_ERROR);
       });
 
@@ -162,9 +168,12 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
     console.log("firstLocationAuthorization: ", this.firstLocationAuthorization);
   }
 
-  ngAfterViewInit()
+  async ngAfterViewInit()
   {
-    this.spinnerService.showLoader();
+    if (this.preloadAuthorizationError)
+      return;
+
+    await this.spinnerService.showLoader();
     this.sensorMissing = false;
 
     //Start fused orientation service (accelerometer, gyroscope, magnetometer)
@@ -407,6 +416,8 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
 
   private manageARSystemsErrors(errorType: ARError)
   {
+    this.spinnerService.dismissLoader();
+
     switch (errorType)
     {
       case ARError.INTERNAL_AR_ERROR:
