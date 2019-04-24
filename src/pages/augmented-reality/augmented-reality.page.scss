@@ -17,10 +17,10 @@ ion-header {
 
             ion-back-button {
                 width: 100% !important;
-
-                button.button-native {
-                    padding: 0 !important;
-                }
+                --margin-start: 0 !important;
+                --margin-end: 0 !important;
+                --padding-start: 0 !important;
+                --padding-end: 0 !important;
             }
         }
     }
