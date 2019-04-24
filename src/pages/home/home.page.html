@@ -25,32 +25,10 @@
         </div>
       </div>
       <div class="back">
-        <span class="f-12 c-grey">
-          Di seguito viene proposto in maniera semplificata il funzionamento dell'applicazione.<br>Tutti i valori configurabili
-          sono modificabili in fase di sviluppo nel file constants.ts (directory src/util), compreso l'endpoint del servizio per il
-          recupero dei POI, attualmente mockato mediante il file poi-list.json.<br>Il base url, della macchina su cui fa risiedere il servizio è configurabile dai file environment.ts ed environment.prod.ts (utilizzato da Ionic
-          quando l'app viene eseguita con il flag --prod). Da questi file è inoltre possibile disattivare l'utilizzo del mock disattivando
-          il corrispettivo flag (porlo a false).
+        <span class="f-12 c-grey" [innerHtml]="'ALGORITHM_HEADER' | translate">
         </span>
-        <ol class="f-12" style="padding-left: 20px">
-          <li>
-            Attivazione della fotocamera come background della view, e recupero dell'angolo del suo campo visivo (FOV).
-          </li>
-          <li>
-            Attivazione a frequenza costante (configurabile) del sensore gps, e dei sensor fusion (accelerometro, giroscopio, magnetometro).
-          </li>
-          <li>
-            All'arrivo dei dati gps, verifico che lo spostamento dell'utente sia di almeno GPS_MIN_DISTANCE_FILTER metri. Se questo è vero,
-            recupero i POI mediante il servizio Rest. Per ogni POI compreso nei RADAR_POI_RADIUS metri dall'utente, calcolo informazioni di distanza e orientamento popolando un array di pin.
-          </li>
-          <li>
-            All'arrivo dei dati di orientamento mediante i fusion sensor, per ogni pin verifico se esso è contenuto nel cono visivo del dispositivo (l'angolo FOV in gradi recuperato precedentemente).
-            Tutti i pin che rientrano in questo cono visivo vengono inseriti in un array di spot con informazioni per ognuno di essi di spiazzamento per la loro visualizzazione su schermo.
-          </li>
-          <li>
-            Ogni spot dello spot array viene inserito nella view in sovrapposizione alla fotocamera in base alle informazioni di spiazzamento precedentemente calcolate.
-          </li>
-        </ol>
+        <span class="algorithmContent f-12" [innerHtml]="'ALGORITHM_CONTENT' | translate">
+        </span>
       </div>
     </div>
   </div>
