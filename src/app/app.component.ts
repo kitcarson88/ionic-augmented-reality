@@ -19,7 +19,7 @@ import { constants } from '../util/constants';
 })
 export class AppComponent
 {
-  showSplash: boolean = true;
+  showSplash: boolean = false;
 
   public appPages = [
     {

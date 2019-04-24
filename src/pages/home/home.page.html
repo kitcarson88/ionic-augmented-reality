@@ -11,13 +11,23 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <div>
-    Benvenuto nell'app Ionic Location Based Augmented Reality.
-    L'applicazione propone un'implementazione di realtà aumentata basata su geolocalizzazione
-    fatta in casa per mezzo dei sensori di movimento (accelerometro, gisoscopio e magnetometro),
-    del sistema di posizionamento geolocalizzato (gps), e di un servizio Rest che restituisce
-    un elenco di punti di interesse (poi) da mostrare.
+<ion-content class="ar-container">
+  <div class="mainContainer flippable-card" (click)="cardRotated = !cardRotated">
+    <div class="card-inner" [ngClass]="{rotated: cardRotated}">
+      <div class="front">
+        <div class="mainInfos">
+          <span class="title f-16 f-weight-600 c-grey">{{'WELCOME' | translate}}</span>
+          <p class="f-14 f-weight-400" [innerHtml]="'AR_MODULES' | translate"></p>
+        </div>
+        <div class="goToAlgorithmContainer">
+          <span class="f-18 f-weight-600 c-grey">{{'GO_TO_ALGORITHM' | translate}}</span>
+          <ion-icon name="arrow-forward" class="f-20 c-grey"></ion-icon>
+        </div>
+      </div>
+      <div class="back">
+        back
+      </div>
+    </div>
   </div>
   <menu-overlay></menu-overlay>
 </ion-content>

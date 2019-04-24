@@ -61,7 +61,8 @@ ion-toolbar.ar-toolbar {
     }
 
     ion-buttons {
-        background-color: #{$ar-buttons-background-color};
+        //background-color: $ar-buttons-background-color;
+        @include gradient($ar-buttons-background-color, $ar-content-background-color, bottom);
         width: #{$ar-toolbar-height} !important;
         height: #{$ar-toolbar-height} !important;
 
@@ -78,6 +79,7 @@ ion-menu.ar-menu {
         ion-toolbar {
             text-align: center !important;
             --background: #{$ar-menu-toolbar-background-color} !important;
+            --background: #{gradient($ar-menu-toolbar-background-color, $ar-content-background-color, bottom)} !important;
             --min-height: #{$ar-toolbar-height} !important;
 
             .logo {
@@ -86,7 +88,7 @@ ion-menu.ar-menu {
         }
     }
     ion-content {
-        --background: #{gradient($ar-menu-toolbar-background-color, $c-white, bottom)} !important;
+        --background: #{gradient($ar-content-background-color, $c-white, bottom)} !important;
 
         ion-list {
             background-color: transparent !important;
@@ -125,4 +127,49 @@ menu-overlay > div{
 ion-menu.show-menu + ion-router-outlet menu-overlay > div {
     z-index: 10000;
     opacity: $menu-overlay-opacity;
+}
+
+.ar-container {
+    --background: #{$ar-content-background-color} !important;
+}
+
+.flippable-card {
+    background-color: transparent;
+    width: calc(100% - 2rem);
+    margin: 1rem;
+    min-height: 15rem;
+    @include perspective(1000px);
+
+    .card-inner {
+        width: 100%;
+        height: 100%;
+        
+        position: absolute !important;
+        @include transition-transform(.8s);
+        transform-style: preserve-3d;
+
+        &.rotated {
+            @include transform(rotateY(-180deg));
+        }
+
+        .front, .back {
+            width: 100%;
+            height: 100%;
+            padding: 1rem;
+            position: absolute;
+            top: 0;
+            left: 0;
+            backface-visibility: hidden;
+            border-radius: 5px;
+            overflow: hidden;
+            @include box-shadow-inline(0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12));
+        }
+
+        .front {
+        }
+
+        .back {
+            @include transform(rotateY(180deg));
+        }
+    }
 }

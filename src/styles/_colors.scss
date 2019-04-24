@@ -3,7 +3,8 @@ $c-black: #000;
 $c-water-green: #048eab;
 $c-grey: #777;
 $c-light-grey-b7: #b7b7b7;
-$c-light-grey-e0: #e0e0e0;
+$c-light-grey-c0: #c0c0c0;
+$c-light-grey-f1: #f1f1f1;
 $c-red: #c51d1d;
 
 //FONT
@@ -19,8 +20,8 @@ $c-red: #c51d1d;
 .c-grey {
     color: $c-grey !important;
 }
-.c-light-grey-e0 {
-    color: $c-light-grey-e0 !important;
+.c-light-grey-c0 {
+    color: $c-light-grey-c0 !important;
 }
 .c-red {
     color: $c-red !important;
@@ -39,8 +40,8 @@ $c-red: #c51d1d;
 .bg-grey {
     background-color: $c-grey !important;
 }
-.bg-light-grey-e0 {
-    background-color: $c-light-grey-e0 !important;
+.bg-light-grey-c0 {
+    background-color: $c-light-grey-c0 !important;
 }
 .bg-red {
     background-color: $c-red !important;

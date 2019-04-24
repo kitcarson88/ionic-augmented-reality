@@ -146,6 +146,14 @@ dato un container  con padding-top e padding-bottom crea
   transition: $transition;
 }
 
+@mixin transition-transform($duration...) {
+  -webkit-transition: -webkit-transform $duration;
+  -moz-transition: -moz-transform $duration;
+  -ms-transition: -ms-transform $duration;
+  -o-transition: -o-transform $duration;
+  transition: transform $duration;
+}
+
 @mixin transition-property($property...) {
   -webkit-transition-property: $property;
   -moz-transition-property: $property;
@@ -247,4 +255,11 @@ dato un container  con padding-top e padding-bottom crea
   -ms-mask-image: url($path);
   -o-mask-image: url($path);
   mask-image: url($path);
+}
+
+@mixin perspective($perspective) {
+  -webkit-perspective: $perspective;
+  -moz-perspective: $perspective;
+  -ms-perspective: $perspective;
+  perspective: $perspective;
 }

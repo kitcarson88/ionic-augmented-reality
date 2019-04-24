@@ -1,1 +1,30 @@
+@import '../../styles/colors';
+@import '../../styles/mixins';
 
+.mainContainer {
+    height: calc(100% - 2rem) !important;
+
+    .back, .front {
+        background-color: $c-white;
+    }
+
+    .goToAlgorithmContainer {
+        width: 100%;
+        padding: 0 10px;
+        position: absolute;
+        bottom: 0;
+        height: 40px;
+        left: 0;
+
+        span {
+            line-height: initial !important;
+            @include vertical-align-transform(absolute);
+            right: 40px;
+        }
+
+        ion-icon {
+            @include vertical-align-transform(absolute);
+            right: 10px;
+        }
+    }
+}
