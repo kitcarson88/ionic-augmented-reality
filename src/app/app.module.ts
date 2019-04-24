@@ -51,8 +51,7 @@ import {
   getGeolocation,
   getDeviceMotion,
   getGyroscope,
-  CameraPreviewExtended,  //Camera Preview extended custom provider
-  getCameraPreviewExtended,
+  getCameraPreview,
 } from './app.providers';
 
 export function createTranslateLoader(http: HttpClient) {
@@ -101,8 +100,7 @@ export function createTranslateLoader(http: HttpClient) {
     {provide: Geolocation, useClass: getGeolocation()},
     {provide: DeviceMotion, useClass: getDeviceMotion()},
     {provide: Gyroscope, useClass: getGyroscope()},
-    CameraPreview,  //Not mocking because of using custom CameraPreviewExtended
-    {provide: CameraPreviewExtended, useClass: getCameraPreviewExtended()},
+    {provide: CameraPreview, useClass: getCameraPreview()},
     Globalization,  //Globalization not mocked. Calls managed directly in app.component
     NetworkService,
     StorageService,

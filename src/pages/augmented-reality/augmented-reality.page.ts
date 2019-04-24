@@ -6,8 +6,7 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 import { Diagnostic } from '@ionic-native/diagnostic/ngx';
 import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
-import { CameraPreviewOptions } from '@ionic-native/camera-preview/ngx';
-import { CameraPreviewExtended } from '../../app/app.providers';
+import { CameraPreviewOptions, CameraPreview } from '@ionic-native/camera-preview/ngx';
 
 import { select } from "@angular-redux/store";
 import { Observable } from "rxjs";
@@ -80,7 +79,7 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
     private gpsService: GpsActions,
     private sensorsService: SensorsService,
     private arInfos: ARActions,
-    private cameraPreview: CameraPreviewExtended,
+    private cameraPreview: CameraPreview,
     private alertService: AlertService,
     private spinnerService: SpinnerService
   ) { }
@@ -334,6 +333,7 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
   
       //Initializing camera FOV used on AR calculations
       this.cameraPreview.getHorizontalFOV().then((fov: number) => {
+        console.log("FOV: ", fov);
         this.arInfos.setCameraFov(Math.abs(fov));
       });
     }, err => {

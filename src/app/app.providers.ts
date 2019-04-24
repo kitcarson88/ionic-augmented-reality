@@ -13,29 +13,6 @@ import { DeviceMotion } from '@ionic-native/device-motion/ngx';
 import { Gyroscope } from '@ionic-native/gyroscope/ngx';
 import { CameraPreview } from '@ionic-native/camera-preview/ngx';
 
-//////////////////////////////CAMERA PREVIEW IONIC WRAPPER EXTENSION/////////////////////////////////////////
-//It extends @ionic-native/camera-preview to expose plugin getHorizontalFOV method
-@Injectable()
-export class CameraPreviewExtended extends CameraPreview
-{
-    //@Cordova()
-    getHorizontalFOV(): Promise<any> {
-        return new Promise((resolve, reject) => {
-            if (window['CameraPreview'])
-            {
-                let cameraPreviewPlugin = window['CameraPreview'];
-                let result = cameraPreviewPlugin.getHorizontalFOV();                
-                resolve(result);
-            }
-            else
-            {
-                throw new Error("Cordova plugin error on getHorizontalFOV method");
-            }
-        });
-    }
-}
-
-////////////////////HERE STARTS PLUGIN MOCKS TO USE THEM MOCKED IN IONIC SERVE (DEV EXECUTION)///////////////
     ////////////////////Mock providers
 export class HTTPMock {
     get(endpoint: string, params?: any, header?: any)
@@ -248,7 +225,7 @@ export class GyroscopeMock {
     }
 }
 
-export class CameraPreviewExtendedMock {
+export class CameraPreviewMock {
     startCamera(options?: any): Promise<any>
     {
         return new Promise((resolve, reject) => {
@@ -317,7 +294,7 @@ export function getGyroscope(): any
     return hasCordova()? Gyroscope : GyroscopeMock;
 }
 
-export function getCameraPreviewExtended(): any{
-    return hasCordova()? CameraPreviewExtended : CameraPreviewExtendedMock;
+export function getCameraPreview(): any{
+    return hasCordova()? CameraPreview : CameraPreviewMock;
 }
 ////////////////////HERE ENDS PLUGIN MOCKS TO USE THEM MOCKED IN IONIC SERVE (DEV EXECUTION)///////////////
