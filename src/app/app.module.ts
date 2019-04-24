@@ -74,8 +74,8 @@ export function createTranslateLoader(http: HttpClient) {
     SplashModule,
     IonicModule.forRoot({
       menuType: 'reveal',
-      //backButtonIcon: 'pea-back-arrow',
-      //backButtonText: '',
+      backButtonIcon: 'arback',
+      backButtonText: '',
       mode: 'md'
     }),
     TranslateModule.forRoot({
