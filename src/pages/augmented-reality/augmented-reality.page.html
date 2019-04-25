@@ -17,7 +17,7 @@
       </span>
     </div>
 
-    <!-- ONLY FOR DEBUG -->
+    <!-- ONLY FOR DEBUG on ionic serve -->
     <!--<div class="marker" style="top: 100px" (click)="openPoiDetailsDebug($event)">
       <span>
         <img src="../../assets/imgs/marker.png"/>
@@ -28,7 +28,7 @@
     </div>-->
   </div>
 
-  <!-- ONLY DEBUG -->
+  <!-- ONLY DEBUG on device -->
   <div style="position:absolute; top: 100px; left: 0;">
     <span class="f-24" *ngIf="fusionSensor$ | async as coord">alpha: {{coord.alfa}}<br>beta: {{coord.beta}}<br>gamma: {{coord.gamma}}<br></span>
   </div>

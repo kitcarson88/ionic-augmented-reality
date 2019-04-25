@@ -73,9 +73,9 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
   infosDescription: string;
   private showInfos: boolean = false;
 
-  //ONLY FOR DEBUG
-  //@select(["ar", "fusionCoordinates"])
-  //fusionSensor$: Observable<boolean>;
+  //ONLY FOR DEBUG on device
+  @select(["ar", "fusionCoordinates"])
+  fusionSensor$: Observable<boolean>;
 
   constructor(
     private navCtrl: NavController,
@@ -465,7 +465,7 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
     this.showInfos = true;
   }
 
-  //ONLY DEBUG
+  //ONLY DEBUG on ionic serve
   /*openPoiDetailsDebug(event)
   {
     event.stopPropagation();
