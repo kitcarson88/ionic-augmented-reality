@@ -23,13 +23,13 @@ import { constants } from '../../util/constants';
 import { FusionSensorsDTO } from '../../entities/dto/fusionSensorsDTO';
 
 enum ARError {
-  INTERNAL_AR_ERROR,
-  SENSORS_ERROR,
-  GPS_NOT_ENABLED,
-  LOCATION_PERMISSION_NOT_GRANTED,
-  CAMERA_PERMISSION_NOT_GRANTED,
-  CAMERA_SYSTEM_NOT_FOUND,
-  LOCATION_SERVICE_DISABLED
+  INTERNAL_AR_ERROR = "INTERNAL_AR_ERROR",
+  SENSORS_ERROR = "SENSORS_ERROR",
+  GPS_NOT_ENABLED = "GPS_NOT_ENABLED",
+  LOCATION_PERMISSION_NOT_GRANTED = "LOCATION_PERMISSION_NOT_GRANTED",
+  CAMERA_PERMISSION_NOT_GRANTED = "CAMERA_PERMISSION_NOT_GRANTED",
+  CAMERA_SYSTEM_NOT_FOUND = "CAMERA_SYSTEM_NOT_FOUND",
+  LOCATION_SERVICE_DISABLED = "LOCATION_SERVICE_DISABLED"
 }
 
 @Component({
@@ -417,31 +417,7 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
   private manageARSystemsErrors(errorType: ARError)
   {
     this.spinnerService.dismissLoader();
-
-    switch (errorType)
-    {
-      case ARError.INTERNAL_AR_ERROR:
-        this.alertService.showSensorsError("Si è verificato un errore con il sistema di realtà aumentata");
-        break;
-      case ARError.SENSORS_ERROR:
-        this.alertService.showSensorsError("Il dispositivo non supporta la funzionalità di realtà aumentata");
-        break;
-      case ARError.GPS_NOT_ENABLED:
-        this.alertService.showSensorsError("Per il corretto funzionamento della funzionalità di realtà aumentata, si prega di abilitare il gps");
-        break;
-      case ARError.LOCATION_PERMISSION_NOT_GRANTED:
-        this.alertService.showSensorsError("Per il corretto funzionamento della funzionalità di realtà aumentata, si prega di concedere i permessi richiesti");
-        break;
-      case ARError.CAMERA_PERMISSION_NOT_GRANTED:
-        this.alertService.showSensorsError("Per il corretto funzionamento della funzionalità di realtà aumentata, si prega di concedere i permessi richiesti");
-        break;
-      case ARError.CAMERA_SYSTEM_NOT_FOUND:
-        this.alertService.showSensorsError("Si è verificato un errore con la fotocamera del dispositivo. Impossibile avviare il modulo di realtà aumentata");
-        break;
-      case ARError.LOCATION_SERVICE_DISABLED:
-        this.alertService.showSensorsError("Per il corretto funzionamento della funzionalità di realtà aumentata, si prega di attivare il gps");
-        break;
-    }
+    this.alertService.showSensorsError(errorType);
   }
 
   ngOnDestroy()

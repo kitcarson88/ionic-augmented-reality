@@ -28,12 +28,12 @@ export class AppComponent
       icon: 'arhome',
       direction: 'root'
     },
-    {
+    /*{
       title: 'Map',
       url: '/map',
       icon: 'armap',
       direction: 'root'
-    },
+    },*/
     {
       title: 'AR',
       url: '/augmented-reality',

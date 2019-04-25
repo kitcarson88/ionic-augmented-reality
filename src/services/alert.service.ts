@@ -13,7 +13,9 @@ export class AlertService
         public events: Events
     ) {}
 
-    async showSensorsError(text: string) {
+    async showSensorsError(textCode: string) {
+        let text = await this.translateService.get(textCode).toPromise();
+
         const alert = await this.alertController.create({
             cssClass: 'ar-alert sensorsError',
             message: text,
