@@ -69,6 +69,10 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
 
   private preloadAuthorizationError: boolean = false;
 
+  infosTitle: string;
+  infosDescription: string;
+  private showInfos: boolean = false;
+
   //ONLY FOR DEBUG
   //@select(["ar", "fusionCoordinates"])
   //fusionSensor$: Observable<boolean>;
@@ -446,5 +450,32 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
 
     if (this.magnetometerCoordinatesErrorSubscription)
       this.magnetometerCoordinatesErrorSubscription.unsubscribe();
+  }
+
+  showDetails()
+  {
+    return this.showInfos;
+  }
+
+  openPoiDetails(poi, event)
+  {
+    event.stopPropagation();
+    this.infosTitle = poi['title'];
+    this.infosDescription = poi['description'];
+    this.showInfos = true;
+  }
+
+  //ONLY DEBUG
+  /*openPoiDetailsDebug(event)
+  {
+    event.stopPropagation();
+    this.infosTitle = "Mock title";
+    this.infosDescription = "Mock description";
+    this.showInfos = true;
+  }*/
+
+  closePoiDetails()
+  {
+    this.showInfos = false;
   }
 }
