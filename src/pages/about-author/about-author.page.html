@@ -11,17 +11,10 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <div>
-    Simone Colazzo è uno sviluppatore di software per piattaforme mobile mediante framework di tipo ibrido.
-    Laureato in Informatica alla Sapienza Università di Roma, inizia la sua attività professionale nell'ottobre del 2014
-    come sviluppatore back-end programmando principalmente in linguaggio Java J2EE. Da sempre appassionato di grafica computazionale,
-    scopre però che il back-end così lontato dall'interfacciamento grafico con l'utente non fa per lui, e dopo
-    essersi specializzato nella realizzazione di interfaccie Web mediante CSS3 passa definitivamente allo sviluppo
-    front-end lavorando dapprima su tecnologie ormai obsolete come JSP, e successivamente su siti basati su Angular.
-    Mediante l'utlizzo del Javascript e del Typescript si specializza nello sviluppo di applicazioni mobile ibride basate
-    sul framework Ionic (versioni 3 e 4) e Cordova. 
-  </div>
-
+<ion-content class="ar-container">
+  <ion-card>
+    <p class="f-16 f-weight-400 c-grey" [innerHtml]="'ABOUT_ME' | translate">
+    </p>
+  </ion-card>
   <menu-overlay></menu-overlay>
 </ion-content>

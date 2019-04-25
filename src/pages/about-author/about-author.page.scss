@@ -1,0 +1,10 @@
+@import '../../styles/colors';
+
+ion-card {
+    background-color: $c-white !important;
+    padding: 1rem !important;
+
+    p {
+        margin: 1rem 0 3rem !important;
+    }
+}
