@@ -30,7 +30,7 @@
 
   <!-- ONLY DEBUG on device -->
   <div style="position:absolute; top: 100px; left: 0;">
-    <span class="f-24" *ngIf="fusionSensor$ | async as coord">alpha: {{coord.alfa}}<br>beta: {{coord.beta}}<br>gamma: {{coord.gamma}}<br></span>
+    <span class="f-18" *ngIf="fusionSensor$ | async as coord">alpha: {{coord.alfa}}<br>beta: {{coord.beta}}<br>gamma: {{coord.gamma}}<br></span>
   </div>
 
   <div ion-fixed class="spotDetails bg-white" *ngIf="showDetails()">

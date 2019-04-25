@@ -7,10 +7,31 @@
         "descrizione": "Just an example description on marker 1"
     },
     {
-		"id": 348237,
+		"id": 4353453,
 		"latitudine": 41.474882,
         "longitudine": 12.903234,
         "titolo": "Example poi 2",
         "descrizione": "Just an example description on marker 2"
+    },
+    {
+		"id": 324354,
+		"latitudine": 41.469851,
+        "longitudine": 12.905578,
+        "titolo": "Example poi 3",
+        "descrizione": "Just an example description on marker 3"
+    },
+    {
+		"id": 87656465,
+		"latitudine": 41.459662,
+        "longitudine": 12.889217,
+        "titolo": "Example poi 4",
+        "descrizione": "Just an example description on marker 4"
+    },
+    {
+		"id": 657686,
+		"latitudine": 41.482196,
+        "longitudine": 12.864520,
+        "titolo": "Example poi 5",
+        "descrizione": "Just an example description on marker 5"
     }
 ]
