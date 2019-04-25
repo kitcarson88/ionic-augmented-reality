@@ -173,3 +173,41 @@ ion-menu.show-menu + ion-router-outlet menu-overlay > div {
         }
     }
 }
+
+ion-aler.ar-alert {
+    button {
+        color: $c-water-green !important;
+    }
+}
+
+ion-loading.ar-spinner {
+    .loading-wrapper {
+        width: $ar-spinner-side;
+        height: $ar-spinner-side;
+        border-radius: 0 !important;
+        background-color: $c-water-green !important;
+        @include box-shadow-inline(none);
+
+        -webkit-animation: sk-rotateplane 1.2s infinite ease-in-out;
+        animation: sk-rotateplane 1.2s infinite ease-in-out;
+    }
+
+    @-webkit-keyframes sk-rotateplane {
+        0% { -webkit-transform: perspective(120px) }
+        50% { -webkit-transform: perspective(120px) rotateY(180deg) }
+        100% { -webkit-transform: perspective(120px) rotateY(180deg)  rotateX(180deg) }
+    }
+
+    @keyframes sk-rotateplane {
+        0% { 
+            transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+            -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg) 
+        } 50% { 
+            transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+            -webkit-transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg) 
+        } 100% { 
+            transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+            -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+        }
+    }
+}

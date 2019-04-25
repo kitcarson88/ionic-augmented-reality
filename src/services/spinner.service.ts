@@ -42,7 +42,10 @@ export class SpinnerService
     if (this.counter <= 0)
     {
       this.counter = 0;
-      this.currentLoader = await this.loadingController.create(/*this.options*/);
+      this.currentLoader = await this.loadingController.create({
+        spinner: null,
+        cssClass: 'ar-spinner'
+      });
       if (this.currentLoader)
         await this.currentLoader.present();
     }
