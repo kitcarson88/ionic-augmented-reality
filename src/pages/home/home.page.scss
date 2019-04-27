@@ -2,7 +2,7 @@
 @import '../../styles/mixins';
 
 .mainContainer {
-    height: calc(100% - 2rem) !important;
+    height: calc(100% - 3rem) !important;
 
     .back, .front {
         background-color: $c-white;

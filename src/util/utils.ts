@@ -118,12 +118,12 @@ export class AugmentedRealityUtils
                 //100 * (180 - angleVertical) / 180;  Modified to set top value from -80% to 180%
                 //screenRelativePositionY = 220 * (180 - angleVertical) / 180 - 80;
 
-                if (85 < angleVertical && angleVertical < 95)
-                screenRelativePositionY = 20;
-                else if (angleVertical >= 95)  //Phone pointed toward the ground -> must move pin to the top of the screen
-                screenRelativePositionY = 100 * (180 - angleVertical) / 85 - 80;
-                else if (angleVertical <= 85) //Phone pointed toward sky -> must move pin to the bottom of the screen
-                screenRelativePositionY = 160 * (85 - angleVertical) / 85 + 20;
+                if (88 < angleVertical && angleVertical < 92)
+                    screenRelativePositionY = 20;
+                else if (angleVertical >= 92)  //Phone pointed toward the ground -> must move pin to the top of the screen
+                    screenRelativePositionY = 100 * (180 - angleVertical) / 88 - 80;
+                else if (angleVertical <= 88) //Phone pointed toward sky -> must move pin to the bottom of the screen
+                    screenRelativePositionY = 160 * (88 - angleVertical) / 88 + 20;
 
                 let relativeSize = 100 * (1 - pin.distance.meter / constants.RADAR_POI_RADIUS) + 15;
 

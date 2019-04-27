@@ -74,6 +74,8 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
   private showInfos: boolean = false;
 
   //ONLY FOR DEBUG on device
+  @select(["ar", "cameraFov"])
+  cameraFov$: Observable<number>;
   @select(["ar", "fusionCoordinates"])
   fusionSensor$: Observable<boolean>;
 

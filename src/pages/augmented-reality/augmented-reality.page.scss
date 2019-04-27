@@ -1,5 +1,6 @@
 @import '../../styles/fonts';
 @import '../../styles/variables';
+@import '../../styles/mixins';
 
 ion-header {
     display: block !important;
@@ -41,9 +42,11 @@ ion-content {
             text-align: center;
             //display: inline-block;
             width: auto;
+            max-width: 8rem !important;
             height: auto;
             position: absolute;
             left: 0;
+            @include transform(translateX(-50%));
 
             & > span {
                 display: inline-block;
