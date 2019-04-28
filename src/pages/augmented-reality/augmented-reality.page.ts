@@ -39,9 +39,6 @@ enum ARError {
 })
 export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
 {
-  private static readonly DEG2RAD = Math.PI / 180;
-  private static readonly EARTH_RADIUS = 6371;  //Earth radius in km
-
   private cameraPresent: boolean;
   private cameraAuthorized: boolean;
   private locationEnabled: boolean;
@@ -74,10 +71,10 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
   private showInfos: boolean = false;
 
   //ONLY FOR DEBUG on device
-  @select(["ar", "cameraFov"])
+  /*@select(["ar", "cameraFov"])
   cameraFov$: Observable<number>;
   @select(["ar", "fusionCoordinates"])
-  fusionSensor$: Observable<boolean>;
+  fusionSensor$: Observable<boolean>;*/
 
   constructor(
     private navCtrl: NavController,

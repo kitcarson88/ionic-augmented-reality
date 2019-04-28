@@ -29,10 +29,10 @@
   </div>
 
   <!-- ONLY DEBUG on device -->
-  <div style="position:absolute; top: 100px; left: 0;">
+  <!--<div style="position:absolute; top: 100px; left: 0;">
     <span class="f-18" *ngIf="fusionSensor$ | async as coord">alpha: {{coord.alfa}}<br>beta: {{coord.beta}}<br>gamma: {{coord.gamma}}<br></span>
     <span class="f-18" *ngIf="cameraFov$ | async as fov">fov: {{fov}}</span>
-  </div>
+  </div>-->
 
   <div ion-fixed class="spotDetails bg-white" *ngIf="showDetails()">
     <span class="f-18 f-weight-600 f-uppercase c-dark">{{infosTitle}}</span>
