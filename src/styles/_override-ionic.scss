@@ -50,4 +50,9 @@
             //border: 1px solid black;    //DEBUG
         }
     }
+
+    ion-back-button {
+        --color: #{$ion-back-button-icon-color} !important;
+        --icon-font-size: #{$ion-back-button-icon-font-size} !important;
+    }
 }
