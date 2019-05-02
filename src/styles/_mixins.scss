@@ -1,7 +1,7 @@
   /*
  *VERTICAL ALIGN KNOWN CHILD
  * */
-@mixin vertical-align-known-child($child-height,$selector) {
+@mixin vertical-centering-known-child($child-height,$selector) {
   //position: relative;
   #{$selector} {
     height: $child-height;
@@ -15,7 +15,7 @@
 /*
   *VERTICAL ALIGN KNOWN PARENT
   * */
-@mixin vertical-align-known-parent($parent-height,$selector) {
+@mixin vertical-centering-known-parent($parent-height,$selector) {
   line-height: $parent-height;
   height: $parent-height;
   #{$selector} {
@@ -28,7 +28,7 @@
 /*
   *VERTICAL ALIGN GHOST ELEMENT TECHNIQUE
   * */
-@mixin vertical-align-ghost-element($selector) {
+@mixin vertical-centering-ghost-element($selector) {
   text-align: center;
   /* May want to do this if there is risk the container may be narrower than the element inside */
   //white-space: nowrap;
@@ -50,7 +50,7 @@
 }
 
 //VERTICAL ALIGN transform technique
-@mixin vertical-align-transform($position: relative) {
+@mixin vertical-centering-transform($position: relative) {
   position: $position !important;
   top: 50% !important;
   -webkit-transform: translateY(-50%) !important;
@@ -58,6 +58,15 @@
   -ms-transform: translateY(-50%) !important;
   -o-transform: translateY(-50%) !important;
   transform: translateY(-50%) !important;
+}
+
+@mixin horizontal-centering-container($selector) {
+  text-align: center !important;
+  width: 100% !important;
+
+  #{$selector} {
+    display: inline-block;
+  }
 }
 
 /*

@@ -16,7 +16,7 @@ ion-content {
 
     .content {
         width: 100%;
-        @include vertical-align-transform(absolute);
+        @include vertical-centering-transform(absolute);
 
         ion-icon {
             color: $c-red;

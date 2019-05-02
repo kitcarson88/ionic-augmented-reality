@@ -18,12 +18,12 @@
 
         span {
             line-height: initial !important;
-            @include vertical-align-transform(absolute);
+            @include vertical-centering-transform(absolute);
             right: 40px;
         }
 
         ion-icon {
-            @include vertical-align-transform(absolute);
+            @include vertical-centering-transform(absolute);
             right: 10px;
         }
     }
