@@ -11,10 +11,9 @@ import { CameraPreviewOptions, CameraPreview } from '@ionic-native/camera-previe
 import { select } from "@angular-redux/store";
 import { Observable } from "rxjs";
 
-import { GpsActions, ARActions } from '../../store';
+import { GpsActions, ARActions, SpinnerActions } from '../../store';
 
 import { SensorsService } from '../../services/sensors.service';
-import { SpinnerService } from '../../services/spinner.service';
 import { AlertService } from '../../services/alert.service';
 
 import { Utils } from '../../util/utils';
@@ -90,7 +89,7 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
     private arInfos: ARActions,
     private cameraPreview: CameraPreview,
     private alertService: AlertService,
-    private spinnerService: SpinnerService
+    private spinnerService: SpinnerActions
   ) { }
 
   private leavePage = () => {

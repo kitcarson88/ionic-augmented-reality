@@ -5,6 +5,9 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 
+import { select } from "@angular-redux/store";
+import { Observable } from "rxjs";
+
 import { Globalization } from '@ionic-native/globalization/ngx';
 import { defaultLanguage, availableLanguages, sysOptions } from './i18n.constants';
 import { TranslateService } from '@ngx-translate/core';
@@ -20,6 +23,9 @@ import { constants } from '../util/constants';
 export class AppComponent
 {
   showSplash: boolean = true;
+
+  @select(["spinner", "visible"])
+  showSpinner$: Observable<boolean>;
 
   public appPages = [
     {

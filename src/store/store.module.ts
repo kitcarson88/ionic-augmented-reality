@@ -17,6 +17,7 @@ import { environment } from '../environments/environment';
 import { rootReducer } from "./store.reducer";
 import { AppState, INITIAL_STATE } from "./store.model";
 import {
+  SpinnerActions,
   GpsActions,
   AccelerometerActions,
   GyroscopeActions,
@@ -38,6 +39,7 @@ import { Converter } from "../util/converter";
 //import { constants } from "../util/constants";
 
 const ACTIONS = [
+  SpinnerActions,
   GpsActions,
   AccelerometerActions,
   GyroscopeActions,
@@ -76,7 +78,7 @@ export class StoreModule
       key: 'root',
       storage: storageService,
       //storage,
-      blacklist: [ 'gps', 'accelerometer', 'gyroscope', 'magnetometer', 'poi', 'ar' ]
+      blacklist: [ 'spinner', 'gps', 'accelerometer', 'gyroscope', 'magnetometer', 'poi', 'ar' ]
     }
     //const persistedReducer = persistReducer(persistConfig, rootReducer);
 

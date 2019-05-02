@@ -27,6 +27,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 //Components
 import { SplashModule } from 'src/components/splash/splash.module';
+import { SpinnerModule } from 'src/components/spinner/spinner.module';
 
 //Providers
 import { Api } from '../providers/api/api';
@@ -35,7 +36,6 @@ import { Api } from '../providers/api/api';
 import { NetworkService } from '../services/network.service';
 import { StorageService } from '../services/storage.service';
 import { SensorsService } from '../services/sensors.service';
-import { SpinnerService } from '../services/spinner.service';
 import { AlertService } from '../services/alert.service';
 
 //Redux store
@@ -71,6 +71,7 @@ export function createTranslateLoader(http: HttpClient) {
     HttpClientModule,
     StoreModule,
     SplashModule,
+    SpinnerModule,
     IonicModule.forRoot({
       menuType: 'reveal',
       backButtonIcon: 'arback',
@@ -105,7 +106,6 @@ export function createTranslateLoader(http: HttpClient) {
     NetworkService,
     StorageService,
     SensorsService,
-    SpinnerService,
     AlertService,
     Api,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }

@@ -5,6 +5,7 @@ import { combineReducers } from "redux";
 
 import { AppState, INITIAL_STATE } from "./store.model";
 
+import { spinnerReducer } from './spinner/spinner.reducer';
 import { gpsReducer } from "./gps/gps.reducer";
 import { accelerometerReducer } from "./accelerometer/accelerometer.reducer";
 import { gyroscopeReducer } from "./gyroscope/gyroscope.reducer";
@@ -19,6 +20,7 @@ export default function reduceReducers(...reducers)
 
 export const rootReducer = reduceReducers(
   combineReducers({
+    spinner: spinnerReducer,
     gps: gpsReducer,
     accelerometer: accelerometerReducer,
     gyroscope: gyroscopeReducer,
