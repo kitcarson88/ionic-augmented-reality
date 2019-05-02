@@ -20,7 +20,7 @@ The app integrates a state - action management using a Redux store module (for m
 
 Here the packages included:
 - [Redux logger](https://www.npmjs.com/package/redux-logger): it logs every action and store state change to facilitate development
-- [Redux persist](https://www.npmjs.com/package/redux-persist): it let to save some store sub-state datas. With a blacklist system let the user to choose what states to save in the internal storage. In the app it isn't directly, but it's used as a dependency of the next redux-offline package
+- [Redux persist](https://www.npmjs.com/package/redux-persist): it let to save some store sub-state datas. With a blacklist system let the developer to choose what states to save in the internal storage. In the app it isn't used directly, but it's used as a dependency of the next redux-offline package
 - [Redux offline](https://www.npmjs.com/package/@redux-offline/redux-offline): it let an offline management of the app, waiting device connection when a service call is done, retrying on call error, etc.
 - [Redux saga](https://www.npmjs.com/package/redux-saga): it's an extension of redux actions triggering; for example it let to launch an action at the arrive of another, to sync some parallel triggered actions, etc.
 
