@@ -50,7 +50,11 @@ To test the app with a back-end, please deploy somewhere a back-end service that
 ### Constants
 A source file containing the app constants is located in src/app/util folder.
 
-The file contains Rest services endpoints, and some other values used in the AR module (sensors relevation frequency, default camera fov, events identifiers, etc.)
+The file contains Rest services endpoints, and some other values used in the AR module:
+- sensors relevation frequency
+- default camera fov
+- ar radius
+- events identifiers
 
 ### Translation and Globalization
 The app includes a translation module using some json files contained in src/assets/i18n folder.
