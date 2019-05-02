@@ -12,5 +12,5 @@
     "CAMERA_PERMISSION_NOT_GRANTED": "Per il corretto funzionamento della funzionalità di realtà aumentata, si prega di concedere i permessi richiesti",
     "CAMERA_SYSTEM_NOT_FOUND": "Si è verificato un errore con la fotocamera del dispositivo. Impossibile avviare il modulo di realtà aumentata",
     "LOCATION_SERVICE_DISABLED": "Per il corretto funzionamento della funzionalità di realtà aumentata, si prega di attivare il gps",
-    "CONNECTION_ERROR_ON_RETRIEVE": "Si è verificato un erroe durante il recupero delle informazioni. Verificare la connessione di rete"
+    "CONNECTION_ERROR_ON_RETRIEVE": "Si è verificato un errore durante il recupero delle informazioni. Verificare la connessione di rete"
 }
