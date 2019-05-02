@@ -36,7 +36,8 @@ import { StorageService } from "../services/storage.service";
 import { ErrorManagerService } from "../services/error.service";*/
 
 import { Converter } from "../util/converter";
-//import { constants } from "../util/constants";
+import { ToastService } from 'src/services/toast.service';
+import { constants } from "../util/constants";
 
 const ACTIONS = [
   SpinnerActions,
@@ -65,9 +66,9 @@ export class StoreModule
     api: Api,
     //networkService: NetworkService,
     storageService: StorageService,
-    /*toastService: ToastService,
+    toastService: ToastService,
     translateService: TranslateService,
-    errorService: ErrorManagerService*/
+    //errorService: ErrorManagerService
   ) {
     if (parentModule) {
       throw new Error(
@@ -190,22 +191,22 @@ export class StoreModule
     const offlineTimeout = () => store => next => action => {
       let state = this.ngRedux.getState();
 
-      /*if (!(state['offline']['online']))
+      if (!(state['offline']['online']))
         switch (action.type)
         {
-          case FilieraActions.RETRIEVE_NFC_INFOS:
+          case PoiApiActions.RETRIEVE_POI:
             setTimeout(() => {
-              if (!(state['offline']['online']) && !(state.filiera.nfcInfos))
+              if (!(state['offline']['online']) && !(state.poi.poi))
               {
-                this.ngRedux.dispatch({ type: FilieraActions.RETRIEVE_NFC_INFOS_ERROR });
+                this.ngRedux.dispatch({ type: PoiApiActions.RETRIEVE_POI_ERROR });
 
-                /*translateService.get('CONNECTION_ERROR_ON_RETRIEVE').subscribe((message: string) => {
+                translateService.get('CONNECTION_ERROR_ON_RETRIEVE').subscribe((message: string) => {
                   toastService.showErrorToast({text: message});
-                });*/
-              /*}
+                });
+              }
             }, constants.CONNECTION_TIMEOUT);
             break;
-        }*/
+        }
 
       return next(action);
     };

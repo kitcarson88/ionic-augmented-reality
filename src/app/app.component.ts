@@ -73,6 +73,7 @@ export class AppComponent
 
       this.statusBar.styleDefault();
       this.statusBar.overlaysWebView(false);
+      this.statusBar.backgroundColorByHexString("#057d96");
 
       this.networkService.initializeNetworkService();
 
