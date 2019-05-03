@@ -1,11 +1,29 @@
 @import '../../styles/colors';
+@import '../../styles/fonts';
 @import '../../styles/mixins';
+@import '../../styles/responsive';
 
 .mainContainer {
     height: calc(100% - 3rem) !important;
 
     .back, .front {
         background-color: $c-white;
+    }
+
+    @include small-mobile {
+        .mainInfos {
+            & > span {
+                font-size: $f-size-2 !important;
+            }
+
+            & > p {
+                font-size: $f-size-1 !important;
+            }
+        }
+
+        .back > span {
+            font-size: $f-size-0 !important;
+        }
     }
 
     .goToAlgorithmContainer {
@@ -20,11 +38,19 @@
             line-height: initial !important;
             @include vertical-centering-transform(absolute);
             right: 40px;
+
+            @include small-mobile {
+                font-size: $f-size-3 !important;
+            }
         }
 
         ion-icon {
             @include vertical-centering-transform(absolute);
             right: 10px;
+
+            @include small-mobile {
+                font-size: $f-size-4 !important;
+            }
         }
     }
 }

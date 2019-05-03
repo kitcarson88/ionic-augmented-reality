@@ -55,6 +55,10 @@ ion-toolbar.ar-toolbar {
     --background: #{$ar-toolbar-background-color} !important;
     --min-height: #{$ar-toolbar-height} !important;
 
+    @include small-mobile {
+        --min-height: #{$ar-toolbar-height-small-mobile} !important;
+    }
+
     ion-title {
         padding-inline-start: 0 !important;
         padding-inline-end: 0 !important;
@@ -66,15 +70,32 @@ ion-toolbar.ar-toolbar {
         width: #{$ar-toolbar-height} !important;
         height: #{$ar-toolbar-height} !important;
 
+        @include small-mobile {
+            width: #{$ar-toolbar-height-small-mobile} !important;
+            height: #{$ar-toolbar-height-small-mobile} !important;
+        }
+
         ion-menu-button {
             display: block !important;
             float: none !important;
             margin: 0 auto !important;
+
+            @include small-mobile {
+                ion-icon.ar-menu-icon {
+                    font-size: $f-size-6 !important;
+                }
+            }
         }
     }
 }
 
 ion-menu.ar-menu {
+    --width: calc(100% - #{$ar-toolbar-height}) !important;
+
+    /*@include small-mobile {
+        --width: calc(100% - #{$ar-toolbar-height-small-mobile}) !important;
+    }*/
+
     ion-header {
         ion-toolbar {
             text-align: center !important;
@@ -82,8 +103,16 @@ ion-menu.ar-menu {
             --background: #{gradient($ar-menu-toolbar-background-color, $ar-content-background-color, bottom)} !important;
             --min-height: #{$ar-toolbar-height} !important;
 
+            @include small-mobile {
+                --min-height: #{$ar-toolbar-height-small-mobile} !important;
+            }
+
             .logo {
                 font-size: $ar-menu-logo-size !important;
+
+                @include small-mobile {
+                    font-size: $ar-menu-logo-size-small-mobile !important;
+                }
             }
         }
     }
@@ -102,6 +131,10 @@ ion-menu.ar-menu {
                 ion-icon {
                     color: $c-grey !important;
                     margin : 0 $ar-menu-content-padding 0 0 !important;
+
+                    @include small-mobile {
+                        font-size: $f-size-6 !important;
+                    }
                 }
 
                 ion-label {

@@ -6,7 +6,8 @@ $device-xlarge: "all and (min-width: 769px)";
 $portrait: "(orientation: portrait)";
 $landscape: "(orientation: landscape)";
 $res_4_3: "(device-aspect-ratio: 2/3)";
-$res_16_9: "(device-aspect-ratio: 40/71)";
+//$res_16_9: "device-aspect-ratio: 40/71";
+$res_16_9: "device-aspect-ratio: 9/16";
 
 @mixin portrait {
     @media #{$portrait} {
@@ -35,8 +36,7 @@ $res_16_9: "(device-aspect-ratio: 40/71)";
 }
 
 @mixin mobile_16_9 {
-    @media #{$device-normal},
-    #{res_16_9} {
+    @media #{$device-normal} and (#{$res_16_9}) {
         @content;
     }
 }

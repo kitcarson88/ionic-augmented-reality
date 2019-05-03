@@ -1,5 +1,7 @@
-@import '../../styles/mixins';
 @import '../../styles/colors';
+@import '../../styles/fonts';
+@import '../../styles/mixins';
+@import '../../styles/responsive';
 
 ion-content {
     width: 100%;
@@ -23,11 +25,19 @@ ion-content {
             font-size: 10rem !important;
             margin-bottom: 4rem;
             @include transition(color .3s linear);
+
+            @include small-mobile {
+                font-size: 8rem !important;
+            }
         }
 
         div {
             color: $c-water-green;
             @include transition(color .3s linear);
+
+            @include small-mobile {
+                font-size: $f-size-8 !important;
+            }
         }
     }
 

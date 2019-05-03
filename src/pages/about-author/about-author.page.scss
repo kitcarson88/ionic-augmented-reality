@@ -1,4 +1,6 @@
 @import '../../styles/colors';
+@import '../../styles/fonts';
+@import '../../styles/responsive';
 
 ion-card {
     background-color: $c-white !important;
@@ -6,5 +8,10 @@ ion-card {
 
     p {
         margin: 1rem 0 3rem !important;
+
+        @include small-mobile {
+            font-size: $f-size-2 !important;
+            margin: .5rem 0 1.5rem !important;
+        }
     }
 }
