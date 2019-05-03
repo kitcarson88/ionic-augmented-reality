@@ -32,6 +32,7 @@ The app integrates only the POIs retrieve Rest call.
 
 This service takes as input values the user current latitude and longitude, and a maximum radius in which POIs are searched. 
 Since the app is shared as an example app, it doesn't call a real back-end service, but the call is mocked with an internal poi-list.json file contained in src/assets/mock-data.
+
 **To test the app consistently using this internal json file, _please modify the example POIs gps positions (latitude and longitude) with some points near to you._**
 
 The call is triggered by redux-offline package, and executed using HTTP ionic-native device modules when a real back-end service is called, or using Angular HttpModule on a mock call.
