@@ -58,8 +58,4 @@ module.exports = function(ctx) {
     fs.mkdirSync("./src/assets/fonts/josefin");
   copyFolderRecursiveSync("./node_modules/typeface-josefin-sans/files", "./src/assets/fonts/josefin");
   copyFileSync("./node_modules/typeface-josefin-sans/index.css", "./src/assets/fonts/josefin");
-
-  //Copy not yet merged camera preview plugin ionic wrapper
-  console.log("\nCopy camera preview ionic native wrapper extended");
-  copyFolderRecursiveSync("./scripts/camera-preview-wrapper-modified/camera-preview", "./node_modules/@ionic-native");
 };
