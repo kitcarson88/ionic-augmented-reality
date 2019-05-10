@@ -45,12 +45,6 @@ export class AppComponent
       url: '/augmented-reality',
       icon: 'arar',
       direction: 'forward'
-    },
-    {
-      title: 'About the author',
-      url: '/about-author',
-      icon: 'arauthor',
-      direction: 'root'
     }
   ];
 
