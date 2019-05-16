@@ -1,7 +1,7 @@
   /*
  *VERTICAL ALIGN KNOWN CHILD
  * */
-@mixin vertical-centering-known-child($child-height,$selector) {
+ @mixin vertical-centering-known-child($child-height,$selector) {
   //position: relative;
   #{$selector} {
     height: $child-height;
@@ -271,4 +271,9 @@ dato un container  con padding-top e padding-bottom crea
   -moz-perspective: $perspective;
   -ms-perspective: $perspective;
   perspective: $perspective;
+}
+
+@mixin border-text($color)
+{
+  text-shadow: 2px 0 0 $color, -2px 0 0  $color, 0 2px 0 $color, 0 -2px 0 $color, 1px 1px $color, -1px -1px 0 $color, 1px -1px 0 $color, -1px 1px 0 $color;
 }
