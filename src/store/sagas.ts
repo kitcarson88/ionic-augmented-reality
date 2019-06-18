@@ -31,7 +31,7 @@ function* filterGpsCoordinate() {
             {
                 let distance: number = AugmentedRealityUtils.calculateDistance(filteredGpsCoordinates.latitude, filteredGpsCoordinates.longitude, currentGpsCoordinates.latitude, currentGpsCoordinates.longitude);
 
-                distance /= 1000; //distance in meters
+                distance *= 1000; //distance in meters
 
                 if (distance <= constants.GPS_MIN_DISTANCE_FILTER)  //Continue to retreive new pois, only if the distance delta is at least constants.GPS_MIN_DISTANCE_FILTER meters
                     return;
