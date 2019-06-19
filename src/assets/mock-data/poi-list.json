@@ -33,5 +33,12 @@
         "longitudine": 12.864520,
         "titolo": "Example poi 5",
         "descrizione": "Just an example description on marker 5"
+    },
+    {
+		"id": 54432545,
+		"latitudine": 41.971366,
+        "longitudine": 12.542397,
+        "titolo": "Example poi 6",
+        "descrizione": "Just an example description on marker 6"
     }
 ]
