@@ -125,7 +125,7 @@ export class AugmentedRealityUtils
                 else if (angleVertical <= 88) //Phone pointed toward sky -> must move pin to the bottom of the screen
                     screenRelativePositionY = 160 * (88 - angleVertical) / 88 + 20;
 
-                let relativeSize = 100 * (1 - pin.distance.meter / constants.RADAR_POI_RADIUS) + 15;
+                let relativeSize = 85 * (1 - pin.distance.meter / constants.RADAR_POI_RADIUS) + 15;
 
                 spotArray.push({
                     id: pin.latitude + pin.longitude + pin.distance.meter,
