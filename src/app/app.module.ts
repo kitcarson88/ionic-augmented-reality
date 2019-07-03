@@ -26,8 +26,8 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
 //Components
-import { SplashModule } from 'src/components/splash/splash.module';
-import { SpinnerModule } from 'src/components/spinner/spinner.module';
+import { SplashModule } from '../components/splash/splash.module';
+import { SpinnerModule } from '../components/spinner/spinner.module';
 
 //Providers
 import { Api } from '../providers/api/api';
