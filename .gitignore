@@ -34,6 +34,10 @@ Thumbs.db
 UserInterfaceState.xcuserstate
 package-lock.json
 
-//Fonts downloaded by npm
+# Custom rules
 src/assets/fonts/roboto
 src/assets/fonts/josefin
+resources/android/icon
+resources/android/splash
+resources/ios/icon
+resources/ios/splash

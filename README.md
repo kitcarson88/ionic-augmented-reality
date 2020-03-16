@@ -1,5 +1,5 @@
 # Ionic Location based Augmented Reality
-The repository contains a Ionic 4 example app with an implementation of a simple location based augmented reality. Using gps data, a Rest service (a GET method call) and device sensors (accelerometer, gyroscope and magnetometer) datas, some Points Of Interest (POIs) are drawn on a camera preview background layer.
+The repository contains a Ionic 5 example app with an implementation of a simple location based augmented reality. Using gps data, a Rest service (a GET method call) and device sensors (accelerometer, gyroscope and magnetometer) datas, some Points Of Interest (POIs) are drawn on a camera preview background layer.
 Sensors datas are combined with a porting of a Complementary Filter paradigm called Sensors Fusion.
 
 ## Algorithm explaination
@@ -20,9 +20,8 @@ The app integrates a state - action management using a Redux store module (for m
 
 Here the packages included:
 - [Redux logger](https://www.npmjs.com/package/redux-logger): it logs every action and store state change to facilitate development
-- [Redux persist](https://www.npmjs.com/package/redux-persist): it let to save some store sub-state datas. With a blacklist system let the developer to choose what states to save in the internal storage. In the app it isn't used directly, but it's used as a dependency of the next redux-offline package
-- [Redux offline](https://www.npmjs.com/package/@redux-offline/redux-offline): it let an offline management of the app, waiting device connection when a service call is done, retrying on call error, etc.
-- [Redux saga](https://www.npmjs.com/package/redux-saga): it's an extension of redux actions triggering; for example it let to launch an action at the arrive of another, to sync some parallel triggered actions, etc.
+- [Redux saga](https://www.npmjs.com/package/redux-saga): it's an extension of redux actions triggering, to create sagas; a saga let complex actions management such as to launch an action at the arrive of another, to sync some parallel triggered actions, etc.
+- [Redux observable](https://www.npmjs.com/package/redux-observable-es6-compat): really similar to redux saga, it let to create epics; an epic is conceptually used to concatenate different actions of a same process
 
 All redux store files are contained in the src/store folder; store.module.ts file contains all its logics and settings.
 It also define some redux middlewares explained in the next section.
@@ -35,17 +34,14 @@ Since the app is shared as an example app, it doesn't call a real back-end servi
 
 **To test the app consistently using this internal json file, _please modify the example POIs gps positions (latitude and longitude) with some points near to you._**
 
-The call is triggered by redux-offline package, and executed using HTTP ionic-native device modules when a real back-end service is called, or using Angular HttpModule on a mock call.
-
-##### Offilne middleware
-To improve redux-offline connection waiting and to prevent an infinite connection waiting, an 'offlineTimeout' middleware is used. At the launch of a call action, a timeout is set. When the timeout occurs, if no data is retrieved, dismiss redux-offline action.
+The call is managed by an epic (redux-observable package), and executed using HTTP ionic-native device modules when a real back-end service is called, or using Angular HttpModule on a mock call.
 
 ##### Data normalizer middleware
 Tipically when some data is retrieved by a back-end service, this data need some manipulation before being shown on a view/page interface. The code proposes a decoupling system by another 'dataNormalizer' middleware. When some data is retrieved, it is given as input to a converter function (src/util/converter.ts source file). The converter manipulates service data and returns optimized data to show.
 Back-end data is typed using special data called DTO (Data Transfer Object) contained in src/entities/dto folder; data types to show on page are stored in src/entities/form folder instead.
 
 ### Environments
-Ionic 4 applications natively support 2 build environments: development and production. To build and app in production mode add the --prod flag in the build command line.
+Ionic 5 applications natively support 2 build environments: development and production. To build and app in production mode add the --prod flag in the build command line.
 In the src/environments folder there are two files environment.ts and environment.prod.ts used in order in dev and prod modes, and they contain same flags setted differently based on build mode. 
 As previously described, a 'mock' flag is setted to use internal mocked Rest calls (setted to true in dev mode by default).
 To test the app with a back-end, please deploy somewhere a back-end service that return a similar poi-list.json data, and adjust environment baseUrl and apiVersion flags.
@@ -67,7 +63,7 @@ Translation settings are stored in src/app/i18n.constants.ts and used in initial
 
 ### AR logics
 Augmented Reality logics consist of many actions executed only when a previous one ends. Once again redux comes in our help with redux-saga package, let it to manage the greater part of the algorithm. These sagas actions are implemented in src/store/sagas.ts file.
-All calculations are contained in src/util/utils.ts file in a AugmentedRealityUtils class.
+All calculations are contained in src/utils/utils.ts file in a AugmentedRealityUtils class.
 
 ### Css styles
 The app includes a src/styles folder containing the main style used in the app:
