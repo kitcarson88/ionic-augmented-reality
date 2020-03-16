@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { Cordova } from '@ionic-native/core';
 import { Observable } from 'rxjs';
+import { HttpClient } from "@angular/common/http";
 
+import { Device } from "@ionic-native/device/ngx";
 import { HTTP } from '@ionic-native/http/ngx';
 import { Network } from '@ionic-native/network/ngx';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
@@ -12,21 +12,61 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { DeviceMotion } from '@ionic-native/device-motion/ngx';
 import { Gyroscope } from '@ionic-native/gyroscope/ngx';
 import { CameraPreview } from '@ionic-native/camera-preview/ngx';
+import { Injectable } from "@angular/core";
 
-    ////////////////////Mock providers
-export class HTTPMock {
+@Injectable()
+export class DeviceMock
+{
+    cordova: string = "not available";
+    model: string = "not available";
+    platform: string = "not available";
+    uuid: string = "not available";
+    version: string = "not available";
+    manufacturer: string = "not available";
+    isVirtual: boolean = true;
+    serial: string = "not available";
+}
+
+@Injectable()
+export class HTTPMock
+{
+    constructor(private http: HttpClient) { }
+
     get(endpoint: string, params?: any, header?: any)
     {
-        return new Promise((resolve, reject) => {
-            resolve({});
+        return new Promise(async (resolve, reject) =>
+        {
+            try
+            {
+                let response = await this.http.get(endpoint, { headers: header }).toPromise();
+                resolve({ data: JSON.stringify(response) });
+            }
+            catch (err)
+            {
+                reject(err);
+            }
         });
     }
 
-    post(endpoint: string, params?: any, header?: any)
+    post(endpoint: string, body?: any, header?: any)
     {
-        return new Promise((resolve, reject) => {
-            resolve({});
+        return new Promise(async (resolve, reject) =>
+        {
+            try
+            {
+                let response = await this.http.post(endpoint, body, { headers: header }).toPromise();
+                resolve({ data: JSON.stringify(response) });
+            }
+            catch (err)
+            {
+                reject(err);
+            }
         });
+    }
+
+    setDataSerializer(): void
+    {
+
     }
 
     setRequestTimeout(timeout: number): void
@@ -35,10 +75,11 @@ export class HTTPMock {
     }
 }
 
+@Injectable()
 export class NetworkMock {
     public type: string = 'unknowkn';
 
-    onchange(): Observable<any>
+    onChange(): Observable<any>
     {
         return new Observable((subscriber) => {
             subscriber.complete();
@@ -46,6 +87,7 @@ export class NetworkMock {
     }
 }
 
+@Injectable()
 export class NativeStorageMock {
     setItem(reference: string, value: any): Promise<any>
     {
@@ -72,6 +114,7 @@ export class NativeStorageMock {
     }
 }
 
+@Injectable()
 export class ScreenOrientationMock {
     public ORIENTATIONS = {
         PORTRAIT_PRIMARY: "",
@@ -91,6 +134,7 @@ export class ScreenOrientationMock {
     }
 }
 
+@Injectable()
 export class DiagnosticMock {
     isCameraPresent(): Promise<any> {
         return new Promise((resolve, reject) => {
@@ -135,6 +179,7 @@ export class DiagnosticMock {
     }
 }
 
+@Injectable()
 export class LocationAccuracyMock {
     public REQUEST_PRIORITY_HIGH_ACCURACY: number = 4;
 
@@ -151,6 +196,7 @@ export class LocationAccuracyMock {
     }
 }
 
+@Injectable()
 export class GeolocationMock {
     watchPosition(options?: any): Observable<any>
     {
@@ -177,6 +223,7 @@ export class GeolocationMock {
     }
 }
 
+@Injectable()
 export class DeviceMotionMock {
     watchAcceleration(options?: any): Observable<any>
     {
@@ -201,6 +248,7 @@ export class DeviceMotionMock {
     }
 }
 
+@Injectable()
 export class GyroscopeMock {
     watch(options?: any): Observable<any>
     {
@@ -225,6 +273,7 @@ export class GyroscopeMock {
     }
 }
 
+@Injectable()
 export class CameraPreviewMock {
     startCamera(options?: any): Promise<any>
     {
@@ -245,12 +294,15 @@ export class CameraPreviewMock {
     }
 }
 
-    /////////////////////Cordova verify function
 export function hasCordova(): boolean{
     return window.hasOwnProperty('cordova');
 }
 
-    /////////////////////Providers getters
+export function getDevice(): any
+{
+    return hasCordova()? Device : DeviceMock;
+}
+
 export function getHTTP(): any
 {
     return hasCordova()? HTTP : HTTPMock;

@@ -1,7 +1,7 @@
 import { AccelerometerState, INITIAL_STATE_ACCELEROMETER } from './accelerometer.model';
 import { AccelerometerActions, AccelerometerAction } from './accelerometer.actions';
 
-import { Utils } from '../../util/utils';
+import { Utils } from '../../utils/utils';
 
 export function accelerometerReducer(state: AccelerometerState = INITIAL_STATE_ACCELEROMETER, action: AccelerometerAction): AccelerometerState
 {

@@ -1,5 +1,10 @@
-<ion-content>
-  <div class="horizontal-centering-container">
-    <div class="loading-element"></div>
+<ion-content *ngIf="withContainer; else withoutContainer">
+  <div class="centering-container">
+    <div class="loading-element centered-container"></div>
   </div>
 </ion-content>
+<ng-template #withoutContainer>
+  <div class="centering-container">
+    <div class="loading-element centered-container"></div>
+  </div>
+</ng-template>

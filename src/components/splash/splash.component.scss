@@ -7,6 +7,12 @@ ion-content {
     width: 100%;
     height: 100%;
     z-index: 10000000;
+    opacity: 1;
+    @include transition(opacity .5s linear);
+
+    &.fadeOut {
+        opacity: 0;
+    }
 }
 
 .splashContainer {
@@ -14,11 +20,15 @@ ion-content {
     width: 100%;
     height: 100%;
     position: relative;
-    @include transition(background-color .3s linear);
+    opacity: 0;
+    @include transition(opacity .3s linear, background-color .3s linear);
+
+    &.fadeIn {
+        opacity: 1;
+    }
 
     .content {
         width: 100%;
-        @include vertical-centering-transform(absolute);
 
         ion-icon {
             color: $c-red;

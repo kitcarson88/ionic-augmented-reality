@@ -8,7 +8,7 @@ import { MotionDTO } from '../entities/dto/motionDTO';
 import { OrientationDTO } from '../entities/dto/orientationDTO';
 import { MagneticFieldDTO } from '../entities/dto/magneticFieldDTO';
 
-import { constants } from '../util/constants';
+import { constants } from '../utils/constants';
 
 @Injectable()
 export class SensorsService
@@ -19,15 +19,12 @@ export class SensorsService
 
     @select(["accelerometer", "coordinates"])
     accelerometerCoordinates$: Observable<MotionDTO>;
-    accelerometerCoordinatesSubscription: any = null;
 
     @select(["gyroscope", "coordinates"])
     gyroscopeCoordinates$: Observable<OrientationDTO>;
-    gyroscopeCoordinatesSubscription: any = null;
     
     @select(["magnetometer", "coordinates"])
     magnetometerCoordinates$: Observable<MagneticFieldDTO>;
-    magnetometerCoordinatesSubscription: any = null;
 
     sensorsSubscription: any = null;
 

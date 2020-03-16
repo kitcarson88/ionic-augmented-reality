@@ -5,9 +5,10 @@ $device-large: "all and (min-width: 481px) and (max-width: 768px)";
 $device-xlarge: "all and (min-width: 769px)";
 $portrait: "(orientation: portrait)";
 $landscape: "(orientation: landscape)";
-$res_4_3: "(device-aspect-ratio: 2/3)";
-//$res_16_9: "device-aspect-ratio: 40/71";
-$res_16_9: "device-aspect-ratio: 9/16";
+$res_2_3: "(device-aspect-ratio: 2/3)";
+$res_3_4: "(device-aspect-ratio: 3/4)";
+$res_min_512_685: "(min-aspect-ratio: 512/683)";    //iPad pro ratio
+$iphone_6_plus_height: "736px";
 
 @mixin portrait {
     @media #{$portrait} {
@@ -22,59 +23,31 @@ $res_16_9: "device-aspect-ratio: 9/16";
 }
 
 @mixin small-mobile {
-    @media #{$device-small}{
+    @media #{$device-small} {
         @content;
     }
 }
 
-@mixin mobile {
-    @media #{$device-small},
-    #{$device-normal},
-    #{$device-large} and #{$portrait} {
-        @content;
-    }
-}
-
-@mixin mobile_16_9 {
-    @media #{$device-normal} and (#{$res_16_9}) {
-        @content;
-    }
-}
-
-@mixin phablet {
-    @media #{$device-large} and #{$portrait},
-    #{$device-xlarge} and #{$landscape} {
+@mixin smartphone {
+    @media #{$device-normal} {
         @content;
     }
 }
 
 @mixin tablet {
-    @media #{$device-large} and #{$landscape},
-    #{$device-xlarge} {
+    @media #{$device-large} {
         @content;
     }
 }
 
-@mixin tablet-xl {
-    @media #{$device-xlarge} and #{$landscape} {
+@mixin big-screen {
+    @media #{$device-xlarge} {
         @content;
     }
 }
 
-@include mobile {
-    .only-tablet {
-        display: none;
-    }
-}
-
-@include mobile {
-    .no-mobile {
-        display: none;
-    }
-}
-
-@include tablet {
-    .no-tablet {
-        display: none;
+.no-small-mobile {
+    @include small-mobile {
+        display: none !important;
     }
 }

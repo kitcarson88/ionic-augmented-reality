@@ -1,19 +1,13 @@
-import { SpinnerState, INITIAL_STATE_SPINNER } from './spinner.model';
 import { SpinnerActions, SpinnerAction } from './spinner.actions';
 
-export function spinnerReducer(state: SpinnerState = INITIAL_STATE_SPINNER, action: SpinnerAction): SpinnerState
+export function spinnerReducer(state: boolean = false, action: SpinnerAction): boolean
 {
-    switch (action.type) {
-        case SpinnerActions.SHOW_SPINNER: {
-            return {
-                visible: true
-            };
-        }
-        case SpinnerActions.HIDE_SPINNER: {
-            return {
-                visible: false
-            };
-        }
+    switch (action.type)
+    {
+        case SpinnerActions.SHOW_SPINNER:
+            return true;
+        case SpinnerActions.HIDE_SPINNER:
+            return false;
     }
 
     return state;

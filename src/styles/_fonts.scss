@@ -127,7 +127,7 @@ $font-family-josefin: 'Josefin Sans';
 
    .f-xsmall{
     font-size: $f-size-1 !important;
-    @include small-mobile() {
+    @include small-mobile {
       font-size: $f-size-0 !important;
     }
    }

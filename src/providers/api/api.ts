@@ -1,46 +1,77 @@
 import { Injectable } from '@angular/core';
 
 import { HTTP } from '@ionic-native/http/ngx';
-import { Http, RequestOptions} from '@angular/http';   //Only for mocked calls (useful on "ionic serve" browser run)
+import { HttpClient } from '@angular/common/http';
 
-import { constants } from '../../util/constants';
+import { constants } from '../../utils/constants';
 
 @Injectable({
   providedIn: 'root'
 })
 export class Api
 {
-  constructor(private http: HTTP, private debugHttp: Http) {
+  private accessToken: string;
+
+  constructor(private http: HTTP, private debugHttp: HttpClient)
+  {
     this.http.setRequestTimeout(constants.SERVICE_TIMEOUT);
   }
 
-  debugGet(endpoint: string, options?: RequestOptions)
+  async debugGet(endpoint: string)
   {
-    try {
-      return this.debugHttp.get(endpoint + "?" + new Date().getTime(), options);
-    } catch (err) {
-      return err;
+    try
+    {
+      let data = await this.debugHttp.get(endpoint + "?" + new Date().getTime()).toPromise();
+      console.log(`Received get ${ endpoint }: `, data);
+      return data;
+    }
+    catch (err)
+    {
+      throw err;
     }
   }
 
-  get(endpoint: string, params?: any, header?: any)
+  async get(endpoint: string, params?: any, header?: any)
   {
-    return this.http.get(endpoint, params, header);
+      console.log("Executing get: ", { endpoint, header });
+      let data = await this.http.get(endpoint, params, header);
+      console.log(`Received get ${ endpoint }: `, data);
+      return data;
   }
 
-  post(endpoint: string, body: any, header?: any) {
-    return this.http.post(endpoint, body, header);
+  async post(endpoint: string, body: any, header?: any, serializer?: 'urlencoded' | 'json' | 'utf8' | 'multipart')
+  {
+    if (serializer)
+      this.http.setDataSerializer(serializer);
+
+    console.log("Executing post: ", { endpoint, header, body });
+    let data = await this.http.post(endpoint, body, header);
+    console.log(`Received post ${ endpoint }: `, data);
+    return data;
   }
 
-  /*put(endpoint: string, body: any, reqOpts?: any) {
-    return this.http.put(endpoint, body, reqOpts);
+  async delete(endpoint: string, params?: any, header?: any)
+  {
+    console.log("Executing delete: ", { endpoint, header });
+    let data = await this.http.delete(endpoint, params, header);
+    console.log(`Received delete ${ endpoint }: `, data);
+    return data;
   }
 
-  delete(endpoint: string, reqOpts?: any) {
-    return this.http.delete(endpoint, reqOpts);
+  async put(endpoint: string, body: any, header?: any, serializer?: 'urlencoded' | 'json' | 'utf8' | 'multipart')
+  {
+    if (serializer)
+      this.http.setDataSerializer(serializer);
+
+    console.log("Executing put: ", { endpoint, header, body });
+    let data = await this.http.put(endpoint, body, header);
+    console.log(`Received put ${ endpoint }: `, data);
+    return data;
   }
 
-  patch(endpoint: string, body: any, reqOpts?: any) {
+  /*
+  patch(endpoint: string, body: any, reqOpts?: any)
+  {
     return this.http.patch(endpoint, body, reqOpts);
   }*/
 }

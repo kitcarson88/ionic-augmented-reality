@@ -1,16 +1,17 @@
 <ion-header>
   <ion-toolbar mode="ios" class="ar-toolbar">
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-back-button mode="md" icon="assets/icon/back.svg">
+      </ion-back-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div ion-fixed class="spotContainer" (click)="closePoiDetails()">
-    <div class="marker" *ngFor="let spot of spotArray" [ngStyle]="{'left': spot.screenRelativePositionX + '%', 'top': spot.screenRelativePositionY + '%'}" (click)="openPoiDetails(spot, $event)">
+  <div ion-fixed class="spotContainer">
+    <div class="marker" *ngFor="let spot of spotArray" [ngStyle]="{'left': spot.screenRelativePositionX + '%', 'top': spot.screenRelativePositionY + '%'}">
       <span>
-        <img src="../../assets/imgs/marker.png" [ngStyle]="{'width': spot.relativeSize + '%'}"/>
+        <img src="assets/images/marker.png" [ngStyle]="{'width': spot.relativeSize + '%'}"/>
       </span>
       <span class="f-16 f-weight-600 f-family-josefin c-water-green">
         {{(spot.distance / 1000).toFixed(2)}} Km
@@ -20,7 +21,7 @@
     <!-- ONLY FOR DEBUG on ionic serve -->
     <!--<div class="marker" style="top: 300px; left: 30%;" (click)="openPoiDetailsDebug($event)">
       <span>
-        <img src="../../assets/imgs/marker.png"/>
+        <img src="assets/images/marker.png"/>
       </span>
       <span class="f-16 f-weight-600 f-family-josefin c-water-green">
         1.34 Km
@@ -32,10 +33,10 @@
   <!--<div style="position:absolute; top: 100px; left: 0;">
     <span class="f-18" *ngIf="fusionSensor$ | async as coord">alpha: {{coord.alfa}}<br>beta: {{coord.beta}}<br>gamma: {{coord.gamma}}<br></span>
     <span class="f-18" *ngIf="cameraFov$ | async as fov">fov: {{fov}}</span>
-  </div>-->
+  </div>
 
   <div ion-fixed class="spotDetails bg-white" *ngIf="showDetails()">
     <span class="f-18 f-weight-600 f-uppercase c-dark">{{infosTitle}}</span>
     <span class="f-16 f-weight-400 c-dark" [innerHtml]="infosDescription"></span>
-  </div>
+  </div>-->
 </ion-content>

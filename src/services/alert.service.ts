@@ -1,34 +1,67 @@
 import { Injectable } from '@angular/core';
-import { AlertController, Events } from '@ionic/angular';
+import { AlertController } from '@ionic/angular';
 
-import { TranslateService } from '@ngx-translate/core';
-import { constants } from '../util/constants';
+import { NgRedux } from '@angular-redux/store';
+import { AppState } from '../store/store.model';
 
 @Injectable()
 export class AlertService
 {
-    constructor(
-        private translateService: TranslateService,
-        private alertController: AlertController,
-        public events: Events
-    ) {}
+    constructor(private alertController: AlertController, private ngRedux: NgRedux<AppState>) { }
 
-    async showSensorsError(textCode: string) {
-        let text = await this.translateService.get(textCode).toPromise();
+    async presentArAlert(header?: string, subHeader?: string, cssClass?: string, buttonsInfos?: {
+        text: string,
+        cssClass?: string,
+        role?: string,
+        actions?: { type: string, payload?: any; }[],
+        dismissOnClick?: boolean;
+    }[])
+    {
+        let buttons;
 
-        const alert = await this.alertController.create({
-            cssClass: 'ar-alert sensorsError',
-            message: text,
-            buttons: [
-                {
-                    text: 'Ok',
-                    handler: data => {
-                        this.events.publish(constants.AR_SYSTEM_ERROR);
-                    }
-                }
-            ]
-        });
-    
-        await alert.present();
+        if (buttonsInfos)
+        {
+            buttons = [];
+
+            for (let info of buttonsInfos)
+            {
+                let button = { text: info.text };
+
+                if (info.cssClass)
+                    button['cssClass'] = info.cssClass;
+
+                button['role'] = info.role ? info.role : null;
+
+                if (info.actions)
+                    button['handler'] = () =>
+                    {
+                        for (let action of info.actions)
+                            this.ngRedux.dispatch(action);
+
+                        if (info.dismissOnClick != null && info.dismissOnClick != undefined)
+                            return info.dismissOnClick;
+                    };
+
+                buttons.push(button);
+            }
+        }
+
+        let options = {
+            cssClass: 'ar-alert' + (cssClass && cssClass.length ? ' ' + cssClass : ''),
+            backdropDismiss: false,
+        };
+
+        if (header)
+            options['header'] = header;
+
+        if (subHeader)
+            options['subHeader'] = subHeader;
+
+        if (buttons)
+            options['buttons'] = buttons;
+
+        let alert = await this.alertController.create(options);
+
+        alert.present();
     }
 }

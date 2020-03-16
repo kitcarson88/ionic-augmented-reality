@@ -21,34 +21,39 @@ body {
 
 //H
 h1 {
-    @include small-mobile() {
+    @include small-mobile {
         font-size: $f-size-8 !important;
     }
     font-size: $f-size-9 !important;
 }
 h2 {
-    @include small-mobile() {
+    @include small-mobile {
         font-size: $f-size-6 !important;
     }
     font-size: $f-size-7 !important;
 }
 h3 {
-    @include small-mobile() {
+    @include small-mobile {
         font-size: $f-size-5 !important;
     }
     font-size: $f-size-6 !important;
 }
 h4 {
-    @include small-mobile() {
+    @include small-mobile {
         font-size: $f-size-4 !important;
     }
     font-size: $f-size-5 !important;
 }
 h5 {
-    @include small-mobile() {
+    @include small-mobile {
         font-size: $f-size-3 !important;
     }
     font-size: $f-size-4 !important;
+}
+
+.centering-container {
+    @include vertical-centering-transform(absolute);
+    @include horizontal-centering-container('.centered-container');
 }
 
 ion-toolbar.ar-toolbar {
@@ -78,6 +83,8 @@ ion-toolbar.ar-toolbar {
         ion-menu-button {
             display: block !important;
             float: none !important;
+            width: 100% !important;
+            height: 100% !important;
             margin: 0 auto !important;
 
             @include small-mobile {
@@ -85,6 +92,17 @@ ion-toolbar.ar-toolbar {
                     font-size: $f-size-6 !important;
                 }
             }
+        }
+
+        ion-back-button {
+            --color: #{$ar-back-button-color};
+            --icon-font-size: #{$ar-back-button-font-size} !important;
+            width: 100% !important;
+            height: 100% !important;
+            --margin-start: 0 !important;
+            --margin-end: 0 !important;
+            --padding-start: 0 !important;
+            --padding-end: 0 !important;
         }
     }
 }
@@ -162,7 +180,7 @@ ion-menu.show-menu + ion-router-outlet menu-overlay > div {
     opacity: $menu-overlay-opacity;
 }
 
-.ar-container {
+ion-content.ar-container {
     --background: #{$ar-content-background-color} !important;
 }
 
@@ -197,17 +215,19 @@ ion-menu.show-menu + ion-router-outlet menu-overlay > div {
             overflow: hidden;
             @include box-shadow-inline(0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12));
         }
-
-        .front {
-        }
-
         .back {
             @include transform(rotateY(180deg));
         }
     }
 }
 
-ion-aler.ar-alert {
+ion-alert.ar-alert {
+    .alert-head {
+        h2 {
+            font-size: 18px !important;
+        }
+    }
+
     button {
         color: $c-water-green !important;
     }

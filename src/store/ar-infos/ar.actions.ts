@@ -1,8 +1,7 @@
 import { Injectable } from "@angular/core";
 
-import { dispatch, NgRedux } from "@angular-redux/store";
+import { dispatch } from "@angular-redux/store";
 import { Action } from "redux";
-import { AppState } from '../store.model';
 
 export interface ARAction extends Action {
     payload?: any;
@@ -16,9 +15,7 @@ export class ARActions
     static readonly SET_FUSION_COORDINATES = "SET_FUSION_COORDINATES";
     static readonly SET_SPOT_ARRAY = "SET_SPOT_ARRAY";
 
-    isAlive: boolean = true;
-
-    constructor(private ngRedux: NgRedux<AppState>) {}
+    constructor() {}
 
     @dispatch()
     setCameraFov = (fov: number): ARAction => ({ type: ARActions.SET_CAMERA_FOV, payload: fov });
@@ -31,8 +28,4 @@ export class ARActions
 
     @dispatch()
     setSpotArray = (data: any): ARAction => ({ type: ARActions.SET_SPOT_ARRAY, payload: data });
-
-    ngOnDestroy(): void {
-        this.isAlive = false;
-    }
 }

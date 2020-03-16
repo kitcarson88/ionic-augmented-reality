@@ -16,75 +16,67 @@ ion-header {
         ion-buttons {
             background-color: transparent !important;
             background-image: none !important;
-
-            ion-back-button {
-                width: 100% !important;
-                --margin-start: 0 !important;
-                --margin-end: 0 !important;
-                --padding-start: 0 !important;
-                --padding-end: 0 !important;
-            }
         }
     }
 }
 
 ion-content {
     --background: transparent !important;
+}
 
-    .spotContainer {
-        width: 100%;
-        height: 100%;
+.spotContainer {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    div.marker {
+        text-align: center;
+        //display: inline-block;
+        width: auto;
+        max-width: 8rem !important;
+        height: auto;
         position: absolute;
-        top: 0;
         left: 0;
-
-        div.marker {
-            text-align: center;
-            //display: inline-block;
-            width: auto;
-            max-width: 8rem !important;
-            height: auto;
-            position: absolute;
-            left: 0;
-            @include transform(translateX(-50%));
-
-            & > span {
-                display: inline-block;
-
-                &:first-child {
-                    width: 5rem;
-                    height: auto;
-    
-                    img {
-                        display: inline-block;
-                        width: 100%;
-                        height: auto;
-                    }
-                }
-
-                &:last-child {
-                    width: 100%;
-                    margin-top: 1rem;
-                }
-            }
-
-        }
-    }
-
-    .spotDetails {
-        width: 100%;
-        height: 30%;
-        padding: 1.6rem 2.8rem 2.4rem;
-        position: fixed;
-        bottom: 0;
-        left: 0;
+        @include transform(translateX(-50%));
 
         & > span {
-            display: block;
+            display: inline-block;
+
+            &:first-child {
+                width: 5rem;
+                height: auto;
+
+                img {
+                    display: inline-block;
+                    width: 100%;
+                    height: auto;
+                }
+            }
 
             &:last-child {
-                line-height: 2.4rem;
+                width: 100%;
+                margin-top: 1rem;
             }
+        }
+
+    }
+}
+
+.spotDetails {
+    width: 100%;
+    height: 30%;
+    padding: 1.6rem 2.8rem 2.4rem;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+
+    & > span {
+        display: block;
+
+        &:last-child {
+            line-height: 2.4rem;
         }
     }
 }

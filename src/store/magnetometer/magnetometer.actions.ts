@@ -1,13 +1,11 @@
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
 
-import { dispatch, NgRedux } from "@angular-redux/store";
+import { dispatch } from "@angular-redux/store";
 import { Action } from "redux";
-import { AppState } from '../store.model';
 
 import { MagneticFieldDTO } from "../../entities/dto/magneticFieldDTO";
 
-import { constants } from "../../util/constants";
+import { constants } from "../../utils/constants";
 
 export interface MagnetometerAction extends Action {
     payload?: any;
@@ -22,9 +20,7 @@ export class MagnetometerActions
 
     private magnetometerSubscription: any = null;
 
-    isAlive: boolean = true;
-
-    constructor(private ngRedux: NgRedux<AppState>) {}
+    constructor() {}
 
     @dispatch()
     setIntensity = (data: any): MagnetometerAction => ({ type: MagnetometerActions.SET_INTENSITIES, payload: data });
@@ -84,8 +80,4 @@ export class MagnetometerActions
             else this.setSensorInError();
         }
     };
-
-    ngOnDestroy(): void {
-        this.isAlive = false;
-    }
 }

@@ -1,12 +1,6 @@
 @import 'fonts';
 @import 'colors';
 
-//LAYOUT AND COMPONENTS VARIABLES
-    //Override ionic components
-$ion-back-button-icon-color: $c-white;
-$ion-back-button-icon-font-size: 1.8rem;
-
-    //Custom enology components
 $ar-toolbar-height: 56px;
 $ar-toolbar-height-small-mobile: 48px;
 $ar-toolbar-background-color: $c-water-green;
@@ -19,6 +13,9 @@ $ar-menu-logo-size: 4rem;
 $ar-menu-logo-size-small-mobile: 3.6rem;
 $ar-menu-content-padding: 1.6rem;
 $ar-menu-item-border: 1px solid $c-light-grey-b7;
+
+$ar-back-button-color: $c-grey;
+$ar-back-button-font-size: 20px;
 
 $ar-content-background-color: $c-light-grey-f1;
 

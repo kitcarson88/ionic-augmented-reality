@@ -1,4 +1,4 @@
-import { constants } from '../../util/constants';
+import { constants } from '../../utils/constants';
 
 export interface ARState {
     cameraFov: number,

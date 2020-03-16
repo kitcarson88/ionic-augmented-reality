@@ -2,11 +2,10 @@ import { Injectable } from "@angular/core";
 import { filter } from 'rxjs/operators';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 
-import { dispatch, NgRedux } from "@angular-redux/store";
+import { dispatch } from "@angular-redux/store";
 import { Action } from "redux";
-import { AppState } from '../store.model';
 
-import { constants } from "../../util/constants";
+import { constants } from "../../utils/constants";
 
 export interface GpsAction extends Action {
     payload?: any;
@@ -21,9 +20,7 @@ export class GpsActions
 
     private locationServiceSubscription: any = null;
 
-    isAlive: boolean = true;
-
-    constructor(private ngRedux: NgRedux<AppState>, private locationService: Geolocation) { }
+    constructor(private locationService: Geolocation) { }
 
     @dispatch()
     setCoordinates = (data: any): GpsAction => ({ type: GpsActions.SET_COORDINATES, payload: data});
@@ -58,8 +55,4 @@ export class GpsActions
         }
         this.resetCoordinates();
     };
-
-    ngOnDestroy(): void {
-        this.isAlive = false;
-    }
 }

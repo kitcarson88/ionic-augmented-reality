@@ -1,25 +1,25 @@
 import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 
-import { Platform, Events, NavController } from '@ionic/angular';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
-import { Diagnostic } from '@ionic-native/diagnostic/ngx';
-import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
-import { NativeStorage } from '@ionic-native/native-storage/ngx';
-import { CameraPreviewOptions, CameraPreview } from '@ionic-native/camera-preview/ngx';
-
 import { select } from "@angular-redux/store";
-import { Observable } from "rxjs";
+import { Observable, Subject } from "rxjs";
+import { first, takeUntil, filter } from "rxjs/operators";
 
-import { GpsActions, ARActions, SpinnerActions } from '../../store';
+import { StatusBar } from "@ionic-native/status-bar/ngx";
+import { ScreenOrientation } from "@ionic-native/screen-orientation/ngx";
+import { Diagnostic } from "@ionic-native/diagnostic/ngx";
+import { LocationAccuracy } from "@ionic-native/location-accuracy/ngx";
+import { NativeStorage } from "@ionic-native/native-storage/ngx";
+import { CameraPreview, CameraPreviewOptions } from "@ionic-native/camera-preview/ngx";
 
-import { SensorsService } from '../../services/sensors.service';
-import { AlertService } from '../../services/alert.service';
+import { SpinnerActions, ARActions, GpsActions } from "../../store";
 
-import { Utils } from '../../util/utils';
-import { constants } from '../../util/constants';
+import { SensorsService } from "../../services/sensors.service";
 
-import { FusionSensorsDTO } from '../../entities/dto/fusionSensorsDTO';
+import { constants } from '../../utils/constants';
+
+import { FusionSensorsDTO } from "../../entities/dto/fusionSensorsDTO";
+import { AlertService } from "../../services/alert.service";
+import { TranslateService } from "@ngx-translate/core";
 
 enum ARError {
   INTERNAL_AR_ERROR = "INTERNAL_AR_ERROR",
@@ -38,189 +38,160 @@ enum ARError {
 })
 export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
 {
+  @select(["platformDevice", "infos", "platform"])
+  os$: Observable<string>;
+  os: string;
+
   private cameraPresent: boolean;
   private cameraAuthorized: boolean;
   private locationEnabled: boolean;
   private locationAvailable: boolean;
   private locationAuthorized: boolean;
   private firstLocationAuthorization: boolean;
+  private preloadAuthorizationError: boolean = false;
+  private authFlagsRetrieve$: Subject<void>;
 
-  private sensorsServiceSubscription = null;
-
-  private sensorMissing: boolean = false;
   @select(["accelerometer", "error"])
-  accelerometerCoordinatesError$: Observable<boolean>;
-  private accelerometerCoordinatesErrorSubscription: any = null;
+  private accelerometerCoordinatesError$: Observable<boolean>;
   @select(["gyroscope", "error"])
-  gyroscopeCoordinatesError$: Observable<boolean>;
-  private gyroscopeCoordinatesErrorSubscription: any = null;
+  private gyroscopeCoordinatesError$: Observable<boolean>;
   @select(["magnetometer", "error"])
-  magnetometerCoordinatesError$: Observable<boolean>;
-  private magnetometerCoordinatesErrorSubscription: any = null;
+  private magnetometerCoordinatesError$: Observable<boolean>;
+  private sensorsErrorsUnsubscribe$: Subject<void>;
+  private sensorsError: boolean;
+  private sensorsUnsubscribe$: Subject<void>;
 
   @select(["ar", "spotArray"])
   spotArray$: Observable<any[]>;
-  private spotArraySubscription: any = null;
   spotArray: any[] = [];
 
-  private preloadAuthorizationError: boolean = false;
-
-  infosTitle: string;
-  infosDescription: string;
-  private showInfos: boolean = false;
-
-  //ONLY FOR DEBUG on device
-  /*@select(["ar", "cameraFov"])
-  cameraFov$: Observable<number>;
-  @select(["ar", "fusionCoordinates"])
-  fusionSensor$: Observable<boolean>;*/
-
   constructor(
-    private navCtrl: NavController,
-    private platform: Platform,
+    private translate: TranslateService,
     private statusBar: StatusBar,
-    private events: Events,
     private screenOrientation: ScreenOrientation,
     private diagnosticService: Diagnostic,
     private locationAccuracy: LocationAccuracy,
     private nativeStorage: NativeStorage,
+    private cameraPreview: CameraPreview,
     private gpsService: GpsActions,
     private sensorsService: SensorsService,
     private arInfos: ARActions,
-    private cameraPreview: CameraPreview,
-    private alertService: AlertService,
-    private spinnerService: SpinnerActions
-  ) { }
+    private spinnerActions: SpinnerActions,
+    private alertService: AlertService
+  ) {
+    this.authFlagsRetrieve$ = new Subject<void>();
+    this.sensorsErrorsUnsubscribe$ = new Subject<void>();
+    this.sensorsUnsubscribe$ = new Subject<void>();
+    this.sensorsError = false;
+  }
 
-  private leavePage = () => {
-    this.navCtrl.navigateBack('/home');
-  };
-
-  ngOnInit()
+  async ngOnInit()
   {
     this.statusBar.hide();
+    
+    this.os$.pipe(first()).subscribe(os => {
+      this.os = os.toLowerCase();
 
-    if (Utils.isIos(this.platform))
-      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE_SECONDARY);
-    else
-      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE_PRIMARY);
+      if (this.os === 'ios')
+        this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE_SECONDARY);
+      else if (this.os === 'android')
+        this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE_PRIMARY);
+    });
 
-    //Catch error visualization by alerts, and go back to previous page
-    this.events.subscribe(constants.AR_SYSTEM_ERROR, this.leavePage);
+    this.spinnerActions.showLoader();
 
-    this.diagnosticService.isCameraPresent()
-      .then(cameraPresent => this.cameraPresent = cameraPresent)
-      .catch(err => {
-        console.log("Error isCameraPresent: ", err);
-        this.preloadAuthorizationError = true;
-        this.manageARSystemsErrors(ARError.INTERNAL_AR_ERROR);
-      });
+    try
+    {
+      this.cameraPresent = await this.diagnosticService.isCameraPresent();
+      this.cameraAuthorized = await this.diagnosticService.isCameraAuthorized();
+      this.locationAvailable = await this.diagnosticService.isLocationAvailable();
+      this.locationEnabled = await this.diagnosticService.isLocationEnabled();
+      this.locationAuthorized = await this.diagnosticService.isLocationAuthorized();
+    }
+    catch(error)
+    {
+      console.log("Error auth flags: ", error);
+      this.preloadAuthorizationError = true;
+    }
 
-    this.diagnosticService.isCameraAuthorized()
-      .then(cameraAuthorized => this.cameraAuthorized = cameraAuthorized)
-      .catch(err => {
-        console.log("Error isCameraAuthorized: ", err);
-        this.preloadAuthorizationError = true;
-        this.manageARSystemsErrors(ARError.INTERNAL_AR_ERROR);
-      });
-
-    this.diagnosticService.isLocationEnabled()
-      .then(locationEnabled => this.locationEnabled = locationEnabled)
-      .catch(err => {
-        console.log("Error isLocationEnabled: ", err);
-        this.preloadAuthorizationError = true;
-        this.manageARSystemsErrors(ARError.INTERNAL_AR_ERROR);
-      });
-
-    this.diagnosticService.isLocationAvailable()
-      .then(locationAvailable => this.locationAvailable = locationAvailable)
-      .catch(err => {
-        console.log("Error isLocationAvailable: ", err);
-        this.preloadAuthorizationError = true;
-        this.manageARSystemsErrors(ARError.INTERNAL_AR_ERROR);
-      });
-
-    this.diagnosticService.isLocationAuthorized()
-      .then(locationAuthorized => this.locationAuthorized = locationAuthorized)
-      .catch(err => {
-        console.log("Error isLocationAuthorized: ", err);
-        this.preloadAuthorizationError = true;
-        this.manageARSystemsErrors(ARError.INTERNAL_AR_ERROR);
-      });
-
-    this.nativeStorage.getItem(constants.FIRST_LOCATION_PERMISSION_REQUEST).then(data => {
+    try
+    {
+      let data = await this.nativeStorage.getItem(constants.FIRST_LOCATION_PERMISSION_REQUEST);
+      
       console.log("first permission flag: ", data);
       if (!data)
         this.firstLocationAuthorization = true;
       else
         this.firstLocationAuthorization = false;
-    }).catch(err => {
-      console.log("No error: simply app shortcut flag not in memory");
+    }
+    catch(error)
+    {
+      console.log("No error: simply app shortcut flag not in memory: ", error);
       this.firstLocationAuthorization = true;
-    });
-  }
+    }
 
-  private debugPrint()
-  {
-    console.log("cameraPresent: ", this.cameraPresent);
-    console.log("cameraAuthorized: ", this.cameraAuthorized);
-    console.log("locationEnabled: ", this.locationEnabled);
-    console.log("locationAvailable: ", this.locationAvailable);
-    console.log("locationAuthorized: ", this.locationAuthorized);
-    console.log("firstLocationAuthorization: ", this.firstLocationAuthorization);
+    this.authFlagsRetrieve$.next();
+    this.authFlagsRetrieve$.complete();
   }
 
   async ngAfterViewInit()
   {
-    if (this.preloadAuthorizationError)
-      return;
+    await this.authFlagsRetrieve$.toPromise();
 
-    await this.spinnerService.showLoader();
-    this.sensorMissing = false;
+    //Something went wrong on system authorizations retrieve. Show alert and abort all.
+    if (this.preloadAuthorizationError)
+    {
+      this.manageARSystemsErrors(ARError.INTERNAL_AR_ERROR);
+      return;
+    }
 
     //Start fused orientation service (accelerometer, gyroscope, magnetometer)
     //The data is not subscribed yet. The app initially verifies if the device as accelerometer, gyroscope and magnetomer,
     // and it verifies permissions too
     this.sensorsService.startSensors();
 
-    //Manage accelerometer, gyroscope, and magnetometer sensors errors
-    this.accelerometerCoordinatesErrorSubscription = this.accelerometerCoordinatesError$.subscribe((flag: boolean) => {
-      if (flag && !this.sensorMissing)
-      {
-        this.sensorMissing = true;
-        this.manageARSystemsErrors(ARError.SENSORS_ERROR);
-      }
-    });
+    this.accelerometerCoordinatesError$
+      .pipe(
+        takeUntil(this.sensorsErrorsUnsubscribe$),
+        filter(data => data != null && data != undefined))
+      .subscribe(flag => {
+        if (flag)
+        {
+          this.sensorsError = true;
+          this.manageARSystemsErrors(ARError.SENSORS_ERROR);
+        }
+      });
 
-    this.gyroscopeCoordinatesErrorSubscription = this.gyroscopeCoordinatesError$.subscribe((flag: boolean) => {
-      if (flag && !this.sensorMissing)
-      {
-        this.sensorMissing = true;
-        this.manageARSystemsErrors(ARError.SENSORS_ERROR);
-      }
-    });
+    this.gyroscopeCoordinatesError$
+      .pipe(
+        takeUntil(this.sensorsErrorsUnsubscribe$),
+        filter(data => data != null && data != undefined))
+      .subscribe(flag => {
+        if (flag)
+        {
+          this.sensorsError = true;
+          this.manageARSystemsErrors(ARError.SENSORS_ERROR);
+        }
+      });
 
-    this.magnetometerCoordinatesErrorSubscription = this.magnetometerCoordinatesError$.subscribe((flag: boolean) => {
-      if (flag && !this.sensorMissing)
-      {
-        this.sensorMissing = true;
-        this.manageARSystemsErrors(ARError.SENSORS_ERROR);
-      }
-    });
+    this.magnetometerCoordinatesError$
+      .pipe(
+        takeUntil(this.sensorsErrorsUnsubscribe$),
+        filter(data => data != null && data != undefined))
+      .subscribe(flag => {
+        if (flag)
+        {
+          this.sensorsError = true;
+          this.manageARSystemsErrors(ARError.SENSORS_ERROR);
+        }
+      });
 
-    //Wait some time, and if there are no errors with sensors, continue to initialize remaining ar systems.
     setTimeout(async () => {
-      //If sensors in error, do nothing (errors are managed previously)
-      if (this.sensorMissing)
-        return;
+      this.sensorsErrorsUnsubscribe$.next();
+      this.sensorsErrorsUnsubscribe$.complete();
 
-      //DEBUG this.debugPrint();
-      if (this.accelerometerCoordinatesErrorSubscription)
-        this.accelerometerCoordinatesErrorSubscription.unsubscribe();
-      if (this.gyroscopeCoordinatesErrorSubscription)
-        this.gyroscopeCoordinatesErrorSubscription.unsubscribe();
-      if (this.magnetometerCoordinatesErrorSubscription)
-        this.magnetometerCoordinatesErrorSubscription.unsubscribe();
+      if (this.sensorsError)
+        return;
 
       if (!this.cameraPresent)
       {
@@ -230,10 +201,8 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
 
       if (!this.cameraAuthorized)
       {
-        //DEBUG console.log("BEFORE camera permission");
         let cameraAuth = await this.diagnosticService.requestCameraAuthorization();
         console.log("cameraAuth: ", cameraAuth);
-        //DEBUG console.log("AFTER camera permission");
 
         if (cameraAuth.toLowerCase().indexOf("denied") >= 0)
         {
@@ -242,25 +211,27 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
         }
       }
 
-      //DEBUG this.debugPrint();
+      //Here camera is present and is authorized. Start it and continue to check/request other permissions
+      //Start camera with a delay to let landscape mode and permission requests
+      setTimeout(() =>
+      {
+        this.initCamera();
+      }, constants.CAMERA_INIT_DELAY);
 
-      //Here camera is present and is authorized. Continue with other permissions
       if (!this.locationEnabled)
       {
         this.manageARSystemsErrors(ARError.LOCATION_SERVICE_DISABLED);
-          return;
+        return;
       }
 
       if (!this.locationAvailable || !this.locationAuthorized)
       {
-        if (Utils.isIos(this.platform))
+        if (this.os === 'ios')
         {
           if (this.firstLocationAuthorization)  //iOS doesn't return anything if the permission is requested many times
           {
-            //DEBUGconsole.log("BEFORE location permission");
             let locAuth = await this.diagnosticService.requestLocationAuthorization();
             console.log("locAuth: ", locAuth);
-            //DEBUGconsole.log("AFTER location permission");
   
             this.nativeStorage.setItem(constants.FIRST_LOCATION_PERMISSION_REQUEST, true);
     
@@ -278,10 +249,8 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
         }
         else    //Android has no issues on request the same permission many times
         {
-          //DEBUG console.log("BEFORE location permission");
           let locAuth = await this.diagnosticService.requestLocationAuthorization();
           console.log("locAuth: ", locAuth);
-          //DEBUG console.log("AFTER location permission");
   
           if (locAuth.toLowerCase().indexOf("denied") >= 0)
           {
@@ -291,21 +260,12 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
         }
       }
 
-      //DEBUG this.debugPrint();
-
-      //Start camera with a delay to let landscape mode and permission requests
-      setTimeout(() => {
-        this.initCamera();
-      }, constants.CAMERA_INIT_DELAY);
-
       //Here all permissions are granted
       //Only on Android request max location precision
-      if (Utils.isAndroid(this.platform))
+      if (this.os === 'android')
       {
-        //DEBUG console.log("BEFORE location can request max precision");
         let canRequest = await this.locationAccuracy.canRequest();
         console.log("canRequest: ", canRequest);
-        //DEBUG console.log("AFTER location can request max precision");
 
         if (canRequest)
         {
@@ -319,18 +279,16 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
           );
         }
       }
-      else if (Utils.isIos(this.platform))
+      else if (this.os === 'ios')
       {
         this.startARSystems();
       }
-
     }, 1500);
   }
 
   private initCamera()
   {
-    let isIos = Utils.isIos(this.platform);
-
+    let isIos = this.os === 'ios';
     const cameraPreviewOpts: CameraPreviewOptions = {
       x: 0,
       y: 0,
@@ -367,15 +325,16 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
       delay: constants.FUSION_SENSOR_INIT_DELAY
     };
 
-    this.sensorsServiceSubscription = this.sensorsService.getSensorsData(sensorsFusionOptions).subscribe((fusionOrientation: FusionSensorsDTO) => {
-      if (fusionOrientation && fusionOrientation.alfa && fusionOrientation.beta && fusionOrientation.gamma)
-        this.arInfos.setFusionCoordinates(fusionOrientation);
-    });
+    this.sensorsService.getSensorsData(sensorsFusionOptions).pipe(takeUntil(this.sensorsUnsubscribe$))
+      .subscribe((fusionOrientation: FusionSensorsDTO) => {
+        if (fusionOrientation && fusionOrientation.alfa && fusionOrientation.beta && fusionOrientation.gamma)
+          this.arInfos.setFusionCoordinates(fusionOrientation);
+      });
 
     //Hide spinner
-    setTimeout(() => this.spinnerService.dismissLoader(), sensorsFusionOptions.delay);
+    setTimeout(() => this.spinnerActions.dismissLoader(), sensorsFusionOptions.delay);
 
-    this.spotArraySubscription = this.spotArray$.subscribe((spotArray: any[]) => {
+    this.spotArray$.pipe(takeUntil(this.sensorsUnsubscribe$)).subscribe((spotArray: any[]) => {
       if (spotArray)
       {
         //Here we have to update current spot array, and add new spots (if there are)
@@ -418,13 +377,17 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
 
   private manageARSystemsErrors(errorType: ARError)
   {
-    this.spinnerService.dismissLoader();
-    this.alertService.showSensorsError(errorType);
+    this.spinnerActions.dismissLoader();
+    this.translate.get(errorType.toString()).toPromise()
+      .then(text => this.alertService.presentArAlert(null, text, null, [{
+        text: 'Ok',
+        actions: [{ type: '@angular-redux/router::UPDATE_LOCATION', payload: '/home' }]
+      }]));
   }
 
   ngOnDestroy()
   {
-    this.spinnerService.dismissLoader();
+    this.spinnerActions.dismissLoader();
     this.statusBar.show();
     this.sensorsService.stopSensors();
     this.cameraPreview.stopCamera();
@@ -432,48 +395,7 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
     
     setTimeout(() => this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT), 500);
 
-    this.events.unsubscribe(constants.AR_SYSTEM_ERROR, this.leavePage);
-
-    if (this.spotArraySubscription)
-      this.spotArraySubscription.unsubscribe();
-
-    if (this.sensorsServiceSubscription)
-      this.sensorsServiceSubscription.unsubscribe();
-
-    if (this.accelerometerCoordinatesErrorSubscription)
-      this.accelerometerCoordinatesErrorSubscription.unsubscribe();
-
-    if (this.gyroscopeCoordinatesErrorSubscription)
-      this.gyroscopeCoordinatesErrorSubscription.unsubscribe();
-
-    if (this.magnetometerCoordinatesErrorSubscription)
-      this.magnetometerCoordinatesErrorSubscription.unsubscribe();
-  }
-
-  showDetails()
-  {
-    return this.showInfos;
-  }
-
-  openPoiDetails(poi, event)
-  {
-    event.stopPropagation();
-    this.infosTitle = poi['title'];
-    this.infosDescription = poi['description'];
-    this.showInfos = true;
-  }
-
-  //ONLY DEBUG on ionic serve
-  /*openPoiDetailsDebug(event)
-  {
-    event.stopPropagation();
-    this.infosTitle = "Mock title";
-    this.infosDescription = "Mock description";
-    this.showInfos = true;
-  }*/
-
-  closePoiDetails()
-  {
-    this.showInfos = false;
+    this.sensorsUnsubscribe$.next();
+    this.sensorsUnsubscribe$.complete();
   }
 }

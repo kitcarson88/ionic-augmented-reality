@@ -1,0 +1,1 @@
+export { PoisProvider } from './pois/pois';

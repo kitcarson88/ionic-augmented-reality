@@ -3,7 +3,7 @@ import { MagnetometerActions, MagnetometerAction } from './magnetometer.actions'
 
 import { MagneticFieldDTO } from '../../entities/dto/magneticFieldDTO';
 
-import { Utils } from '../../util/utils';
+import { Utils } from '../../utils/utils';
 
 export function magnetometerReducer(state: MagnetometerState = INITIAL_STATE_MAGNETOMETER, action: MagnetometerAction): MagnetometerState
 {

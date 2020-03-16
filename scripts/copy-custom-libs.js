@@ -1,5 +1,6 @@
 var fs = require('fs');
 var path = require('path');
+var rimraf = require("rimraf");
 
 function copyFileSync( source, target ) {
 

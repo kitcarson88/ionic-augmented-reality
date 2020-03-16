@@ -1,11 +1,10 @@
 import { Injectable } from "@angular/core";
 import { DeviceMotion, DeviceMotionAccelerationData, DeviceMotionAccelerometerOptions } from '@ionic-native/device-motion/ngx';
 
-import { dispatch, NgRedux } from "@angular-redux/store";
+import { dispatch } from "@angular-redux/store";
 import { Action } from "redux";
-import { AppState } from '../store.model';
 
-import { constants } from '../../util/constants';
+import { constants } from '../../utils/constants';
 
 export interface AccelerometerAction extends Action {
     payload?: any;
@@ -20,9 +19,7 @@ export class AccelerometerActions
 
     private accelerometerServiceSubscription: any = null;
 
-    isAlive: boolean = true;
-
-    constructor(private ngRedux: NgRedux<AppState>, private accelerometerService: DeviceMotion) {}
+    constructor(private accelerometerService: DeviceMotion) {}
 
     @dispatch()
     setAcceleration = (data: any): AccelerometerAction => ({ type: AccelerometerActions.SET_ACCELERATIONS, payload: data });
@@ -61,8 +58,4 @@ export class AccelerometerActions
         }
         this.resetAcceleration();
     };
-
-    ngOnDestroy(): void {
-        this.isAlive = false;
-    }
 }

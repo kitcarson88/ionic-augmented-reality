@@ -9,7 +9,8 @@ import { createTranslateLoader } from '../../app/app.module';
 import { HttpClient } from '@angular/common/http';
 
 import { HomePage } from './home.page';
-import { MenuOverlayModule } from 'src/components/menu-overlay/menu-overlay.module';
+
+import { MenuOverlayModule } from '../../components/menu-overlay/menu-overlay.module';
 
 @NgModule({
   imports: [
@@ -19,12 +20,11 @@ import { MenuOverlayModule } from 'src/components/menu-overlay/menu-overlay.modu
     MenuOverlayModule,
     TranslateModule.forChild({
       loader: {
-           provide: TranslateLoader,
-           useFactory: (createTranslateLoader),
-           deps: [ HttpClient ]
-         }
+        provide: TranslateLoader,
+        useFactory: (createTranslateLoader),
+        deps: [HttpClient]
       }
-    ),
+    }),
     RouterModule.forChild([
       {
         path: '',
@@ -34,4 +34,4 @@ import { MenuOverlayModule } from 'src/components/menu-overlay/menu-overlay.modu
   ],
   declarations: [HomePage]
 })
-export class HomePageModule {}
+export class HomePageModule { }

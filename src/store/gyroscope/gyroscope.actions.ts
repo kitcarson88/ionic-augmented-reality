@@ -1,11 +1,10 @@
 import { Injectable } from "@angular/core";
 import { Gyroscope, GyroscopeOrientation, GyroscopeOptions } from '@ionic-native/gyroscope/ngx';
 
-import { dispatch, NgRedux } from "@angular-redux/store";
+import { dispatch } from "@angular-redux/store";
 import { Action } from "redux";
-import { AppState } from '../store.model';
 
-import { constants } from "../../util/constants";
+import { constants } from "../../utils/constants";
 
 export interface GyroscopeAction extends Action {
     payload?: any;
@@ -20,10 +19,7 @@ export class GyroscopeActions
 
     private gyroscopeServiceSubscription: any = null;
 
-
-    isAlive: boolean = true;
-
-    constructor(private ngRedux: NgRedux<AppState>, private gyroscopeService: Gyroscope) {}
+    constructor(private gyroscopeService: Gyroscope) {}
 
     @dispatch()
     setOrientation = (data: any): GyroscopeAction => ({ type: GyroscopeActions.SET_ANGLES, payload: data });
@@ -62,8 +58,4 @@ export class GyroscopeActions
         }
         this.resetOrientation();
     };
-
-    ngOnDestroy(): void {
-        this.isAlive = false;
-    }
 }

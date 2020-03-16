@@ -203,6 +203,20 @@ dato un container  con padding-top e padding-bottom crea
   transform: $transformation;
 }
 
+@mixin keyframe($animation-name) {
+  @-webkit-keyframes #{$animation-name} {
+    @content;
+  }
+
+  @-moz-keyframes #{$animation-name} {
+    @content;
+  }
+
+  @keyframes #{$animation-name} {
+    @content;
+  }
+}
+
 @mixin animation($animation...) {
   -webkit-animation: $animation;
   -moz-animation: $animation;
@@ -224,6 +238,14 @@ dato un container  con padding-top e padding-bottom crea
   -ms-box-shadow: $box-shadow-intensity $color !important;
   -o-box-shadow: $box-shadow-intensity $color !important;
   box-shadow: $box-shadow-intensity $color !important;
+}
+
+@mixin box-shadow-inline-no-important($box-shadow-style...) {
+  -webkit-box-shadow: $box-shadow-style;
+  -moz-box-shadow: $box-shadow-style;
+  -ms-box-shadow: $box-shadow-style;
+  -o-box-shadow: $box-shadow-style;
+  box-shadow: $box-shadow-style;
 }
 
 @mixin box-shadow-inline($box-shadow-style...) {
@@ -276,4 +298,12 @@ dato un container  con padding-top e padding-bottom crea
 @mixin border-text($color)
 {
   text-shadow: 2px 0 0 $color, -2px 0 0  $color, 0 2px 0 $color, 0 -2px 0 $color, 1px 1px $color, -1px -1px 0 $color, 1px -1px 0 $color, -1px 1px 0 $color;
+}
+
+@mixin clamp-text-lines($lines)
+{
+  display: -webkit-box !important;
+  -webkit-line-clamp: $lines !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
 }

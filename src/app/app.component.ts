@@ -1,37 +1,41 @@
 import { Component } from '@angular/core';
-
 import { Platform } from '@ionic/angular';
+
+import { select, NgRedux } from "@angular-redux/store";
+import { Observable } from "rxjs";
+
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
-
-import { select } from "@angular-redux/store";
-import { Observable } from "rxjs";
+import { Device } from "@ionic-native/device/ngx";
 
 import { Globalization } from '@ionic-native/globalization/ngx';
 import { defaultLanguage, availableLanguages, sysOptions } from './i18n.constants';
 import { TranslateService } from '@ngx-translate/core';
 
-import { NetworkService } from '../services/network.service';
+import { AppState } from '../store/store.model';
 
-import { constants } from '../util/constants';
+import { PlatformDeviceActions } from "../store";
+
+import { Utils } from '../utils/utils';
 
 @Component({
   selector: 'app-root',
-  templateUrl: 'app.component.html'
+  templateUrl: 'app.component.html',
+  styleUrls: ['app.component.scss']
 })
 export class AppComponent
 {
-  showSplash: boolean = true;
+  @select(["splash"])
+  splashState$: Observable<string>;
 
-  @select(["spinner", "visible"])
+  @select(["spinner"])
   showSpinner$: Observable<boolean>;
 
   public appPages = [
     {
       title: 'Home',
       url: '/home',
-      icon: 'arhome',
+      icon: 'assets/icon/home.svg',
       direction: 'root'
     },
     /*{
@@ -43,42 +47,43 @@ export class AppComponent
     {
       title: 'AR',
       url: '/augmented-reality',
-      icon: 'arar',
+      icon: 'assets/icon/ar.svg',
       direction: 'forward'
     }
   ];
 
   constructor(
     private platform: Platform,
+    private device: Device,
+    private pltDevInfos: PlatformDeviceActions,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    public globalization: Globalization,
-    public translate: TranslateService,
-    private networkService: NetworkService,
-    private screenOrientation: ScreenOrientation
-  ) {
+    private globalization: Globalization,
+    private translate: TranslateService,
+    private ngRedux: NgRedux<AppState>
+  )
+  {
     this.initializeApp();
   }
 
   initializeApp()
   {
-    this.platform.ready().then(() => {
-      this.splashScreen.hide();
-
+    this.platform.ready().then(() => 
+    {
       this.statusBar.styleDefault();
-      this.statusBar.overlaysWebView(false);
-      this.statusBar.backgroundColorByHexString("#057d96");
+      this.splashScreen.hide();
+      this.ngRedux.dispatch({ type: 'HIDE_SPLASH' });
 
-      this.networkService.initializeNetworkService();
-
-      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
+      //Initialize some device infos
+      this.initDeviceInfos();
 
       // this language will be used as a fallback when a translation isn't found in the current language
       this.translate.setDefaultLang(defaultLanguage);
 
-      if ((<any>window).cordova)
+      if ((<any> window).cordova)
       {
-        this.globalization.getPreferredLanguage().then(result => {
+        this.globalization.getPreferredLanguage().then(result =>
+        {
           var language = this.getSuitableLanguage(result.value);
           this.translate.use(language);
           sysOptions.systemLanguage = language;
@@ -92,16 +97,40 @@ export class AppComponent
         sysOptions.systemLanguage = language;
       }
     });
+  }
 
-    setTimeout(() => {
-      this.showSplash = false;
-    }, constants.SPLASH_TIMEOUT);
+  private initDeviceInfos()
+  {
+    let os: 'android' | 'ios' | 'other' =
+      Utils.isAndroid(this.platform) ? 'android' : (Utils.isIos(this.platform) ? 'ios' : 'other');
+
+    let model = this.device.model;
+    if (Utils.isiPhoneX(this.platform, this.device))
+      model = 'iPhoneX';
+    if (Utils.isiPhoneXMax(this.platform, this.device))
+      model = 'iPhoneXMax';
+
+    let integration: 'cordova' | 'electron' | 'none' =
+      this.platform.is('cordova') ? 'cordova' : (this.platform.is('electron') ? 'electron' : 'none');
+
+    this.pltDevInfos.initializeInfos(
+      this.device.manufacturer,
+      model,
+      this.device.uuid,
+      this.device.serial,
+      os,
+      this.device.version,
+      this.device.platform,
+      integration,
+      this.platform.width(),
+      this.platform.height()
+    );
   }
 
   private getSuitableLanguage(language)
   {
-    console.log("language: ", language);
-		language = language.substring(0, 2).toLowerCase();
-		return availableLanguages.some(x => x.code == language) ? language : defaultLanguage;
+    //console.log("language: ", language);
+    language = language.substring(0, 2).toLowerCase();
+    return availableLanguages.some(x => x.code == language) ? language : defaultLanguage;
   }
 }
