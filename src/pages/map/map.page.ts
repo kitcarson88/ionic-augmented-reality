@@ -26,10 +26,12 @@ import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { Diagnostic } from '@ionic-native/diagnostic/ngx';
 import { Geoposition } from '@ionic-native/geolocation/ngx';
 
-import { GpsActions } from '../../store';
+import { GpsActions, StorageActions } from '../../store';
 
 import { Utils } from '../../utils/utils';
 import { constants } from '../../utils/constants';
+
+import { Poi } from '../../entities/form/poi';
 
 @Component({
   selector: 'app-map',
@@ -43,9 +45,15 @@ export class MapPage implements OnInit
     lng: 12.495939
   };
 
+  private static readonly EXAMPLE_POI_TITLE = 'Example map poi in ';
+  private static readonly EXAMPLE_POI_DESCRIPTION = 'A simple description for map example poi located in ';
+
   @select(["platformDevice", "infos", "os"])
   os$: Observable<'ios' | 'android' | 'other'>;
   os: 'ios' | 'android' | 'other';
+
+  @select(["storage", "pois"])
+  pois$: Observable<Poi[]>;
 
   private isLocationEnabled: boolean = true;
   private isLocationAvailable: boolean = true;
@@ -105,7 +113,8 @@ export class MapPage implements OnInit
     private translate: TranslateService,
     private gps: GpsActions,
     private nativeStorage: NativeStorage,
-    private diagnostic: Diagnostic
+    private diagnostic: Diagnostic,
+    private storage: StorageActions
   ) { }
 
   ngOnInit()
@@ -133,6 +142,9 @@ export class MapPage implements OnInit
 
           if (this.poisCluster)
           {
+            //Add a new marker
+            let title = MapPage.EXAMPLE_POI_TITLE + '[' + coordinates.lat + ', ' + coordinates.lng + ']';
+            let description = MapPage.EXAMPLE_POI_DESCRIPTION + '[' + coordinates.lat + ', ' + coordinates.lng + ']';
             let m = new Marker(
               [coordinates.lat, coordinates.lng],
               {
@@ -143,17 +155,58 @@ export class MapPage implements OnInit
               }
             );
 
-            m.addTo(this.poisCluster);
+            m['title'] = title;
+            m['description'] = description;
+
+            m.addTo(this.poisCluster).on('click', this.removeMarker);
+
+            //Store a new marker in redux storage
+            this.storage.addPoi({
+              title,
+              description,
+              latitude: coordinates.lat,
+              longitude: coordinates.lng
+            });
           }
         });
       });
-
     }, 500);
   }
 
   onClusterReady(cluster: MarkerClusterGroup)
   {
     this.poisCluster = cluster;
+
+    this.pois$.pipe(first()).subscribe(pois => {
+      for (let poi of pois)
+      {
+        let m = new Marker(
+          [poi.latitude, poi.longitude],
+          {
+            icon: new Icon({
+              iconUrl: "assets/images/marker_blu.png",
+              iconSize: [32, 32]
+            })
+          }
+        );
+
+        m['title'] = poi.title;
+        m['description'] = poi.description;
+
+        m.addTo(this.poisCluster).on('click', this.removeMarker);
+      }
+    });
+  }
+
+  private removeMarker = (event) =>
+  {
+    //Remove marker
+    let marker: Marker = event.target;
+    this.poisCluster.removeLayer(marker);
+
+    //Delete from storage
+    let coordinates = marker.getLatLng();
+    this.storage.removePoi(coordinates.lat, coordinates.lng);
   }
 
   private async permissionsTestAndUserPosition()
