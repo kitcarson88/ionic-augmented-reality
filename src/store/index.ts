@@ -6,4 +6,5 @@ export { GyroscopeActions } from './gyroscope/gyroscope.actions';
 export { MagnetometerActions } from './magnetometer/magnetometer.actions';
 export { PlatformDeviceActions } from './platform-device/platform-device.actions';
 export { ARActions } from './ar-infos/ar.actions';
-export { WsActions, WsAction } from './ws/ws.actions';
+export { WsActions } from './ws/ws.actions';
+export { StorageActions } from './storage/storage.actions';

@@ -24,6 +24,7 @@ import
 export class MapPage implements OnInit
 {
   map: Map;
+  poisCluster: MarkerClusterGroup;
 
   mapOptions = {
     layers: [
@@ -83,11 +84,16 @@ export class MapPage implements OnInit
 
     setTimeout(() => {
       this.map.invalidateSize();
-    }, 50);
+
+      this.map.on("click", (event) =>
+      {
+        
+      });
+    }, 500);
   }
 
   onClusterReady(cluster: MarkerClusterGroup)
   {
-
+    this.poisCluster = cluster;
   }
 }

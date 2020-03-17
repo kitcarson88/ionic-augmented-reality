@@ -8,6 +8,7 @@ import { GyroscopeState, INITIAL_STATE_GYROSCOPE } from './gyroscope/gyroscope.m
 import { MagnetometerState, INITIAL_STATE_MAGNETOMETER } from './magnetometer/magnetometer.model';
 import { ARState, INITIAL_STATE_AR } from './ar-infos/ar.model';
 import { WsState, INITIAL_STATE_WEB_SERVICES } from './ws/ws.model';
+import { StorageState, INITIAL_STATE_STORAGE } from './storage/storage.model';
 
 export interface AppState
 {
@@ -19,7 +20,8 @@ export interface AppState
     gyroscope: GyroscopeState,
     magnetometer: MagnetometerState,
     ar: ARState,
-    ws: WsState
+    ws: WsState,
+    storage: StorageState
 }
 
 export const INITIAL_STATE: AppState = {
@@ -31,7 +33,8 @@ export const INITIAL_STATE: AppState = {
     gyroscope: INITIAL_STATE_GYROSCOPE,
     magnetometer: INITIAL_STATE_MAGNETOMETER,
     ar: INITIAL_STATE_AR,
-    ws: INITIAL_STATE_WEB_SERVICES
+    ws: INITIAL_STATE_WEB_SERVICES,
+    storage: INITIAL_STATE_STORAGE
 };
 
 export interface PayloadAction extends Action

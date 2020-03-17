@@ -22,7 +22,8 @@ import
   GyroscopeActions,
   MagnetometerActions,
   ARActions,
-  WsActions
+  WsActions,
+  StorageActions
 } from "./index";
 
 import { RootEpics } from './epics';
@@ -31,7 +32,7 @@ import rootSaga from './sagas';
 import { SplashEpics } from './splash/splash.epics';
 import { WsEpics } from './ws/ws.epics';
 
-//import { StorageService } from "../services/storage.service";
+import { StorageService } from "../services/storage.service";
 
 import { Converter } from "../utils/converter";
 
@@ -44,7 +45,8 @@ const ACTIONS = [
   GyroscopeActions,
   MagnetometerActions,
   ARActions,
-  WsActions
+  WsActions,
+  StorageActions
 ];
 
 const RESOLVERS = [
@@ -65,7 +67,7 @@ export class StoreModule
     parentModule: StoreModule,
     public ngRedux: NgRedux<AppState>,
     devTools: DevToolsExtension,
-    //storageService: StorageService,
+    storageService: StorageService,
     rootEpics: RootEpics,
     ngReduxRouter: NgReduxRouter,
   )
@@ -76,14 +78,6 @@ export class StoreModule
         "StoreModule is already loaded. Import it in the AppModule only"
       );
     }
-
-    /*const persistConfig = {
-      key: 'root',
-      storage: storageService,
-      //storage,
-      blacklist: ['spinner', 'ws', 'gps', 'discoverData', 'events', 'router', 'platformDevice']
-    };
-    const persistedReducer = persistReducer(persistConfig, rootReducer);*/
 
     //MIDDLEWARES
     const dataNormalizer = () => store => next => action =>
@@ -116,8 +110,7 @@ export class StoreModule
     const enhancers = devTools.isEnabled() ? [devTools.enhancer()] : [];
 
     ngRedux.configureStore(
-      //rootReducer(storageService),
-      rootReducer(null),
+      rootReducer(storageService),
       INITIAL_STATE,
       middlewares,
       enhancers as any

@@ -72,7 +72,7 @@ export class AppComponent
     {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-      this.ngRedux.dispatch({ type: 'HIDE_SPLASH' });
+      //this.ngRedux.dispatch({ type: 'HIDE_SPLASH' });
 
       //Initialize some device infos
       this.initDeviceInfos();

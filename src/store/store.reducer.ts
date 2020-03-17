@@ -3,7 +3,7 @@
 import { combineReducers } from "redux";
 import { routerReducer } from '@angular-redux/router';
 
-//import { persistReducer } from 'redux-persist';
+import { persistReducer } from 'redux-persist';
 
 import { AppState, INITIAL_STATE } from './store.model';
 
@@ -16,6 +16,7 @@ import { gyroscopeReducer } from "./gyroscope/gyroscope.reducer";
 import { magnetometerReducer } from "./magnetometer/magnetometer.reducer";
 import { arReducer } from './ar-infos/ar.reducer';
 import { wsReducer } from './ws/ws.reducer';
+import { storageReducer } from './storage/storage.reducer';
 
 export default function reduceReducers(...reducers)
 {
@@ -24,27 +25,12 @@ export default function reduceReducers(...reducers)
 
 export function rootReducer(storage)
 {
-  /*const storagePersistConfig = {
+  const storagePersistConfig = {
     key: 'storage',
     storage,
     blacklist: []
   };
   const storagePersistedReducer = persistReducer(storagePersistConfig, storageReducer);
-
-  const encryptor = createEncryptor({
-    secretKey: '3159b4d15e0c8d3f07254e1b288d9156',
-    onError: function (error)
-    {
-      console.log("An error occured: ", error);
-    }
-  });
-  const secureStoragePersistConfig = {
-    key: 'secureStorage',
-    storage,
-    transform: [encryptor],
-    blacklist: []
-  };
-  const secureStoragePersistedReducer = persistReducer(secureStoragePersistConfig, secureStorageReducer);*/
 
   return reduceReducers(
     combineReducers({
@@ -57,7 +43,8 @@ export function rootReducer(storage)
       gyroscope: gyroscopeReducer,
       magnetometer: magnetometerReducer,
       ar: arReducer,
-      ws: wsReducer
+      ws: wsReducer,
+      storage: storagePersistedReducer
     }),
     mainReducer
   );
