@@ -1,5 +1,6 @@
 import { Platform } from '@ionic/angular';
 import { Device } from '@ionic-native/device/ngx';
+import { Geoposition } from '@ionic-native/geolocation/ngx';
 
 import { constants } from './constants';
 
@@ -48,6 +49,11 @@ export class Utils
     public static isiPhoneXMax(plt: Platform, dev: Device)
     {
         return Utils.isIos(plt) && Utils.hasIosMinVersion(dev.version, 11) && plt.width() === 414 && plt.height() === 896;
+    }
+
+    public static isGpsInError(gpsData: Geoposition | PositionError)
+    {
+        return gpsData == null || typeof gpsData === 'object' && gpsData['code'] && gpsData['message'];
     }
 }
 

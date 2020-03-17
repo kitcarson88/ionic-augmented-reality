@@ -55,4 +55,27 @@ export class GpsActions
         }
         this.resetCoordinates();
     };
+
+    getPosition = async () =>
+    {
+        let options = {
+            maximumAge: constants.GPS_MAXIMUM_AGE,
+            enableHighAccuracy: constants.GPS_ENABLE_HIGH_ACCURACY
+        }
+
+        if (constants.GPS_TIMEOUT_ENABLED)
+            options['timeout'] = constants.GPS_TIMEOUT;
+
+        let p = await this.locationService.getCurrentPosition(options);
+        console.log("P: ", p);
+        this.setCoordinates(p);
+        return p;
+
+        /*this.locationService.getCurrentPosition(options).then(p =>
+        {
+            console.log("p: ", p);
+            if (p && p.coords)
+                this.setCoordinates(p);
+        });*/
+    };
 }

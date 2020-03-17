@@ -26,7 +26,7 @@ export interface AppState
 
 export const INITIAL_STATE: AppState = {
     spinner: false,
-    splash: 'active',
+    splash: 'inactive',
     platformDevice: INITIAL_STATE_PLATFORM_DEVICE,
     gps: INITIAL_STATE_GPS,
     accelerometer: INITIAL_STATE_ACCELEROMETER,

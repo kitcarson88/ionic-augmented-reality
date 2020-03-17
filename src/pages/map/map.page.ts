@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
+import { select } from '@angular-redux/store';
+import { Observable } from 'rxjs';
+import { first, delay } from 'rxjs/operators';
+
 import
 {
   Map,
@@ -16,6 +20,17 @@ import
   geoJSON
 } from 'leaflet';
 
+import { TranslateService } from '@ngx-translate/core';
+
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
+import { Diagnostic } from '@ionic-native/diagnostic/ngx';
+import { Geoposition } from '@ionic-native/geolocation/ngx';
+
+import { GpsActions } from '../../store';
+
+import { Utils } from '../../utils/utils';
+import { constants } from '../../utils/constants';
+
 @Component({
   selector: 'app-map',
   templateUrl: './map.page.html',
@@ -23,7 +38,21 @@ import
 })
 export class MapPage implements OnInit
 {
+  private static DEFAULT_POSITION = {
+    lat: 41.898998,
+    lng: 12.495939
+  };
+
+  @select(["platformDevice", "infos", "os"])
+  os$: Observable<'ios' | 'android' | 'other'>;
+  os: 'ios' | 'android' | 'other';
+
+  private isLocationEnabled: boolean = true;
+  private isLocationAvailable: boolean = true;
+  private isLocationAuthorized: boolean = true;
+
   map: Map;
+  userMarker: Marker;
   poisCluster: MarkerClusterGroup;
 
   mapOptions = {
@@ -72,10 +101,21 @@ export class MapPage implements OnInit
   };
   clusterData = [];
 
-  constructor() { }
+  constructor(
+    private translate: TranslateService,
+    private gps: GpsActions,
+    private nativeStorage: NativeStorage,
+    private diagnostic: Diagnostic
+  ) { }
 
   ngOnInit()
   {
+    //Test geolocation activation and permissions.
+    //If all is ok, launch position retrieve
+    this.os$.pipe(first(), delay(1000)).subscribe(os => {
+      this.os = os;
+      this.permissionsTestAndUserPosition();
+    });
   }
 
   onMapReady(map: Map)
@@ -85,10 +125,29 @@ export class MapPage implements OnInit
     setTimeout(() => {
       this.map.invalidateSize();
 
-      this.map.on("click", (event) =>
+      this.map.once("moveend", () =>
       {
-        
+        this.map.on("click", (event) =>
+        {
+          let coordinates: LatLng = event['latlng'];
+
+          if (this.poisCluster)
+          {
+            let m = new Marker(
+              [coordinates.lat, coordinates.lng],
+              {
+                icon: new Icon({
+                  iconUrl: "assets/images/marker_blu.png",
+                  iconSize: [32, 32]
+                })
+              }
+            );
+
+            m.addTo(this.poisCluster);
+          }
+        });
       });
+
     }, 500);
   }
 
@@ -96,4 +155,129 @@ export class MapPage implements OnInit
   {
     this.poisCluster = cluster;
   }
+
+  private async permissionsTestAndUserPosition()
+  {
+    //firstLocationAuthorization is a flag to verify if the location service
+    //is requesting for the first time. On iOS permission dialog is shown only at
+    //the first time
+    let firstLocationAuthorization: boolean;
+    try
+    {
+      let data = await this.nativeStorage.getItem(constants.FIRST_LOCATION_PERMISSION_REQUEST);
+      console.log("firstLocationAuthorization: ", firstLocationAuthorization);
+
+      if (!data)
+        firstLocationAuthorization = true;
+      else
+        firstLocationAuthorization = false;
+    }
+    catch (err)
+    {
+      console.log("No error: simply app shortcut flag not in memory");
+      firstLocationAuthorization = true;
+    }
+
+    try
+    {
+      this.isLocationEnabled = await this.diagnostic.isLocationEnabled();
+      this.isLocationAvailable = await this.diagnostic.isLocationAvailable();
+      this.isLocationAuthorized = await this.diagnostic.isLocationAuthorized();
+    }
+    catch (error)
+    {
+      console.log("Internal error: ", error);
+    }
+
+    if (!this.isLocationAvailable || !this.isLocationAuthorized)
+    {
+      if (this.os === 'ios')
+      {
+        if (firstLocationAuthorization)
+        {
+          let locAuth = await this.diagnostic.requestLocationAuthorization();
+          console.log("locAuth: ", locAuth);
+
+          this.nativeStorage.setItem(constants.FIRST_LOCATION_PERMISSION_REQUEST, true);
+
+          if (locAuth.toLowerCase().indexOf("denied") >= 0)
+          {
+            console.log("Location permission not accepted");
+            let label = await this.translate.get('LOCATION_NOT_PERMITTED').toPromise();
+            //this.toastService.showErrorToast(label);
+          }
+        }
+        else
+        {
+          console.log("Location permission not accepted");
+          let label = await this.translate.get('LOCATION_NOT_PERMITTED').toPromise();
+          //this.toastService.showErrorToast(label);
+        }
+      }
+      else if (this.os === 'android')
+      {
+        let locAuth = await this.diagnostic.requestLocationAuthorization();
+        console.log("locAuth: ", locAuth);
+
+        if (locAuth.toLowerCase().indexOf("denied") >= 0)
+        {
+          console.log("Location permission not accepted");
+          let label = await this.translate.get('LOCATION_NOT_PERMITTED').toPromise();
+          //this.toastService.showErrorToast(label);
+        }
+      }
+    }
+
+    if (!this.isLocationEnabled)
+    {
+      console.log("Location not enabled");
+      //this.toastService.showInfoToast(await this.translate.get('LOCATION_NOT_ENABLED').toPromise());
+    }
+
+    this.gps.getPosition()
+      .then(this.onPositionRetrieve)
+      .catch(this.onPositionRetrieve);
+  }
+
+  private onPositionRetrieve = (gpsResponse: Geoposition | PositionError) =>
+  {
+    if (!Utils.isGpsInError(gpsResponse))
+    {
+      let geoposition = gpsResponse as Geoposition;
+
+      //Set the new marker
+      let icon = new Icon({
+        iconUrl: 'assets/images/user-marker-small.png',
+        iconSize: [32, 32],
+        //iconAnchor: [16, 0],
+        //popupAnchor: [-3, -76],
+        //shadowUrl: 'my-icon-shadow.png',
+        //shadowSize: [68, 95],
+        //shadowAnchor: [22, 94]
+      });
+
+      let coords = new LatLng(geoposition.coords.latitude, geoposition.coords.longitude);
+
+      this.userMarker = new Marker(
+        coords,
+        {
+          icon
+        }
+      ).addTo(this.map);
+
+      this.map.flyTo(coords, 13, {
+        animate: true,
+        duration: 1,
+      });
+    }
+    else
+    {
+      let coords = new LatLng(MapPage.DEFAULT_POSITION.lat, MapPage.DEFAULT_POSITION.lng);
+
+      this.map.flyTo(coords, 5, {
+        animate: true,
+        duration: 1,
+      });
+    }
+  };
 }

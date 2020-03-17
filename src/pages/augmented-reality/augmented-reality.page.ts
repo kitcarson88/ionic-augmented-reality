@@ -38,9 +38,9 @@ enum ARError {
 })
 export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
 {
-  @select(["platformDevice", "infos", "platform"])
-  os$: Observable<string>;
-  os: string;
+  @select(["platformDevice", "infos", "os"])
+  os$: Observable<'ios' | 'android' | 'other'>;
+  os: 'ios' | 'android' | 'other';
 
   private cameraPresent: boolean;
   private cameraAuthorized: boolean;
@@ -90,7 +90,7 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
     this.statusBar.hide();
     
     this.os$.pipe(first()).subscribe(os => {
-      this.os = os.toLowerCase();
+      this.os = os;
 
       if (this.os === 'ios')
         this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE_SECONDARY);

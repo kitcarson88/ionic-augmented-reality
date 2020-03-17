@@ -90,7 +90,7 @@ function* calculatePinArray()
                 //The array is created with pin near the user (maximum RADAR_POI_RADIUS) and every pin
                 //has bearing and distance informations
                 pin = AugmentedRealityUtils.relativePosition(pin, filteredGpsCoordinates);
-                console.log("Pin after relative position update: ", pin);
+                //console.log("Pin after relative position update: ", pin);
 
                 if (!(pin['distance']) || +pin['distance']['meter'] > constants.RADAR_POI_RADIUS)
                     continue;

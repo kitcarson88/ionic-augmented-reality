@@ -221,6 +221,30 @@ export class GeolocationMock {
             }, options['maximumAge']);
         });
     }
+
+    getCurrentPosition(options?: any): Promise<any>
+    {
+        return new Promise((resolve, reject) => {
+            //To simulate a gps error
+            /*resolve({
+                code: 2,
+                message: "A mocked error occured"
+            });*/
+
+            resolve({
+                coords: {
+                    latitude: 41.893151,
+                    longitude: 12.492813,
+                    accuracy: 10,
+                    altitude: 0,
+                    altitudeAccuracy: 0,
+                    heading: 0,
+                    speed: 0
+                },
+                timestamp: 0
+            });
+        });
+    }
 }
 
 @Injectable()
