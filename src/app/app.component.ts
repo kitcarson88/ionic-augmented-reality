@@ -38,17 +38,17 @@ export class AppComponent
       icon: 'assets/icon/home.svg',
       direction: 'root'
     },
-    /*{
-      title: 'Map',
-      url: '/map',
-      icon: 'armap',
-      direction: 'root'
-    },*/
     {
       title: 'AR',
       url: '/augmented-reality',
       icon: 'assets/icon/ar.svg',
       direction: 'forward'
+    },
+    {
+      title: 'Map',
+      url: '/map',
+      icon: 'assets/icon/map.svg',
+      direction: 'root'
     }
   ];
 

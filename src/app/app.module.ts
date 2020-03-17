@@ -1,4 +1,6 @@
 import { NgModule } from '@angular/core';
+import { NgReduxRouterModule } from '@angular-redux/router';
+import { NgReduxModule } from '@angular-redux/store';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
@@ -74,6 +76,8 @@ export function createTranslateLoader(http: HttpClient)
     StoreModule,
     SplashModule,
     SpinnerModule,
+    NgReduxModule,
+    NgReduxRouterModule.forRoot(),
     IonicModule.forRoot({
       mode: 'md'
     }),
