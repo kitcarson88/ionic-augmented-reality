@@ -133,8 +133,9 @@ export class MapPage implements OnInit
 
     setTimeout(() => {
       this.map.invalidateSize();
+    }, 500);
 
-      this.map.once("moveend", () =>
+    this.map.once("moveend", () =>
       {
         this.map.on("click", (event) =>
         {
@@ -170,7 +171,6 @@ export class MapPage implements OnInit
           }
         });
       });
-    }, 500);
   }
 
   onClusterReady(cluster: MarkerClusterGroup)
@@ -313,9 +313,7 @@ export class MapPage implements OnInit
 
       this.userMarker = new Marker(
         coords,
-        {
-          icon
-        }
+        { icon }
       ).addTo(this.map);
 
       this.map.flyTo(coords, 13, {
@@ -333,4 +331,18 @@ export class MapPage implements OnInit
       });
     }
   };
+
+  findMe()
+  {
+    if (this.userMarker)
+    {
+      this.map.removeLayer(this.userMarker);
+      this.userMarker = null;
+    }
+
+    this.gps.resetCoordinates();
+    this.gps.getPosition()
+      .then(this.onPositionRetrieve)
+      .catch(this.onPositionRetrieve);
+  }
 }

@@ -241,3 +241,13 @@ ion-toast.ar-toast {
         --background: #{$ar-success-toast-background-color} !important;
     }
 }
+
+ion-fab-button.ar-fab-button {
+    --background: #{$ar-fab-button-background-color} !important;
+    --background-activated: #{$ar-fab-button-background-color} !important;
+    --background-hover: #{$ar-fab-button-background-color} !important;
+    --color: #{$ar-fab-button-color} !important;
+    --color-activated: #{$ar-fab-button-color} !important;
+    --color-hover: #{$ar-fab-button-color} !important;
+    --box-shadow: none !important;
+}

@@ -18,6 +18,12 @@
 			(leafletMarkerClusterReady)="onClusterReady($event)">
 		</div>
   </div>
+
+  <ion-fab class="locateButtonContainer" horizontal="end" vertical="bottom">
+		<ion-fab-button class="ar-fab-button map-button" (click)="findMe()">
+			<ion-icon src="assets/icon/locate.svg"></ion-icon>
+		</ion-fab-button>
+	</ion-fab>
   
   <menu-overlay></menu-overlay>
 </ion-content>

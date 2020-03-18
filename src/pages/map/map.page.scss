@@ -9,3 +9,13 @@
         height: 100%;
     }
 }
+
+.locateButtonContainer {
+    bottom: 50px !important;
+
+    .ar-fab-button {
+        width: 50px !important;
+        height: 50px !important;
+        border-radius: 25px !important;
+    }
+}
