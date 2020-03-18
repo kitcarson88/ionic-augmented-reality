@@ -10,6 +10,7 @@ import { FusionSensorsDTO } from '../entities/dto/fusionSensorsDTO';
 const getGpsCoordinates = state => state.gps.coordinates;
 const getFilteredGpsCoordinates = state => state.gps.distanceFilteredCoordinates;
 const getPois = state => state.ws.pois.data;
+const getMapPois = state => state.storage.pois;
 const getPinArray = state => state.ar.pinArray;
 const getFusionOrientation = state => state.ar.fusionCoordinates;
 const getFov = state => state.ar.cameraFov;
@@ -68,8 +69,12 @@ function* calculatePinArray()
 
     yield takeEvery("RETRIEVE_POIS_SUCCESS", function* ()
     {
-        const poiList: Poi[] = yield select(getPois);
+        let poiList: Poi[] = yield select(getPois);
         const filteredGpsCoordinates: GpsCoordinatesDTO = yield select(getFilteredGpsCoordinates);
+
+        //Retrieve map poi too, and add to service ones
+        const mapPoiList = yield select(getMapPois);
+        poiList = [...poiList, mapPoiList];
 
         if (poiList && poiList.length > 0)
         {
