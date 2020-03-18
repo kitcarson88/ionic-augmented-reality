@@ -1,4 +1,5 @@
-import { Observable } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { Observable, Observer } from 'rxjs';
 import { HttpClient } from "@angular/common/http";
 
 import { Device } from "@ionic-native/device/ngx";
@@ -11,8 +12,8 @@ import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { DeviceMotion } from '@ionic-native/device-motion/ngx';
 import { Gyroscope } from '@ionic-native/gyroscope/ngx';
+import { Magnetometer } from '@ionic-native/magnetometer/ngx';
 import { CameraPreview } from '@ionic-native/camera-preview/ngx';
-import { Injectable } from "@angular/core";
 
 @Injectable()
 export class DeviceMock
@@ -213,7 +214,7 @@ export class GeolocationMock {
             timestamp: 0
         };
 
-        return Observable.create((observer: any) => {
+        return new Observable((observer: Observer<any>) => {
             observer.next(position);
 
             setInterval(() => {
@@ -262,7 +263,7 @@ export class DeviceMotionMock {
             z: 9.773429870605469
         };
 
-        return Observable.create((observer: any) => {
+        return new Observable((observer: Observer<any>) => {
             observer.next(motion);
 
             setInterval(() => {
@@ -287,12 +288,27 @@ export class GyroscopeMock {
             z: -0.0010830641258507967
         };
 
-        return Observable.create((observer: any) => {
+        return new Observable((observer: Observer<any>) => {
             observer.next(orientation);
             
             setInterval(() => {
                 observer.next(orientation);
             }, frequency);
+        });
+    }
+}
+
+@Injectable()
+export class MagnetometerMock {
+    watchReadings(): Observable<any>
+    {
+        return new Observable(observer => {
+            observer.next({
+                x: 0,
+                y: 0,
+                z: 0,
+                magnitude: 0
+            });
         });
     }
 }
@@ -368,6 +384,11 @@ export function getDeviceMotion(): any
 export function getGyroscope(): any
 {
     return hasCordova()? Gyroscope : GyroscopeMock;
+}
+
+export function getMagnetometer(): any
+{
+    return hasCordova()? Magnetometer : MagnetometerMock;
 }
 
 export function getCameraPreview(): any{

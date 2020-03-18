@@ -33,6 +33,7 @@
     "@ionic-native/gyroscope": "^5.22.0",
     "@ionic-native/http": "^5.22.0",
     "@ionic-native/location-accuracy": "^5.22.0",
+    "@ionic-native/magnetometer": "^5.22.0",
     "@ionic-native/native-storage": "^5.22.0",
     "@ionic-native/network": "^5.22.0",
     "@ionic-native/screen-orientation": "^5.22.0",

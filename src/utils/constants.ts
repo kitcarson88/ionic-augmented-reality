@@ -24,9 +24,6 @@ export const constants = {
     ACCELEROMETER_FREQUENCY: 100,    //5000, //DEBUG
         //Gyroscope relevation options
     GYROSCOPE_FREQUENCY: 100,    //5000, //DEBUG
-        //Magnetometer relevation options
-    MAGNETOMETER_MOCKED: false,  //true, //DEBUG
-    MAGNETOMETER_MOCK_FREQUENCY: 5000,    //ONLY FOR DEBUG
         //Fusion sensors options
     FUSION_SENSOR_INIT_DELAY: 3000,
     FUSION_SENSOR_FREQUENCY: 150   //10000,    //DEBUG     //This value might be higher than accelerometer and gyroscope frequency

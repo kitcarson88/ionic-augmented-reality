@@ -3,6 +3,8 @@ import { Injectable } from "@angular/core";
 import { dispatch } from "@angular-redux/store";
 import { Action } from "redux";
 
+import { Magnetometer, MagnetometerReading } from '@ionic-native/magnetometer/ngx';
+
 import { MagneticFieldDTO } from "../../entities/dto/magneticFieldDTO";
 
 import { constants } from "../../utils/constants";
@@ -18,9 +20,9 @@ export class MagnetometerActions
     static readonly ERROR_INTENSITIES = "ERROR_INTENSITIES";
     static readonly RESET_INTENSITIES = "RESET_INTENSITIES";
 
-    private magnetometerSubscription: any = null;
+    private magnetometerServiceSubscription: any = null;
 
-    constructor() {}
+    constructor(private magnetometerService: Magnetometer) {}
 
     @dispatch()
     setIntensity = (data: any): MagnetometerAction => ({ type: MagnetometerActions.SET_INTENSITIES, payload: data });
@@ -32,52 +34,27 @@ export class MagnetometerActions
     resetIntensity = (): MagnetometerAction => ({ type: MagnetometerActions.RESET_INTENSITIES });
 
     startService = () => {
-        if (constants.MAGNETOMETER_MOCKED)
+        try
         {
-            let reading = {
-                magnitude: 27.70505933038224,
-                x: -16.619998931884766,
-                y: -12.420000076293945,
-                z: -18.35999870300293
-            };
-
-            this.setIntensity(new MagneticFieldDTO(reading['x'], reading['y'], reading['z'], reading['magnitude']));
-
-            this.magnetometerSubscription = setInterval(() => {
-                this.setIntensity(new MagneticFieldDTO(reading['x'], reading['y'], reading['z'], reading['magnitude']));
-            }, constants.MAGNETOMETER_MOCK_FREQUENCY);
-        }
-        else
-        {
-            if (window['cordova'] && window['cordova']['plugins'] && window['cordova']['plugins']['magnetometer'])
-            {
-                let magnetometerService = window['cordova']['plugins']['magnetometer'];
-                this.magnetometerSubscription = magnetometerService.watchReadings((reading) => {
-                    this.setIntensity(new MagneticFieldDTO(reading['x'], reading['y'], reading['z'], reading['magnitude']));
-                }, err => {
-                    let magnetometerService = window['cordova']['plugins']['magnetometer'];
-                    magnetometerService.stop([this.magnetometerSubscription]);
-                    
-                    this.setSensorInError();
+            this.magnetometerServiceSubscription = this.magnetometerService.watchReadings()
+                .subscribe((reading: MagnetometerReading) => {
+                    this.setIntensity(reading);
                 });
-            }
-            else this.setSensorInError();
+        }
+        catch (err)
+        {
+            console.log("Magnetometer sensor error: ", err);
+            this.stopService();
+            this.setSensorInError();
         }
     };
 
     stopService = () => {
-        if (constants.MAGNETOMETER_MOCKED)
+        if (this.magnetometerServiceSubscription)
         {
-            clearInterval(this.magnetometerSubscription);
+            this.magnetometerServiceSubscription.unsubscribe();
+            this.magnetometerServiceSubscription = null;
         }
-        else
-        {
-            if (window['cordova'] && window['cordova']['plugins'] && window['cordova']['plugins']['magnetometer'])
-            {
-                let magnetometerService = window['cordova']['plugins']['magnetometer'];
-                magnetometerService.stop([this.magnetometerSubscription]);
-            }
-            else this.setSensorInError();
-        }
+        this.resetIntensity();
     };
 }

@@ -22,6 +22,7 @@ import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { DeviceMotion } from '@ionic-native/device-motion/ngx';
 import { Gyroscope } from '@ionic-native/gyroscope/ngx';
+import { Magnetometer } from '@ionic-native/magnetometer/ngx';
 import { CameraPreview } from '@ionic-native/camera-preview/ngx';
 
 import { AppComponent } from './app.component';
@@ -57,6 +58,7 @@ import
   getGeolocation,
   getDeviceMotion,
   getGyroscope,
+  getMagnetometer,
   getCameraPreview,
 } from './app.providers';
 
@@ -105,6 +107,7 @@ export function createTranslateLoader(http: HttpClient)
     { provide: Geolocation, useClass: getGeolocation() },
     { provide: DeviceMotion, useClass: getDeviceMotion() },
     { provide: Gyroscope, useClass: getGyroscope() },
+    { provide: Magnetometer, useClass: getMagnetometer() },
     { provide: CameraPreview, useClass: getCameraPreview() },
     Globalization,  //Globalization not mocked. Calls managed directly in app.component
     //NetworkService,
