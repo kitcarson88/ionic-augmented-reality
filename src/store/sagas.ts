@@ -89,6 +89,7 @@ function* calculatePinArray()
                 pin['longitude'] = poi.longitude;
                 pin['title'] = poi.title;
                 pin['description'] = poi.description;
+                pin['icon'] = poi.icon;
 
                 //Update pin with bearing and distance
                 //For each poi retrieved (with latitude and longitude), an array of pin is populated.

@@ -3,4 +3,5 @@ export class Poi {
     longitude: number;
     title: string;
     description: string;
+    icon: string;
 }

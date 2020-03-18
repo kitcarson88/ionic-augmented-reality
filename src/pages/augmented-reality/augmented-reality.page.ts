@@ -65,6 +65,10 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
   spotArray$: Observable<any[]>;
   spotArray: any[] = [];
 
+  infosTitle: string;
+  infosDescription: string;
+  private showInfos: boolean = false;
+
   constructor(
     private translate: TranslateService,
     private statusBar: StatusBar,
@@ -397,5 +401,32 @@ export class AugmentedRealityPage implements OnInit, AfterViewInit, OnDestroy
 
     this.sensorsUnsubscribe$.next();
     this.sensorsUnsubscribe$.complete();
+  }
+
+  showDetails()
+  {
+    return this.showInfos;
+  }
+
+  openPoiDetails(poi, event)
+  {
+    event.stopPropagation();
+    this.infosTitle = poi['title'];
+    this.infosDescription = poi['description'];
+    this.showInfos = true;
+  }
+
+  //ONLY DEBUG on ionic serve
+  /*openPoiDetailsDebug(event)
+  {
+    event.stopPropagation();
+    this.infosTitle = "Mock title";
+    this.infosDescription = "Mock description";
+    this.showInfos = true;
+  }*/
+
+  closePoiDetails()
+  {
+    this.showInfos = false;
   }
 }

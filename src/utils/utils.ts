@@ -155,6 +155,7 @@ export class AugmentedRealityUtils
                     id: pin.latitude + pin.longitude + pin.distance.meter,
                     title: pin.title,
                     description: pin.description,
+                    icon: pin.icon,
                     distance: pin.distance.meter,
                     screenRelativePositionX: screenRelativePositionX,
                     screenRelativePositionY: screenRelativePositionY,

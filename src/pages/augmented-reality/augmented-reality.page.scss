@@ -8,6 +8,7 @@ ion-header {
     position: absolute !important;
     top: 0 !important;
     left: 0 !important;
+    z-index: 150;
 
     ion-toolbar.ar-toolbar {
         --background: transparent !important;
@@ -30,6 +31,7 @@ ion-content {
     position: absolute;
     top: 0;
     left: 0;
+    z-index: 10;
 
     div.marker {
         text-align: center;
@@ -71,6 +73,7 @@ ion-content {
     position: fixed;
     bottom: 0;
     left: 0;
+    z-index: 100;
 
     & > span {
         display: block;

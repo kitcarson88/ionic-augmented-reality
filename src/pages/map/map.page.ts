@@ -150,14 +150,14 @@ export class MapPage implements OnInit
               [coordinates.lat, coordinates.lng],
               {
                 icon: new Icon({
-                  iconUrl: "assets/images/marker_blu.png",
+                  iconUrl: "assets/images/marker_blue.png",
                   iconSize: [32, 32]
                 })
               }
             );
 
-            m['title'] = title;
-            m['description'] = description;
+            //m['title'] = title;
+            //m['description'] = description;
 
             m.addTo(this.poisCluster).on('click', this.removeMarker);
 
@@ -166,7 +166,8 @@ export class MapPage implements OnInit
               title,
               description,
               latitude: coordinates.lat,
-              longitude: coordinates.lng
+              longitude: coordinates.lng,
+              icon: 'assets/images/marker_blue.png'
             });
           }
         });
@@ -184,14 +185,14 @@ export class MapPage implements OnInit
           [poi.latitude, poi.longitude],
           {
             icon: new Icon({
-              iconUrl: "assets/images/marker_blu.png",
+              iconUrl: "assets/images/marker_blue.png",
               iconSize: [32, 32]
             })
           }
         );
 
-        m['title'] = poi.title;
-        m['description'] = poi.description;
+        //m['title'] = poi.title;
+        //m['description'] = poi.description;
 
         m.addTo(this.poisCluster).on('click', this.removeMarker);
       }

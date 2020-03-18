@@ -8,10 +8,10 @@
 </ion-header>
 
 <ion-content>
-  <div ion-fixed class="spotContainer">
-    <div class="marker" *ngFor="let spot of spotArray" [ngStyle]="{'left': spot.screenRelativePositionX + '%', 'top': spot.screenRelativePositionY + '%'}">
+  <div ion-fixed class="spotContainer" (click)="closePoiDetails()">
+    <div class="marker" *ngFor="let spot of spotArray" [ngStyle]="{'left': spot.screenRelativePositionX + '%', 'top': spot.screenRelativePositionY + '%'}" (click)="openPoiDetails(spot, $event)">
       <span>
-        <img src="assets/images/marker_red.png" [ngStyle]="{'width': spot.relativeSize + '%'}"/>
+        <img [src]="spot.icon" [ngStyle]="{'width': spot.relativeSize + '%'}"/>
       </span>
       <span class="f-16 f-weight-600 f-family-josefin c-water-green">
         {{(spot.distance / 1000).toFixed(2)}} Km
@@ -33,10 +33,10 @@
   <!--<div style="position:absolute; top: 100px; left: 0;">
     <span class="f-18" *ngIf="fusionSensor$ | async as coord">alpha: {{coord.alfa}}<br>beta: {{coord.beta}}<br>gamma: {{coord.gamma}}<br></span>
     <span class="f-18" *ngIf="cameraFov$ | async as fov">fov: {{fov}}</span>
-  </div>
+  </div>-->
 
   <div ion-fixed class="spotDetails bg-white" *ngIf="showDetails()">
     <span class="f-18 f-weight-600 f-uppercase c-dark">{{infosTitle}}</span>
     <span class="f-16 f-weight-400 c-dark" [innerHtml]="infosDescription"></span>
-  </div>-->
+  </div>
 </ion-content>

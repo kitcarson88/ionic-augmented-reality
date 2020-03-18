@@ -23,6 +23,7 @@ export class Converter
         poi.longitude = dto.longitudine;
         poi.title = dto.titolo;
         poi.description = dto.descrizione;
+        poi.icon = 'assets/images/marker_red.png';
 
         return poi;
     }
