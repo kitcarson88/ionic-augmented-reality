@@ -2,6 +2,8 @@
 The repository contains a Ionic 5 example app with an implementation of a simple location based augmented reality. Using gps data, a Rest service (a GET method call) and device sensors (accelerometer, gyroscope and magnetometer) datas, some Points Of Interest (POIs) are drawn on a camera preview background layer.
 Sensors datas are combined with a porting of a Complementary Filter paradigm called Sensors Fusion.
 
+To test the app, the user can also add pois from a map page. Every touch on the map adds a new poi that can be recognized from AR page (be sure to add a poi into the max configured radius area).
+
 ## Algorithm explaination
 In this section there is an explaination of the AR algorithm:
 
@@ -20,6 +22,7 @@ The app integrates a state - action management using a Redux store module (for m
 
 Here the packages included:
 - [Redux logger](https://www.npmjs.com/package/redux-logger): it logs every action and store state change to facilitate development
+- [Redux persist](https://www.npmjs.com/package/redux-persist): it let to save some store sub-state datas. With a blacklist system let the developer to choose what states to save in the internal storage. It isn't used in the core app, but it let to save pois added by map page.
 - [Redux saga](https://www.npmjs.com/package/redux-saga): it's an extension of redux actions triggering, to create sagas; a saga let complex actions management such as to launch an action at the arrive of another, to sync some parallel triggered actions, etc.
 - [Redux observable](https://www.npmjs.com/package/redux-observable-es6-compat): really similar to redux saga, it let to create epics; an epic is conceptually used to concatenate different actions of a same process
 
