@@ -73,8 +73,8 @@ function* calculatePinArray()
         const filteredGpsCoordinates: GpsCoordinatesDTO = yield select(getFilteredGpsCoordinates);
 
         //Retrieve map poi too, and add to service ones
-        const mapPoiList = yield select(getMapPois);
-        poiList = [...poiList, mapPoiList];
+        let mapPoiList: Poi[] = yield select(getMapPois);
+        poiList = [...poiList, ...mapPoiList];
 
         if (poiList && poiList.length > 0)
         {
