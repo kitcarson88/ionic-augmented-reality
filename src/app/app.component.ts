@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { Platform } from '@ionic/angular';
 
-import { select, NgRedux } from "@angular-redux/store";
+import { select } from "@angular-redux/store";
 import { Observable } from "rxjs";
 
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Device } from "@ionic-native/device/ngx";
 
@@ -12,7 +11,6 @@ import { Globalization } from '@ionic-native/globalization/ngx';
 import { defaultLanguage, availableLanguages, sysOptions } from './i18n.constants';
 import { TranslateService } from '@ngx-translate/core';
 
-import { AppState } from '../store/store.model';
 
 import { PlatformDeviceActions } from "../store";
 
@@ -56,11 +54,9 @@ export class AppComponent
     private platform: Platform,
     private device: Device,
     private pltDevInfos: PlatformDeviceActions,
-    private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private globalization: Globalization,
     private translate: TranslateService,
-    private ngRedux: NgRedux<AppState>
   )
   {
     this.initializeApp();
@@ -71,8 +67,6 @@ export class AppComponent
     this.platform.ready().then(() => 
     {
       this.statusBar.styleDefault();
-      this.splashScreen.hide();
-      this.ngRedux.dispatch({ type: 'HIDE_SPLASH' });
 
       //Initialize some device infos
       this.initDeviceInfos();

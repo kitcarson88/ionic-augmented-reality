@@ -17,5 +17,5 @@ export class SplashActions
     constructor() { }
 
     @dispatch()
-    hideSplash = (): SplashAction => ({ type: SplashActions.HIDE_SPLASH });
+    hide = (): SplashAction => ({ type: SplashActions.HIDE_SPLASH });
 }
