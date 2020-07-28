@@ -1,4 +1,4 @@
-# Ionic Location based Augmented Reality
+# [Ionic Location based Augmented Reality](https://github.com/KitCarson88/ionic-augmented-reality)
 The repository contains a Ionic 5 example app with an implementation of a simple location based augmented reality. Using gps data, a Rest service (a GET method call) and device sensors (accelerometer, gyroscope and magnetometer) datas, some Points Of Interest (POIs) are drawn on a camera preview background layer.
 Sensors datas are combined with a porting of a Complementary Filter paradigm called Sensors Fusion.
 
