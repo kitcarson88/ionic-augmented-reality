@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, AfterViewInit } from '@angular/core';
 
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs';
