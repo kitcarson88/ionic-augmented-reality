@@ -7,7 +7,7 @@ import storage from 'redux-persist/lib/storage';
 
 import
 {
-  //Actions imports: PLEASE DON'T DELETE OR MODIFY THIS PLACEHOLDER
+  AppPlatformDeviceActions
 } from './index';
 
 import rootReducer from './store.reducer';
@@ -15,7 +15,7 @@ import rootEpic from './epics';
 import rootSaga from './sagas';
 
 const ACTIONS = [
-  //Actions: PLEASE DON'T DELETE OR MODIFY THIS PLACEHOLDER
+  AppPlatformDeviceActions
 ];
 
 const RESOLVERS = [

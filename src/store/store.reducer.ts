@@ -1,10 +1,11 @@
 import { createStoredReducer, createSecureStoredReducer } from '@redux-multipurpose/core';
 
+import { appPlatformDeviceReducer } from './app-platform-device/app-platform-device.slice';
 
 export function rootReducer(storage)
 {
   return {
-    //Reducers: PLEASE DON'T DELETE OR MODIFY THIS PLACEHOLDER
+    appPlatformDevice: appPlatformDeviceReducer
   };
 }
 
