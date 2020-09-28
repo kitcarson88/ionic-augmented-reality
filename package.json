@@ -9,7 +9,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "clean": "rm -rf platforms/ plugins/ www/ resources/android/icon/ resources/android/splash/ resources/ios/ node_modules/ package-lock.json "
   },
   "private": true,
   "dependencies": {
