@@ -30,6 +30,8 @@ npm-debug.log*
 /plugins
 /www
 
+package-lock.json
+
 # Custom rules
 #src/assets/fonts/roboto
 #src/assets/fonts/josefin
