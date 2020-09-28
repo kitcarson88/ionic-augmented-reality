@@ -41,7 +41,7 @@ export class GpsActions
             options['timeout'] = constants.GPS_TIMEOUT;
 
         this.locationServiceSubscription = this.locationService.watchPosition(options)
-            .pipe(filter((p) => p.coords !== undefined))    //Filter Out Errors
+            .pipe(filter((p: any) => p.coords !== undefined))    //Filter Out Errors
             .subscribe(position => {
                 this.setCoordinates(position);
             });
