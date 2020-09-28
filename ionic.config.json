@@ -1,0 +1,7 @@
+{
+  "name": "IonicAugmentedReality",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
