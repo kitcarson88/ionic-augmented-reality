@@ -1,6 +1,7 @@
 <ng-container *ngIf="(splashState$ | async) as splashState">
   <splash *ngIf="splashState !== 'inactive'"></splash>
 </ng-container>
+<spinner class="ar-spinner" *ngIf="showSpinner$ | async" [withContainer]="true" name="rotatingSquare"></spinner>
 
 <ion-app>
   <ion-router-outlet></ion-router-outlet>

@@ -35,6 +35,9 @@ export class AppComponent implements OnInit
   @select([ "splash" ])
   splashState$: Observable<string>;
 
+  @select(["spinner"])
+  showSpinner$: Observable<boolean>;
+
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
@@ -42,7 +45,6 @@ export class AppComponent implements OnInit
     private appVersion: AppVersion,
     private appPltDevInfos: AppPlatformDeviceActions,
     private globalization: Globalization,
-
     private translate: TranslateService
   ) {
   }

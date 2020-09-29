@@ -73,3 +73,9 @@ h5 {
     }
     font-size: $f-size-4 !important;
 }
+
+.ar-spinner {
+    --content-background: #{$ar-spinner-background-color};
+    --size: #{$ar-spinner-side};
+    --element-color: #{$ar-spinner-color};
+}

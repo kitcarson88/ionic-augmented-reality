@@ -19,15 +19,18 @@ import { AppRoutingModule } from './app-routing.module';
 //Redux store
 import { StoreModule } from '../store/store.module';
 
-//Ionic mock providers
-import
-{
-  getAppVersion,
-  IonicAngularUtilitiesModule
-} from 'ionic-angular-utilities';
+//Libraries
+import { IonicAngularUtilitiesModule } from 'ionic-angular-utilities';
 
 //Components
 import { SplashModule } from '../components/splash/splash.module';
+import { SpinnerModule } from 'ionic-angular-utilities';
+
+//Ionic mock providers
+import
+{
+  getAppVersion
+} from 'ionic-angular-utilities';
 
 export function createTranslateLoader(http: HttpClient)
 {
@@ -44,6 +47,7 @@ export function createTranslateLoader(http: HttpClient)
     HttpClientModule,
 		StoreModule,
     SplashModule,
+    SpinnerModule,
 		IonicModule.forRoot({
       mode: 'md'
     }),
