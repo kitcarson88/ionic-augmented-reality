@@ -3,6 +3,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+import { Globalization } from '@ionic-native/globalization/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppVersion } from '@ionic-native/app-version/ngx';
@@ -24,14 +29,21 @@ import
 //Components
 import { SplashModule } from '../components/splash/splash.module';
 
+export function createTranslateLoader(http: HttpClient)
+{
+  return new TranslateHttpLoader(http, '../assets/i18n/', '.json');
+}
+
 @NgModule({
   declarations: [
     AppComponent
   ],
   entryComponents: [],
   imports:[
+    BrowserModule,
+    HttpClientModule,
 		StoreModule,
-		BrowserModule,
+    SplashModule,
 		IonicModule.forRoot({
       mode: 'md'
     }),
@@ -45,13 +57,22 @@ import { SplashModule } from '../components/splash/splash.module';
         }
       }
     }),
-    SplashModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (createTranslateLoader),
+        deps: [
+          HttpClient
+        ]
+      }
+    }),
 		AppRoutingModule
 	],
   providers: [
     StatusBar,
     SplashScreen,
     { provide: AppVersion, useClass: getAppVersion() },
+    Globalization,  //Globalization not mocked. Calls managed directly in app.component
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
