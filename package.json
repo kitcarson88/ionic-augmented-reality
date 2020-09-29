@@ -36,8 +36,10 @@
     "cordova-plugin-app-version": "^0.1.9",
     "cordova-plugin-globalization": "^1.11.0",
     "ionic-angular-utilities": "^1.0.2",
+    "roboto-fontface": "^0.10.0",
     "rxjs": "^6.5.5",
     "tslib": "^2.0.1",
+    "typeface-josefin-sans": "0.0.75",
     "zone.js": "^0.10.3"
   },
   "devDependencies": {

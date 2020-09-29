@@ -2,10 +2,14 @@
 
 $font-size-base: 10px;
 $font-family-default: 'Roboto';
+$font-family-josefin: 'Josefin Sans';
 
 /***********************************
    * Font families
    ***********************************/
 .f-family-roboto {
-  font-family: 'Roboto' !important;
+  font-family: $font-family-default !important;
+}
+.f-family-josefin {
+  font-family: 'Josefin Sans' !important;
 }
