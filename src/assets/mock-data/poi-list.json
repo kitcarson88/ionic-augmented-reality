@@ -1,0 +1,44 @@
+[
+	{
+		"id": 348237,
+		"latitudine": 41.957995, 
+        "longitudine": 12.561082,
+        "titolo": "Example poi 1",
+        "descrizione": "Just an example description on marker 1"
+    },
+    {
+		"id": 4353453,
+		"latitudine": 41.957284,
+        "longitudine": 12.563506,
+        "titolo": "Example poi 2",
+        "descrizione": "Just an example description on marker 2"
+    },
+    {
+		"id": 324354,
+		"latitudine": 41.957371,
+        "longitudine": 12.557209,
+        "titolo": "Example poi 3",
+        "descrizione": "Just an example description on marker 3"
+    },
+    {
+		"id": 87656465,
+		"latitudine": 41.459662,
+        "longitudine": 12.889217,
+        "titolo": "Example poi 4",
+        "descrizione": "Just an example description on marker 4"
+    },
+    {
+		"id": 657686,
+		"latitudine": 41.482196,
+        "longitudine": 12.864520,
+        "titolo": "Example poi 5",
+        "descrizione": "Just an example description on marker 5"
+    },
+    {
+		"id": 54432545,
+		"latitudine": 41.971366,
+        "longitudine": 12.542397,
+        "titolo": "Example poi 6",
+        "descrizione": "Just an example description on marker 6"
+    }
+]

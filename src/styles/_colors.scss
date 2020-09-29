@@ -1,5 +1,12 @@
 $c-white: #fff;
 $c-black: #000;
+$c-black-32: rgba(0, 0, 0, .32);
+$c-water-green: #048eab;
+$c-grey: #777;
+$c-light-grey-b7: #b7b7b7;
+$c-light-grey-c0: #c0c0c0;
+$c-light-grey-f1: #f1f1f1;
+$c-red: #c51d1d;
 
 //FONT
 .c-white {
@@ -8,6 +15,18 @@ $c-black: #000;
 .c-black {
     color: $c-black !important;
 }
+.c-water-green {
+    color: $c-water-green !important;
+}
+.c-grey {
+    color: $c-grey !important;
+}
+.c-light-grey-c0 {
+    color: $c-light-grey-c0 !important;
+}
+.c-red {
+    color: $c-red !important;
+}
 
 //BACKGROUND
 .bg-white {
@@ -15,6 +34,18 @@ $c-black: #000;
 }
 .bg-black {
     background-color: $c-black !important;
+}
+.bg-water-green {
+    background-color: $c-water-green !important;
+}
+.bg-grey {
+    background-color: $c-grey !important;
+}
+.bg-light-grey-c0 {
+    background-color: $c-light-grey-c0 !important;
+}
+.bg-red {
+    background-color: $c-red !important;
 }
 
 @mixin bg-opacity($color, $opacity) {
