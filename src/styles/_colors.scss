@@ -1,0 +1,22 @@
+$c-white: #fff;
+$c-black: #000;
+
+//FONT
+.c-white {
+    color: $c-white !important;
+}
+.c-black {
+    color: $c-black !important;
+}
+
+//BACKGROUND
+.bg-white {
+    background-color: $c-white !important;
+}
+.bg-black {
+    background-color: $c-black !important;
+}
+
+@mixin bg-opacity($color, $opacity) {
+    background-color: rgba($color, $opacity) !important;
+}

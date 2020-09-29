@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+
 import { Platform } from '@ionic/angular';
 
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -8,7 +9,10 @@ import { AppVersion } from '@ionic-native/app-version/ngx';
 import { Plugins } from '@capacitor/core';
 const { Device } = Plugins;
 
+import { Observable } from 'rxjs';
+import { select, ReducerInjector } from '@redux-multipurpose/core';
 import { AppPlatformDeviceActions } from '../store';
+import { splashReducer } from '../store/splash/splash.slice';
 
 import { Utils } from '../utils/utils';
 import { constants } from '../utils/constants';
@@ -18,7 +22,15 @@ import { constants } from '../utils/constants';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss']
 })
-export class AppComponent {
+@ReducerInjector([{
+	key: 'splash',
+	reducer: splashReducer
+}])
+export class AppComponent implements OnInit
+{
+  @select([ "splash" ])
+  splashState$: Observable<string>;
+
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
@@ -26,6 +38,10 @@ export class AppComponent {
     private appVersion: AppVersion,
     private appPltDevInfos: AppPlatformDeviceActions
   ) {
+  }
+
+  ngOnInit()
+  {
     this.initializeApp();
   }
 

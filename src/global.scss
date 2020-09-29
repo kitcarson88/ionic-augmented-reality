@@ -24,3 +24,14 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+
+//Import custom libraries styles
+  //Override some ionic components
+@import '~ionic-angular-utilities/lib/styles/override-ionic';
+  //Mixins
+@import '~ionic-angular-utilities/lib/styles/mixins';
+  //Responsiveness
+@import '~ionic-angular-utilities/lib/styles/responsive';
+
+@import 'styles/index';
