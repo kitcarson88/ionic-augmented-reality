@@ -38,6 +38,23 @@ export class AppComponent implements OnInit
   @select(["spinner"])
   showSpinner$: Observable<boolean>;
 
+  public appPages = [{
+      title: 'Home',
+      url: '/home',
+      icon: 'assets/icon/home.svg',
+      direction: 'root'
+    }, {
+      title: 'AR',
+      url: '/augmented-reality',
+      icon: 'assets/icon/ar.svg',
+      direction: 'forward'
+    }, {
+      title: 'Map',
+      url: '/map',
+      icon: 'assets/icon/map.svg',
+      direction: 'root'
+  }];
+
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,

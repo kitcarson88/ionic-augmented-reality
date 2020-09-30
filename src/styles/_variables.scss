@@ -2,6 +2,17 @@
 @import 'colors';
 
 //Put here common app variables
+$ar-toolbar-height: 56px;
+$ar-toolbar-height-small-mobile: 48px;
+
+$ar-menu-logo-size: $f-size-big;
+$ar-menu-content-padding: 1.6rem;
+$ar-menu-item-border: 1px solid $c-light-grey-c0;
+
+$menu-overlay-opacity: .5;
+$menu-overlay-opacity-time: .3s;
+
+$ar-back-button-font-size: 20px;
+
 $ar-spinner-background-color: $c-black-32;
 $ar-spinner-side: 4rem;
-$ar-spinner-color: $c-water-green;

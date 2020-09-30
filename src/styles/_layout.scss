@@ -74,8 +74,124 @@ h5 {
     font-size: $f-size-4 !important;
 }
 
+ion-toolbar.ar-toolbar {
+    --background: var(--ion-color-primary) !important;
+    --min-height: #{$ar-toolbar-height} !important;
+    --padding-start: 0 !important;
+    --padding-end: 0 !important;
+    --padding-top: 0 !important;
+    --padding-bottom: 0 !important;
+
+    @include small-mobile {
+        --min-height: #{$ar-toolbar-height-small-mobile} !important;
+    }
+
+    ion-title {
+        padding-inline-start: 0 !important;
+        padding-inline-end: 0 !important;
+    }
+
+    ion-buttons {
+        background: linear-gradient(var(--ion-color-medium-lighter), var(--ion-color-light)) !important;
+        
+        width: #{$ar-toolbar-height} !important;
+        height: #{$ar-toolbar-height} !important;
+
+        @include small-mobile {
+            width: #{$ar-toolbar-height-small-mobile} !important;
+            height: #{$ar-toolbar-height-small-mobile} !important;
+        }
+
+        ion-menu-button {
+            display: block !important;
+            float: none !important;
+            width: 100% !important;
+            height: 100% !important;
+            margin: 0 auto !important;
+
+            @include small-mobile {
+                ion-icon.ar-menu-icon {
+                    font-size: $f-size-6 !important;
+                }
+            }
+        }
+
+        ion-back-button {
+            --color: var(--ion-color-medium);
+            --icon-font-size: #{$ar-back-button-font-size} !important;
+            width: 100% !important;
+            height: 100% !important;
+            --margin-start: 0 !important;
+            --margin-end: 0 !important;
+            --padding-start: 0 !important;
+            --padding-end: 0 !important;
+        }
+    }
+}
+
+ion-menu.ar-menu {
+    --width: calc(100% - #{$ar-toolbar-height}) !important;
+
+    ion-header {
+        ion-toolbar {
+            text-align: center !important;
+            --background: var(--ion-color-medium-lighter) !important;
+            --background: linear-gradient(var(--ion-color-medium-lighter), var(--ion-color-light)) !important;
+            --min-height: #{$ar-toolbar-height} !important;
+
+            @include small-mobile {
+                --min-height: #{$ar-toolbar-height-small-mobile} !important;
+            }
+
+            .logo {
+                font-size: $ar-menu-logo-size !important;
+            }
+        }
+    }
+    ion-content {
+        --background: linear-gradient(var(--ion-color-light), #{$c-white}) !important;
+
+        ion-list {
+            background-color: transparent !important;
+            padding-top: $ar-menu-content-padding !important;
+
+            ion-item {
+                --background: transparent !important;
+                border-bottom: $ar-menu-item-border !important;
+                --padding-start: #{$ar-menu-content-padding} !important;
+
+                ion-icon {
+                    color: var(--ion-color-medium) !important;
+                    margin : 0 $ar-menu-content-padding 0 0 !important;
+                }
+
+                ion-label {
+                    color: var(--ion-color-medium) !important;
+                }
+
+                &.active {
+                    ion-label, ion-icon {
+                        color: var(--ion-color-primary) !important;
+                    }
+                }
+            }
+        }
+    }
+}
+
+menu-overlay > div{
+    z-index: -10;
+    opacity: 0;
+    @include transition(opacity $menu-overlay-opacity-time linear);
+}
+
+ion-menu.show-menu + ion-router-outlet menu-overlay > div {
+    z-index: 10000;
+    opacity: $menu-overlay-opacity;
+}
+
 .ar-spinner {
     --content-background: #{$ar-spinner-background-color};
     --size: #{$ar-spinner-side};
-    --element-color: #{$ar-spinner-color};
+    --element-color: var(--ion-color-primary);
 }
