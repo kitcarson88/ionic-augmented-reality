@@ -16,7 +16,7 @@ ion-content {
 }
 
 .splashContainer {
-    background-color: $c-white;
+    background-color: var(--ion-background-color);
     width: 100%;
     height: 100%;
     position: relative;
@@ -27,35 +27,27 @@ ion-content {
         opacity: 1;
     }
 
-    .content {
-        width: 100%;
+    ion-icon {
+        color: var(--ion-color-secondary);
+        font-size: 10rem !important;
+        margin-bottom: 4rem;
+        @include transition(color .3s linear);
 
-        ion-icon {
-            color: $c-red;
-            font-size: 10rem !important;
-            margin-bottom: 4rem;
-            @include transition(color .3s linear);
-
-            @include small-mobile {
-                font-size: 8rem !important;
-            }
-        }
-
-        div {
-            color: $c-water-green;
-            @include transition(color .3s linear);
-
-            @include small-mobile {
-                font-size: $f-size-8 !important;
-            }
+        @include small-mobile {
+            font-size: 8rem !important;
         }
     }
 
+    div {
+        color: var(--ion-color-primary);
+        @include transition(color .3s linear);
+    }
+
     &.colorFade {
-        background-color: $c-water-green;
+        background-color: var(--ion-color-primary);
 
         ion-icon, div {
-            color: $c-white !important;
+            color: var(--ion-background-color) !important;
         }
     }
 }

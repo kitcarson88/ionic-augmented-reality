@@ -4,6 +4,8 @@ import { IonicModule } from '@ionic/angular';
 
 import { SplashComponent } from './splash.component';
 
+import { CentralizerModule } from 'ionic-angular-utilities';
+
 @NgModule({
 	declarations: [
 		SplashComponent
@@ -11,6 +13,7 @@ import { SplashComponent } from './splash.component';
 	imports: [
 		CommonModule,
 		IonicModule,
+		CentralizerModule
 	],
 	exports: [
 		SplashComponent

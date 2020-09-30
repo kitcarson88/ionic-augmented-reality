@@ -15,16 +15,16 @@ $c-red: #c51d1d;
     color: $c-black !important;
 }
 .c-water-green {
-    color: $c-water-green !important;
+    color: var(--ion-color-primary) !important;
 }
 .c-grey {
-    color: $c-grey !important;
+    color: var(--ion-color-medium) !important;
 }
 .c-light-grey-c0 {
-    color: $c-light-grey-c0 !important;
+    color: var(--ion-color-medium-lighter) !important;
 }
 .c-red {
-    color: $c-red !important;
+    color: var(--ion-color-secondary) !important;
 }
 
 //BACKGROUND
@@ -35,16 +35,16 @@ $c-red: #c51d1d;
     background-color: $c-black !important;
 }
 .bg-water-green {
-    background-color: $c-water-green !important;
+    background-color: var(--ion-color-primary) !important;
 }
 .bg-grey {
-    background-color: $c-grey !important;
+    background-color: var(--ion-color-medium) !important;
 }
 .bg-light-grey-c0 {
-    background-color: $c-light-grey-c0 !important;
+    background-color: var(--ion-color-medium-lighter) !important;
 }
 .bg-red {
-    background-color: $c-red !important;
+    background-color: var(--ion-color-secondary) !important;
 }
 
 @mixin bg-opacity($color, $opacity) {

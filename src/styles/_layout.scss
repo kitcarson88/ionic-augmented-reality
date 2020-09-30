@@ -195,3 +195,40 @@ ion-menu.show-menu + ion-router-outlet menu-overlay > div {
     --size: #{$ar-spinner-side};
     --element-color: var(--ion-color-primary);
 }
+
+.flippable-card {
+    background-color: transparent;
+    width: calc(100% - 2rem);
+    margin: 1rem;
+    min-height: 15rem;
+    @include perspective(1000px);
+
+    .card-inner {
+        width: 100%;
+        height: 100%;
+        
+        position: absolute !important;
+        @include transition-transform(.8s);
+        transform-style: preserve-3d;
+
+        &.rotated {
+            @include transform(rotateY(-180deg));
+        }
+
+        .front, .back {
+            width: 100%;
+            height: 100%;
+            padding: 1rem;
+            position: absolute;
+            top: 0;
+            left: 0;
+            backface-visibility: hidden;
+            border-radius: 5px;
+            overflow: hidden;
+            @include box-shadow-inline(0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12));
+        }
+        .back {
+            @include transform(rotateY(180deg));
+        }
+    }
+}

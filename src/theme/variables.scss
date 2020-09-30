@@ -1,17 +1,26 @@
+@import '../styles/colors';
+
 // Ionic Variables and Theming. For more info, please see:
 // http://ionicframework.com/docs/theming/
 
 /** Ionic CSS Variables **/
 :root {
+  --ion-text-color:             #000;
+  --ion-text-color-rgb:         0, 0, 0;
+
+  /* These examples use the same color: lightsteelblue. */
+  --ion-background-color:       #fff;
+  --ion-background-color-rgb:   255, 255, 255;
+
   /** primary **/
-  --ion-color-primary: #048eab;
+  --ion-color-primary: #{$c-water-green};
   --ion-color-primary-rgb: 4,142,171;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 255,255,255;
   --ion-color-primary-shade: #047d96;
   --ion-color-primary-tint: #1d99b3;
 
-  --ion-color-secondary: #c51d1d;
+  --ion-color-secondary: #{$c-red};
   --ion-color-secondary-rgb: 197,29,29;
   --ion-color-secondary-contrast: #ffffff;
   --ion-color-secondary-contrast-rgb: 255,255,255;
@@ -59,14 +68,14 @@
   --ion-color-dark-tint: #383a3e;
 
   /** medium **/
-  --ion-color-medium: #777777;
+  --ion-color-medium: #{$c-grey};
   --ion-color-medium-rgb: 119,119,119;
   --ion-color-medium-contrast: #ffffff;
   --ion-color-medium-contrast-rgb: 255,255,255;
   --ion-color-medium-shade: #696969;
   --ion-color-medium-tint: #858585;
 
-  --ion-color-medium-lighter: #c0c0c0;
+  --ion-color-medium-lighter: #{$c-light-grey-c0};
   --ion-color-medium-lighter-rgb: 192,192,192;
   --ion-color-medium-lighter-contrast: #000000;
   --ion-color-medium-lighter-contrast-rgb: 0,0,0;
@@ -74,7 +83,7 @@
   --ion-color-medium-lighter-tint: #c6c6c6;
 
   /** light **/
-  --ion-color-light: #f1f1f1;
+  --ion-color-light: #{$c-light-grey-f1};
   --ion-color-light-rgb: 241,241,241;
   --ion-color-light-contrast: #000000;
   --ion-color-light-contrast-rgb: 0,0,0;
@@ -206,8 +215,8 @@
    */
 
   .md body {
-    --ion-background-color: #121212;
-    --ion-background-color-rgb: 18,18,18;
+    --ion-background-color: #000;
+    --ion-background-color-rgb: 0,0,0;
 
     --ion-text-color: #ffffff;
     --ion-text-color-rgb: 255,255,255;

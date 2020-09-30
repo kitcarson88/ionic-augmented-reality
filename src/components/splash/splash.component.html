@@ -3,13 +3,11 @@
     fadeIn: state !== 'active' && state !== 'inactive',
     colorFade: state === 'animation' || state === 'fadeOut'
   }">
-    <div class="centering-container">
-      <div class="content centered-container">
-        <ion-icon src="assets/icon/marker.svg"></ion-icon>
-        <div class="f-30 f-family-josefin f-weight-600">
-          Ionic<br>Location based<br>Augmented Reality
-        </div>
+    <centralizer>
+      <ion-icon src="assets/icon/marker.svg"></ion-icon>
+      <div class="f-30 f-family-josefin f-weight-600">
+        Ionic<br>Location based<br>Augmented Reality
       </div>
-    </div>
+    </centralizer>
   </div>
 </ion-content>
