@@ -9,7 +9,8 @@ import
 {
   AppPlatformDeviceActions,
 	SpinnerActions,
-	GpsActions
+	GpsActions,
+	StorageActions
 } from './index';
 
 import rootReducer from './store.reducer';
@@ -19,7 +20,8 @@ import rootSaga from './sagas';
 const ACTIONS = [
   AppPlatformDeviceActions,
 	SpinnerActions,
-	GpsActions
+	GpsActions,
+	StorageActions
 ];
 
 const RESOLVERS = [

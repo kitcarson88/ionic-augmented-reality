@@ -3,3 +3,4 @@
 export { AppPlatformDeviceActions } from './app-platform-device/app-platform-device.selectors-dispatchers';
 export { SpinnerActions } from './spinner/spinner.selectors-dispatchers';
 export { GpsActions } from './gps/gps.selectors-dispatchers';
+export { StorageActions } from './storage/storage.selectors-dispatchers';

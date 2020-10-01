@@ -3,13 +3,17 @@ import { createStoredReducer, createSecureStoredReducer } from '@redux-multipurp
 import { appPlatformDeviceReducer } from './app-platform-device/app-platform-device.slice';
 import { spinnerReducer } from './spinner/spinner.slice';
 import { gpsReducer } from './gps/gps.slice';
+import { storageReducer } from './storage/storage.slice';
 
 export function rootReducer(storage)
 {
-  return {
-    appPlatformDevice: appPlatformDeviceReducer,
+  const storagePersistedReducer = createStoredReducer('storage', storage, storageReducer);
+
+	return {
+    	appPlatformDevice: appPlatformDeviceReducer,
 		spinner: spinnerReducer,
-		gps: gpsReducer
+		gps: gpsReducer,
+		storage: storagePersistedReducer
   };
 }
 

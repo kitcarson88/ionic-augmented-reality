@@ -128,10 +128,10 @@ export class MapPage implements OnInit
     this.map = map;
 
     setTimeout(() => {
-      this.map.invalidateSize();
-    }, 500);
+      this.map.invalidateSize(true);
+    }, 300);
 
-    this.map.once("moveend", () =>
+    /*this.map.once("moveend", () =>
       {
         this.map.on("click", (event) =>
         {
@@ -158,16 +158,16 @@ export class MapPage implements OnInit
             //m.addTo(this.poisCluster).on('click', this.removeMarker);
 
             //Store a new marker in redux storage
-            /*this.storage.addPoi({
+            this.storage.addPoi({
               title,
               description,
               latitude: coordinates.lat,
               longitude: coordinates.lng,
               icon: 'assets/images/marker_blue.png'
-            });*/
+            });
           }
         });
-      });
+      });*/
   }
 
   onClusterReady(cluster: MarkerClusterGroup)
@@ -330,9 +330,9 @@ export class MapPage implements OnInit
       this.userMarker = null;
     }
 
-    /*this.gps.resetCoordinates();
+    this.gps.resetCoordinates();
     this.gps.getPosition()
       .then(this.onPositionRetrieve)
-      .catch(this.onPositionRetrieve);*/
+      .catch(this.onPositionRetrieve);
   }
 }
