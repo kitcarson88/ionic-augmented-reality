@@ -36,4 +36,9 @@ export class Utils
     {
         return Utils.isIos(plt) && Utils.hasIosMinVersion(dev.osVersion, 11) && plt.width() === 414 && plt.height() === 896;
     }
+
+    public static isGpsInError(gpsData: any)
+    {
+        return !(gpsData && gpsData['coords'] && gpsData['coords']['latitude'] && gpsData['coords']['longitude']);
+    }
 }

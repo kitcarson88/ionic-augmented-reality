@@ -2,12 +2,14 @@ import { createStoredReducer, createSecureStoredReducer } from '@redux-multipurp
 
 import { appPlatformDeviceReducer } from './app-platform-device/app-platform-device.slice';
 import { spinnerReducer } from './spinner/spinner.slice';
+import { gpsReducer } from './gps/gps.slice';
 
 export function rootReducer(storage)
 {
   return {
     appPlatformDevice: appPlatformDeviceReducer,
-		spinner: spinnerReducer
+		spinner: spinnerReducer,
+		gps: gpsReducer
   };
 }
 

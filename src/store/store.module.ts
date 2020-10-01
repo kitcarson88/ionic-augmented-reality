@@ -8,7 +8,8 @@ import storage from 'redux-persist/lib/storage';
 import
 {
   AppPlatformDeviceActions,
-	SpinnerActions
+	SpinnerActions,
+	GpsActions
 } from './index';
 
 import rootReducer from './store.reducer';
@@ -17,7 +18,8 @@ import rootSaga from './sagas';
 
 const ACTIONS = [
   AppPlatformDeviceActions,
-	SpinnerActions
+	SpinnerActions,
+	GpsActions
 ];
 
 const RESOLVERS = [

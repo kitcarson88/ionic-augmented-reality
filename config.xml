@@ -1,0 +1,4 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="it.kitcarson88.locationAR" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <preference name="cordova.plugins.diagnostic.modules" value="LOCATION" />
+</widget>

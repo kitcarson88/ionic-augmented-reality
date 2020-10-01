@@ -4,9 +4,16 @@ import { Observable } from 'rxjs';
 import { delay, first } from 'rxjs/operators';
 import { select } from '@redux-multipurpose/core';
 
-import { Plugins } from '@capacitor/core';
+import { Plugins, GeolocationPosition } from '@capacitor/core';
 const { Storage } = Plugins;
 
+import { Diagnostic } from '@ionic-native/diagnostic/ngx';
+
+import { TranslateService } from '@ngx-translate/core';
+
+import { GpsActions } from '../../store';
+
+import { Utils } from '../../utils/utils';
 import { constants } from '../../utils/constants';
 
 import
@@ -43,6 +50,12 @@ export class MapPage implements OnInit
   @select(["appPlatformDevice", "infos", "os"])
   os$: Observable<'ios' | 'android' | 'other'>;
   os: 'ios' | 'android' | 'other';
+
+
+  private isLocationEnabled: boolean = true;
+  private isLocationAvailable: boolean = true;
+  private isLocationAuthorized: boolean = true;
+
 
   map: Map;
   userMarker: Marker;
@@ -93,6 +106,12 @@ export class MapPage implements OnInit
     }
   };
   clusterData = [];
+
+  constructor(
+    private diagnostic: Diagnostic,
+    private gps: GpsActions,
+    private translate: TranslateService
+  ) {}
 
   ngOnInit()
   {
@@ -198,11 +217,15 @@ export class MapPage implements OnInit
       firstLocationAuthorization = true;
     }
 
-    /*try
+    try
     {
       this.isLocationEnabled = await this.diagnostic.isLocationEnabled();
       this.isLocationAvailable = await this.diagnostic.isLocationAvailable();
       this.isLocationAuthorized = await this.diagnostic.isLocationAuthorized();
+
+      console.log("isLocationEnabled: ", await this.diagnostic.isLocationEnabled());
+      console.log("isLocationAvailable: ", await this.diagnostic.isLocationAvailable());
+      console.log("isLocationAuthorized: ", await this.diagnostic.isLocationAuthorized());
     }
     catch (error)
     {
@@ -218,7 +241,7 @@ export class MapPage implements OnInit
           let locAuth = await this.diagnostic.requestLocationAuthorization();
           console.log("locAuth: ", locAuth);
 
-          this.nativeStorage.setItem(constants.FIRST_LOCATION_PERMISSION_REQUEST, true);
+          Storage.set({ key: constants.FIRST_LOCATION_PERMISSION_REQUEST, value: "true" });
 
           if (locAuth.toLowerCase().indexOf("denied") >= 0)
           {
@@ -256,14 +279,14 @@ export class MapPage implements OnInit
 
     this.gps.getPosition()
       .then(this.onPositionRetrieve)
-      .catch(this.onPositionRetrieve);*/
+      .catch(this.onPositionRetrieve);
   }
 
-  private onPositionRetrieve = (/*gpsResponse: Geoposition | PositionError*/) =>
+  private onPositionRetrieve = (gpsResponse: any) =>
   {
-    /*if (!Utils.isGpsInError(gpsResponse))
+    if (!Utils.isGpsInError(gpsResponse))
     {
-      let geoposition = gpsResponse as Geoposition;
+      let geoposition = gpsResponse as GeolocationPosition;
 
       //Set the new marker
       let icon = new Icon({
@@ -294,9 +317,9 @@ export class MapPage implements OnInit
 
       this.map.flyTo(coords, 5, {
         animate: true,
-        duration: 1,
+        duration: 1
       });
-    }*/
+    }
   };
 
   findMe()
