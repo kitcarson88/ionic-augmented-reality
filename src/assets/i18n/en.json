@@ -1,4 +1,6 @@
 {
+    "MAP": "mappa",
+    "HOME": "Ionic location based AR",
     "WELCOME": "Welcome in the Ionic Location Based Augmented Reality app.",
     "AR_MODULES": "The app is an home made implementation of a location based AR that uses:<br><ul><li>device motion sensors (accelerometer, gyroscope, magnetometer),</li><li>global positioning system (gps)</li><li>a Rest service to retrieve a points of interest list (POI) to show.</li></ul><br>Motion sensors data is optimized using a complementary filter called Sensor Fusion.<br><br>The Rest service is a simple GET call to retrieve user's nearby POIs. It takes user's latitude, longitude and a POI maximum radius as input parameters.",
     "GO_TO_ALGORITHM": "Go to the algorithm",

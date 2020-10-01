@@ -196,6 +196,10 @@ ion-menu.show-menu + ion-router-outlet menu-overlay > div {
     --element-color: var(--ion-color-primary);
 }
 
+ion-content.ar-container {
+    --background: var(--ion-color-light) !important;
+}
+
 .flippable-card {
     background-color: transparent;
     width: calc(100% - 2rem);

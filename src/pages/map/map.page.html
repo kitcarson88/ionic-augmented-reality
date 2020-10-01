@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar mode="ios" class="ar-toolbar">
+    <ion-buttons slot="start">
+      <ion-menu-button>
+        <ion-icon src="assets/icon/menu.svg" class="ar-menu-icon f-26 c-grey"></ion-icon>
+      </ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      <h4 class="f-family-josefin f-weight-600 f-capitalize c-white">{{'MAP' | translate}}</h4>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ar-container">
+  <div class="map-container">
+		<div slot="fixed" id="map" leaflet [leafletOptions]="mapOptions" (leafletMapReady)="onMapReady($event)"
+			[leafletMarkerClusterOptions]="clusterOptions" [leafletMarkerCluster]="clusterData"
+			(leafletMarkerClusterReady)="onClusterReady($event)">
+		</div>
+  </div>
+  
+  <menu-overlay></menu-overlay>
+</ion-content>
