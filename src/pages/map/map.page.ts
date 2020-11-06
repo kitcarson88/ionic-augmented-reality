@@ -200,7 +200,7 @@ export class MapPage implements OnInit
     //firstLocationAuthorization is a flag to verify if the location service
     //is requesting for the first time. On iOS permission dialog is shown only at
     //the first time
-    let firstLocationAuthorization: boolean;
+    /*let firstLocationAuthorization: boolean;
     try
     {
       let data = await Storage.get({ key: constants.FIRST_LOCATION_PERMISSION_REQUEST });
@@ -275,7 +275,7 @@ export class MapPage implements OnInit
     {
       console.log("Location not enabled");
       //this.toastService.showInfoToast(await this.translate.get('LOCATION_NOT_ENABLED').toPromise());
-    }
+    }*/
 
     this.gps.getPosition()
       .then(this.onPositionRetrieve)

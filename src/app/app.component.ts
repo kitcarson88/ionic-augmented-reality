@@ -5,7 +5,6 @@ import { Platform } from '@ionic/angular';
 import { Plugins } from '@capacitor/core';
 const { Device } = Plugins;
 
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppVersion } from '@ionic-native/app-version/ngx';
 import { Globalization } from '@ionic-native/globalization/ngx';
@@ -14,9 +13,11 @@ import { TranslateService } from '@ngx-translate/core';
 import { availableLanguages, defaultLanguage, sysOptions } from './i18n.constants';
 
 import { Observable } from 'rxjs';
-import { select, ReducerInjector } from '@redux-multipurpose/core';
+import { store, select } from '@redux-multipurpose/core';
 import { AppPlatformDeviceActions } from '../store';
+import { addEpic } from '../store/epics';
 import { splashReducer } from '../store/splash/splash.slice';
+import { doSplashAnimation } from '../store/splash/splash.epics';
 
 import { Utils } from '../utils/utils';
 import { constants } from '../utils/constants';
@@ -26,10 +27,6 @@ import { constants } from '../utils/constants';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss']
 })
-@ReducerInjector([{
-	key: 'splash',
-	reducer: splashReducer
-}])
 export class AppComponent implements OnInit
 {
   @select([ "splash" ])
@@ -57,7 +54,6 @@ export class AppComponent implements OnInit
 
   constructor(
     private platform: Platform,
-    private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private appVersion: AppVersion,
     private appPltDevInfos: AppPlatformDeviceActions,
@@ -75,7 +71,9 @@ export class AppComponent implements OnInit
   {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
-      this.splashScreen.hide();
+
+      store.addReducer('splash', splashReducer);
+      store.replaceEpics(addEpic('doSplashAnimation', doSplashAnimation));
       
       //Initialize some device infos
       setTimeout(() =>

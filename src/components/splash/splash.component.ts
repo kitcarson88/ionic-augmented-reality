@@ -4,7 +4,7 @@ import { Plugins } from '@capacitor/core';
 const { SplashScreen } = Plugins;
 
 import { Observable } from 'rxjs';
-import { store, select, ReducerDeallocator } from '@redux-multipurpose/core';
+import { store, select } from '@redux-multipurpose/core';
 import { hide } from '../../store/splash/splash.slice';
 import { addEpic, removeEpic } from '../../store/epics';
 import { doSplashAnimation } from '../../store/splash/splash.epics';
@@ -14,7 +14,6 @@ import { doSplashAnimation } from '../../store/splash/splash.epics';
   templateUrl: './splash.component.html',
   styleUrls: ['./splash.component.scss'],
 })
-@ReducerDeallocator(['splash'])
 export class SplashComponent implements AfterViewInit, OnDestroy
 {
 
@@ -22,11 +21,6 @@ export class SplashComponent implements AfterViewInit, OnDestroy
   splashState$: Observable<'active' | 'fadeIn' | 'animation' | 'fadeOut' | 'inactive'>;
 
   constructor() {}
-
-  ngOnInit()
-  {
-    store.replaceEpics(addEpic('doSplashAnimation', doSplashAnimation));
-  }
 
   ngAfterViewInit()
   {
@@ -37,5 +31,6 @@ export class SplashComponent implements AfterViewInit, OnDestroy
   ngOnDestroy()
   {
     store.replaceEpics(removeEpic('doSplashAnimation'));
+    store.removeReducer("splash");
   }
 }
